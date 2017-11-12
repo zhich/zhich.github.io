@@ -1,3 +1,14 @@
+---
+title: Android Studio 的一些技巧
+date: 2016-09-25 12:28:31
+categories: "Android"
+tags:
+     - Android
+     - Android Studio
+---
+
+
+
 [技巧](#技巧)
 
 [插件](#插件)
