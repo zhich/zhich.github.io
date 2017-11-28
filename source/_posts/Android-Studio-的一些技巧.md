@@ -197,7 +197,7 @@ public class LoginActivity extends Activity {
 - GsonFormat
 可将一段 Json 生成所需的 Gson 实体。
 
-- ParcelableGenerate
+- Android Parcelable code generator
 可自动生成 Parcelable 接口所需的代码。
 
 - AndroidCodeGenerator
