@@ -268,6 +268,5 @@ Android Debug Database 是一个非常酷的开源工具，完全改变了 debug
 app 中会有一些难以意识到的安全漏洞，要杜绝这些漏洞往往需要相当的经验和精力。但是这个工具可以帮助你检测安全漏洞，就像使用拼写检查一下简单。**使用方法：选中要查找问题的 java 文件或者文件夹，右键 Devknox Scan -> Devknox Scan 就会开始扫描。**
 
 ### ClassyShark
-[ClassyShark](https://github.com/google/android-classyshark) 
-可以帮助你窥探任何 apk 获得许多有用的信息，比如 classes , resources , manifest ,  dependencies , dex count 等等。它可以让你了解一个 app 时做什么的甚至是如何做到的 。ClassyShark 是开源的。
+[ClassyShark](https://github.com/google/android-classyshark) 可以帮助你窥探任何 apk 获得许多有用的信息，比如 classes , resources , manifest ,  dependencies , dex count 等等。它可以让你了解一个 app 是做什么的甚至是如何做到的。ClassyShark 是开源的。
 
