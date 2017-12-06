@@ -13,6 +13,8 @@ tags:
 
 [插件](#插件)
 
+[工具](#工具)
+
 
 
 ## 技巧
@@ -230,3 +232,42 @@ public class LoginActivity extends Activity {
 
 ### AndroidLocalizationer
 可用于将项目中的 string 资源自动翻译为其他语言的 Android Studio/IntelliJ IDEA 插件。
+
+### Key Promoter
+当用鼠标点击 AS 的一个功能时，Key Promoter 插件会展示该功能的快捷键。
+
+### FindBugs-IDEA
+一个免费的 Android Studio 插件，可以在开发早期检测出常见的 Java bug .
+
+### ADB Idea
+[ADB Idea](https://github.com/pbreault/adb-idea) 一个开源的 Android Studio 插件，帮助你在 IDE 中实现 app 重启，杀死，清理数据，卸载。
+
+### Codota
+[Codota](https://www.codota.com/) 写代码经常会遇到需要从 github 或者 stackoverflow 上寻找代码示例的时候，这个插件可以在无需离开 IDE 就能做这件事情。
+
+## 工具
+### Stetho
+Stetho 是 Facebook 开发的 Android 调试工具。它可以通过 Chrome 的开发者工具来辅助 Android 开发。提供有网络抓包、查看本地数据（比如 Sqlite 数据库，Sharepreference 等等）、Javascript 控制台、View Hierarchy 布局层级查看、Dump App 等功能。
+
+### Gradle, please
+[Gradle, please](http://gradleplease.appspot.com/) 帮助快速地找到第三方库 gradle 依赖的那行代码。比如我们要使用 glide , 只需在一个输入框中输入 glide , 下面就会显示 glide 的完整依赖。当我们搞不清楚库的拼写或者版本号这些细节时，就显得相当有用。
+
+### LeakCanary
+LeakCanary 是由 Square 开发的一个开源工具，让复杂的内存泄漏检测变得更简单。它可以在内存泄漏的时候显示通知，并提供一个完整的泄漏轨迹。
+
+### Android Debug Database
+Android Debug Database 是一个非常酷的开源工具，完全改变了 debug 数据库和 shared preferences 的方式。现在你可以在一个漂亮的界面上查看，编辑，删除数据，以及运行 sql 语句。
+
+### Android WiFi ADB
+[Android WiFi ADB](https://github.com/pedrovgs/AndroidWiFiADB) 可以通过 Wi-Fi  从 Android Studio 运行 app . 无需用数据线把设备和电脑连接起来。
+
+### drawable-optimizer
+[drawable-optimizer](https://github.com/fabiomsr/drawable-optimizer) 一个通过优化 PNG 图片来减小 APK 体积的 gradle 插件。
+
+### DevKnox
+app 中会有一些难以意识到的安全漏洞，要杜绝这些漏洞往往需要相当的经验和精力。但是这个工具可以帮助你检测安全漏洞，就像使用拼写检查一下简单。**使用方法：选中要查找问题的 java 文件或者文件夹，右键 Devknox Scan -> Devknox Scan 就会开始扫描。**
+
+### ClassyShark
+[ClassyShark](https://github.com/google/android-classyshark) 
+可以帮助你窥探任何 apk 获得许多有用的信息，比如 classes , resources , manifest ,  dependencies , dex count 等等。它可以让你了解一个 app 时做什么的甚至是如何做到的 。ClassyShark 是开源的。
+
