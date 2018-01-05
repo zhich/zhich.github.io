@@ -202,6 +202,12 @@ public class LoginActivity extends Activity {
 
   就是这么简单，这个命令会杀死编译的守护进程，编译会立即停止。
 
+### 关闭 / 显示方法参数提示
+
+![](/images/1.png)
+
+![](/images/2.png)
+
 ## 插件
 ### .ignore
 给 Git 项目生成最合适的 ignore 文件。
