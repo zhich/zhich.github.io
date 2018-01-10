@@ -310,7 +310,7 @@ Android 中的序列化官方推荐 Parceble , 其实 Parceble 最好用于内�
 
 #### SharedPreferences
 
-SharedPreferences.Editor.commit 这个方法是同步的，一直到把数据同步到 Flash 上面之后才会返回，由于 IO 操作的不可控，尽量使用 apply 方法代替。apply 只在 API Level >= 9 才会支持，需要做兼容。不过，最新的 support v4 包已经为我们做好了处理，使用  SharedPreferencesCompat.EditorCompat.getInstance().apply(editor) 即可。
+`SharedPreferences.Editor.commit` 这个方法是同步的，一直到把数据同步到 Flash 上面之后才会返回，由于 IO 操作的不可控，尽量使用 apply 方法代替。apply 只在 API Level >= 9 才会支持，需要做兼容。不过，最新的 support v4 包已经为我们做好了处理，使用  `SharedPreferencesCompat.EditorCompat.getInstance().apply(editor)` 即可。
 
 #### 其它优化
 
@@ -318,25 +318,25 @@ SharedPreferences.Editor.commit 这个方法是同步的，一直到把数据同
 
 - Handler 机制有一个特点是不会随着 Activity、Service 的生命周期结束而结束。也就是说，如果你 Post 了一个 Delay 的 Runnable , 然后在 Runnable 执行之前退出了 Activity , Runnable 到时间之后还是要执行的。如果 Runnable 里面包含更新 View 的操作，程序崩溃了。
 
-- 不少人在子线程中更新 View 时喜欢使用 Context.runOnUiThread , 这个方法有个缺点，就是一但 Context 生命周期结束，比如 Activity 已经销毁时，一调用就会崩溃。
+- 不少人在子线程中更新 View 时喜欢使用 `Context.runOnUiThread` , 这个方法有个缺点，就是一但 Context 生命周期结束，比如 Activity 已经销毁时，一调用就会崩溃。
 
 - Application 的生命周期就是进程的生命周期。只有进程被干掉时，Application 才会销毁。哪怕是没有 Activity、Service 在运行，Application 也会存在。所以，为了减少内存压力，尽量不要在 Application 里面引用大对象、Context 等。
 
 - Activity 的 onDestroy 方法调用时机是不确定的（有时候离开界面很久之后才会调用 onDestroy 方法），应该避免指望通过 onDestroy 方法去释放与 Activity 相关的资源，否则会导致一些随机 bug .
 
-- 如果使用 Context.startActivity 启动外部应用，最好做一下异常预防，因为寻找不到对应的应用时，会抛出异常。如果你要打开的是应用内的 Activity , 不防使用显式 Intent , 这样能提高系统搜索目标 Activity 的效率。
+- 如果使用 `Context.startActivity` 启动外部应用，最好做一下异常预防，因为寻找不到对应的应用时，会抛出异常。如果你要打开的是应用内的 Activity , 不防使用显式 Intent , 这样能提高系统搜索目标 Activity 的效率。
 
 - 如果子类实现 Serializable 接口而父类未实现时，父类不会被序列化，但此时父类必须有个无参构造方法，否则会抛 InvalidClassException 异常。
 
-- transient 关键字修饰变量可以限制序列化。
+- `transient` 关键字修饰变量可以限制序列化。
 
-- View.getContext 获取控件上下文，写 RecyclerView 的 Adapter 的时候，为了使用 LayoutInflater , 不用在构造函数中传入一个外部的 context .
+- `View.getContext` 获取控件上下文，写 RecyclerView 的 Adapter 的时候，为了使用 LayoutInflater , 不用在构造函数中传入一个外部的 context .
 
 ## UI相关
 
 ### Space
 
-Space 经常用于组件之间的缝隙，其 draw()为空，减少了绘制渲染的过程。组件之间的距离使用 Space 会提高了绘制效率，特别是对于动态设置间距会很方便高效。正是因为 draw()为空，对该 view 没有做任务绘制渲染，所以不能对 Space 设置背景色。
+Space 经常用于组件之间的缝隙，其 `draw()` 为空，减少了绘制渲染的过程。组件之间的距离使用 Space 会提高了绘制效率，特别是对于动态设置间距会很方便高效。正是因为 draw()为空，对该 view 没有做任务绘制渲染，所以不能对 Space 设置背景色。
 
 ### tools标签
 
@@ -351,4 +351,7 @@ tools 标签可以很好的帮助开发者实时预览 xml 的效果，并且运
 
 ### ContextCompat
 
-6.0 之后 getResources().getColor() 方法被废弃了，可以用 ContextCompat.getColor(context, R.color.color_name) 替换，ContextCompat 是 v4 包里的，请放心使用，另外还有 getDrawable() 等方法。
+Android 6.0 之后 `getResources().getColor()` 被废弃了，可用 `ContextCompat.getColor(context, R.color.color_name)` 替换，ContextCompat 是 v4 包里的，请放心使用，另外还有 `getDrawable()` 等方法。
+
+
+
