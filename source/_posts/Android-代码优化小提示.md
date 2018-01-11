@@ -112,17 +112,16 @@ if (null != userList.get(i) && null != userList.get(i).name) {
 ```Java
 try {
     cursor = context.getContentResolver().query(Uri.parse(PROVIDER_SETTINGFILE), null, null, null, null);
-    if (null == cursor) { // cursor 为 null，下面没法玩
-        return;
-    }
     //省略 n 行代码...
 } catch (Exception e) {
     e.printStackTrace();
 } finally {
-    try {
-        cursor.close();
-    } catch (Exception e) {
-        e.printStackTrace();
+    if(cursor != null){
+       try {
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+       }
     }
 }
 ```
