@@ -167,7 +167,44 @@ public class Test {
 
 #### WebView
 
+- 首先就是使用自己封装的 WebView , 不在 xml 里面声明，而是直接代码 new 个对象，传入 application context 防止 activity 引用滥用。
 
+```Java
+webView =  new BridgeWebView(getContext().getApplicationContext());
+webFrameLayout.addView(webView, 0);
+```
+
+> 在使用了这个方式后，基本上 90% 的 webview 内存泄漏的问题便得以解决。
+
+- 而在 Android 4.4 版本以下，会出现 Android Webview 无法自动释放，如在 Fragment 中，使用 onDetach 来释放 Webview 是比较好的时机。
+
+```Java
+public void onDetach() {
+    releaseWebViews();
+    super.onDetach();
+}
+
+private void releaseWebViews() {
+    if(webView != null) {
+        try {
+            if(webView.getParent() != null) {
+                ((ViewGroup) webView.getParent()).removeView(webView);
+            }
+            webView.destroy();
+        }catch (IllegalArgumentException e) {
+        }
+        RefWatcher refWatcher = FApplication.getRefWatcher();
+        refWatcher.watch(webView);
+        webView = null;
+    }
+}
+```
+
+参考文章：
+
+[Android WebView: 性能优化不得不说的事](https://www.jianshu.com/p/95d4d73be3d1)
+
+[android内存优化之webview](https://www.jianshu.com/p/c2412918b2b5#fn2)
 
 #### Handler
 
