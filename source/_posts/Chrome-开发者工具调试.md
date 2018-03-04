@@ -65,7 +65,7 @@ tags:
 
 - 点击右侧的 Styles 标签页，可以实时修改 CSS 的属性值，所有的 Name 和 Value 值都是可以编辑的。在每个属性后面单击可以添加新的样式。
 
-![](/images/3.png)
+![](/images/4.png)
 
 - 点击 Computed 标签页，可以编辑左侧选中的盒子模型参数，所有值都是可以修改的。点击不同的位置（top、bottom、left、right）就可以修改元素的 padding、border、margin 属性值。
 
