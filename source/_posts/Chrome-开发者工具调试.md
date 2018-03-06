@@ -73,6 +73,68 @@ tags:
 
 ### Console
 
+#### 在控制台输出日志
+**在 JS 代码或者命令行中，可通过以下 API 将日志信息打印到控制台中**
+
+- console.log
+
+  打印一般的基础日志信息，当要打印的基础日志太多时可使用 `console.group` 将相关的日志进行分组。
+
+- console.warn
+
+  打印带有黄色小图标的警告信息。
+
+- console.error
+
+  打印带有红色小图标的错误信息。
+
+![](/images/5.png)
+
+- console.assert
+
+  当第一个参数为 false 时，才会打印第二个参数的值。
+
+![](/images/6.png)
+
+**可以根据 JS 条件判断输出不同的日志信息**
+
+> 当需要换到下一行而不是回车的时候，请按 `Shift + Enter`
+
+![](/images/7.png)
+
+#### 与控制台交互
+
+- JS 表达式计算
+
+  可以在控制台中输入 JS 表达式，然后点击 `Enter` 键得出结果。当在控制台输入命令时，会弹出相应的智能提示框，可按 `Tab` 键补全命令。
+
+![](/images/8.png)
+
+- 选择元素
+
+**$(selector)**: 列出与 selector 匹配的所有元素。
+
+**$$(selector)**: 列出与 selector 匹配的所有元素组成了数组。
+
+**$x(path)**：返回的是一个数组，数组中即为与 xpath 匹配的所有元素。 
+
+另外还有两种方法与上面类似：
+
+**document.querySelector("img")**：会返回 DOM 中匹配的第一个元素（只返回一个元素）。
+
+**document.querySelectorAll("img")**：等同于 $$(selector) 。
+
+![](/images/9.png)
+
+> 点击返回的每个元素，则会定位到页面中的 img 元素及 html 中的具体位置。
+
+### Sources
+
+
+
+
+
+
 
 
 
