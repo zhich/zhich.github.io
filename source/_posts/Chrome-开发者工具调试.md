@@ -168,8 +168,49 @@ tags:
 
 ##### 调试的功能区域介绍
 
+调试的功能区域在调试页面的**右侧**。下图为在某方法处打了一个断点。
+
+![](/images/19.png)
+
+- watch
+
+  可以用来实时监视变量的值。
+
+- Call Stack
+
+  断点执行到程序块停下来后，Call Stack 会显示断点所在处的方法调用栈。
+
+  如果想重新从 Call Stack 调用栈中调用某个方法，可以在 Call Stack 调用栈中的该方法处右键点击 **Restart Frame** ，那么断点就会跳转到该方法的开头处重新执行。 
+
+- Scope
+
+  可以查看此时局部变量和全局变量的值。
+ 
+- Breakpoints
+
+  展示当前所有 js 断点，通过点击按钮可以去掉或加上断点，点击下方的代码表达式可跳转到该断点的程序代码处。
+
+- XHR Breakpoints
+
+  点击右侧 + 号，可以添加请求的 URL ，当 XHR 调用触发时就会在 request.send() 处中断。
+
+- DOM Breakpoints
+
+  当给 DOM 元素设置断点（来查看元素的变化情况）时，该 DOM 断点就会出现在 DOM Breakpoints 中。
+
+- Event listener Breakpoints 
+
+  此处列出了各种可能的事件类型。勾选对应的事件类型，当触发该事件类型的 js 代码时就会自动中断。
 
 
 
 
 
+
+
+
+参考资料：
+
+[Chrome开发者工具详解(1)-Elements、Console、Sources面板](http://www.cnblogs.com/charliechu/p/5948448.html)
+
+[超完整的 Chrome 浏览器客户端调试大全](http://web.jobbole.com/89344/)
