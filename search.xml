@@ -25,8 +25,8 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[前端学习栈]]></title>
-    <url>%2F2018%2F05%2F25%2F%E5%89%8D%E7%AB%AF-%E5%AD%A6%E4%B9%A0%E6%A0%88%2F</url>
+    <title><![CDATA[前端学习]]></title>
+    <url>%2F2018%2F05%2F25%2F%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%2F</url>
     <content type="text"><![CDATA[劝学 唐代：颜真卿 三更灯火五更鸡，正是男儿读书时。 黑发不知勤学早，白首方悔读书迟。 ES6 es6-learn React react-learn Vue vue-learn]]></content>
       <categories>
         <category>前端</category>
@@ -36,8 +36,8 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Android 学习栈]]></title>
-    <url>%2F2018%2F04%2F27%2FAndroid-%E5%AD%A6%E4%B9%A0%E6%A0%88%2F</url>
+    <title><![CDATA[Android 学习]]></title>
+    <url>%2F2018%2F04%2F27%2FAndroid-%E5%AD%A6%E4%B9%A0%2F</url>
     <content type="text"><![CDATA[长歌行 佚名 青青园中葵，朝露待日晞。 阳春布德泽，万物生光辉。 常恐秋节至，焜黄华叶衰。 百川东到海，何时复西归？ 少壮不努力，老大徒伤悲！ 本文主要目的是对列出的 Android 知识点进行逐一学习。学习过程中会在 Github 上对每个知识点做些笔记，通过本文可跳转过去。本文会持续进行 update . 基础篇 四大组件 Activity Service BroadcastReceiver ContentProvider View 开源库 网络 Okhttp Retrofit 图片加载 Glide Fresco Picasso Glide Bitmap Pool 数据库 GreenDAO ORMLite 依赖注入 Butter Knife Dagger 2 AndroidAnnotations 工具库 EventBus LeakCanary Secure Preference Manager Weak handler 调试工具 Stetho 其它 RxJava 架构 MVP MVVM]]></content>
       <categories>
         <category>Android</category>
