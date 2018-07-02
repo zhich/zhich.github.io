@@ -1,5 +1,5 @@
 ---
-title: Android 学习栈
+title: Android 学习
 date: 2018-04-27 21:33:00
 categories: "Android"
 tags:
@@ -84,7 +84,7 @@ tags:
 
 - ### 其它
 
-  - #### [RxJava](https://github.com/zhich/rxjava-learn)
+  - #### [RxJava](https://github.com/zhich/RxJava-Learning)
 
 
 ## 架构
