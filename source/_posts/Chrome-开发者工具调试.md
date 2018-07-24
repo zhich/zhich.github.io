@@ -15,7 +15,7 @@ tags:
 
 ### Chrome 开发者工具面板简介
 
-![](/images/3.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/3.png)
 
 - 箭头图标
 
@@ -65,7 +65,7 @@ tags:
 
 - 点击右侧的 Styles 标签页，可以实时修改 CSS 的属性值，所有的 Name 和 Value 值都是可以编辑的。在每个属性后面单击可以添加新的样式。
 
-![](/images/4.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/4.png)
 
 - 点击 Computed 标签页，可以编辑左侧选中的盒子模型参数，所有值都是可以修改的。点击不同的位置（top、bottom、left、right）就可以修改元素的 padding、border、margin 属性值。
 
@@ -88,19 +88,19 @@ tags:
 
   打印带有红色小图标的错误信息。
 
-![](/images/5.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/5.png)
 
 - console.assert
 
   当第一个参数为 false 时，才会打印第二个参数的值。
 
-![](/images/6.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/6.png)
 
 **可以根据 JS 条件判断输出不同的日志信息**
 
 > 当需要换到下一行而不是回车的时候，请按 `Shift + Enter`
 
-![](/images/7.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/7.png)
 
 #### 与控制台交互
 
@@ -108,7 +108,7 @@ tags:
 
   可以在控制台中输入 JS 表达式，然后点击 `Enter` 键得出结果。当在控制台输入命令时，会弹出相应的智能提示框，可按 `Tab` 键补全命令。
 
-![](/images/8.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/8.png)
 
 - 选择元素
 
@@ -124,7 +124,7 @@ tags:
 
 **document.querySelectorAll("img")**：等同于 $$(selector) 。
 
-![](/images/9.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/9.png)
 
 > 点击返回的每个元素，则会定位到页面中的 img 元素及 html 中的具体位置。
 
@@ -132,9 +132,9 @@ tags:
 
 #### 格式化代码
 
-![](/images/10.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/10.png)
 
-![](/images/11.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/11.png)
 
 以上图片分别为源代码格式化前和格式化后的状态。通过点击源代码底部的 `{}` 即可将源代码格式化。
 
@@ -144,19 +144,19 @@ tags:
 
 以下创建一个 sum.js 的代码片段。在代码区内写完代码后，可以格式化、打断点，右键选择 `Save` 保存代码。在 sum.js 文件上右键选择 `Run` 即可运行代码，代码的运行结果会在底部的 Console 输出。
 
-![](/images/12.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/12.png)
 
 此外，**如果是在你自己的项目环境内，Sinppets 代码片段可执行项目内的方法。**
 
 比如，可以新建一个 app.js 代码片段，用于调用我们项目环境中 common.js 的某些方法或字段。
 
-![](/images/13.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/13.png)
 
 #### 断点调试
 
 #### 在代码中打断点
 
-![](/images/18.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/18.png)
 
 在源代码左侧处点击即可打上一个断点。 当代码运行到断点处，右侧功能区域会展示出调试的相关信息。右侧最上面一排分别是：暂停/继续、单步执行、单步跳入此执行块、单步跳出此执行块、禁用/启用所有断点。
 
@@ -170,7 +170,7 @@ tags:
 
 调试的功能区域在调试页面的**右侧**。下图为在某方法处打了一个断点。
 
-![](/images/19.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/19.png)
 
 - watch
 

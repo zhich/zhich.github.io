@@ -204,9 +204,9 @@ public class LoginActivity extends Activity {
 
 ### 关闭 / 显示方法参数提示
 
-![](/images/1.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/1.png)
 
-![](/images/2.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/2.png)
 
 ## 插件
 ### .ignore

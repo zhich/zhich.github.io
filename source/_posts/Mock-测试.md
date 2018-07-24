@@ -19,13 +19,13 @@ tags:
 
 下载如图所示的 jar 包，并简单命名为 moco .
 
-![](/images/15.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/15.png)
 
 **step 2:**
 
 把上面的 moco.jar 放到一个文件夹里面，并在该文件夹中创建配置文件 config.json 。config.json 中配置了两个请求，一个输出 Hello World 的请求，一个检查 App 升级的请求，他们分别输出 hello.json 文件和 checkAppUpgrade.json 文件中的内容。
 
-![](/images/14.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/14.png)
 
 **config.json**
 
@@ -92,8 +92,8 @@ java -jar moco.jar http -p 8089 -c config.json
 
 在浏览器输入 config.json 配置文件中配置的 uri 即可输出对应的 file 文件中指定的 json 数据。
 
-![](/images/16.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/16.png)
 
-![](/images/17.png)
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/17.png)
 
 > 把 localhost 换成自己电脑的 ip 就可以在手机上访问了。
