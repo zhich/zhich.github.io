@@ -39,9 +39,9 @@ fun runTest1() {
     var name = "AA"
     run {
         val name = "BB"
-        Log.e(TAG, name) // AA
+        Log.e(TAG, name) // BB
     }
-    Log.d(TAG, name) // BB
+    Log.d(TAG, name) // AA
 }
 ```
 
