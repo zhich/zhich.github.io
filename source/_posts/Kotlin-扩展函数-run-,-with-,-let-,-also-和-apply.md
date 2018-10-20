@@ -1,81 +1,14 @@
 ---
-title: Kotlin扩展函数run,with,let,also和apply
+title: Kotlin 扩展函数 run , with , let , also 和 apply
 date: 2018-10-16 21:41:00
-categories: "Android"
+categories: "Kotlin"
 tags:
      - Android
+     - Kotlin
 ---
 
 
 
-
-## 函数特点
-### T.run()、T.run()、T.also()、T.apply() 函数
-
-> xxx 表示函数名
-
-```Java
-class MyClass {
-    fun test() {
-        val str = "AA"
-        val result = str.xxx {
-            print(this) // 接收者
-            print(it) // 传参
-            100 // 返回值
-        }
-        print(result)
-    }
-}
-```
-
-| 函数           | 接收者（this）  | 传参（it）| 返回值（result）      |
-| ------------- |---------------|----------|---------------------|
-| T.run()       |   "AA"        | 编译错误  | 作用域中的最后一个对象  |
-| T.let()       | this@Myclass  |  "AA"    | 作用域中的最后一个对象  |
-| T.also()      | this@Myclass  |  "AA"    |   "AA" 对象（本身）   |
-| T.apply()     | "AA"          | 编译错误  |   "AA" 对象（本身）   |
-
-
-### with(T) 与 run() 函数
-
-```Java
-class MyClass {
-    fun withTest() {
-        val str = "AB"
-        var result = with(str) {
-            print(this) // 接收者
-            print(it) // 传参
-            100 // 返回值
-        }
-        print(result)
-    }
-
-    fun runTest() {
-        var result = run {
-            print(this) // 接收者
-            print(it) // 传参
-            100 // 返回值
-        }
-        print(result)
-    }
-}
-```
-
-| 函数           | 接收者（this） | 传参（it）| 返回值（result）      |
-| ------------- |---------------|----------|---------------------|
-| with()        | "AA"          | 编译错误  | 作用域中的最后一个对象  |
-| run()         | this@Myclass  | 编译错误  | 作用域中的最后一个对象  |
-
-### 函数特点汇总
-
-| 函数           | 接收者（this）  | 传参（it）| 返回值（result）      |
-| ------------- |---------------|----------|---------------------|
-| T.run()       |   "AA"        | 编译错误  | 作用域中的最后一个对象  |
-| with()        | "AA"          | 编译错误  | 作用域中的最后一个对象  |
-| run()         | this@Myclass  | 编译错误  | 作用域中的最后一个对象  |
-| T.let()       | this@Myclass  |  "AA"    | 作用域中的最后一个对象  |
-| T.also()      | this@Myclass  |  "AA"    |   "AA" 对象（本身）   |
-| T.apply()     | "AA"          | 编译错误  |   "AA" 对象（本身）   |
 
 
 ## 函数定义与使用
@@ -280,6 +213,74 @@ fun applyTest() {
 ```
 
 > **T.apply() 返回原来的对象不变**。
+
+## 函数特点
+### T.run()、T.run()、T.also()、T.apply() 函数
+
+> xxx 表示函数名
+
+```Java
+class MyClass {
+    fun test() {
+        val str = "AA"
+        val result = str.xxx {
+            print(this) // 接收者
+            print(it) // 传参
+            100 // 返回值
+        }
+        print(result)
+    }
+}
+```
+
+| 函数           | 接收者（this）  | 传参（it）| 返回值（result）      |
+| ------------- |---------------|----------|---------------------|
+| T.run()       |   "AA"        | 编译错误  | 作用域中的最后一个对象  |
+| T.let()       | this@Myclass  |  "AA"    | 作用域中的最后一个对象  |
+| T.also()      | this@Myclass  |  "AA"    |   "AA" 对象（本身）   |
+| T.apply()     | "AA"          | 编译错误  |   "AA" 对象（本身）   |
+
+
+### run() 与 with(T) 函数
+
+```Java
+class MyClass {
+    fun runTest() {
+        var result = run {
+            print(this) // 接收者
+            print(it) // 传参
+            100 // 返回值
+        }
+        print(result)
+    }
+
+    fun withTest() {
+        val str = "AB"
+        var result = with(str) {
+            print(this) // 接收者
+            print(it) // 传参
+            100 // 返回值
+        }
+        print(result)
+    }
+}
+```
+
+| 函数           | 接收者（this） | 传参（it）| 返回值（result）      |
+| ------------- |---------------|----------|---------------------|
+| run()         | this@Myclass  | 编译错误  | 作用域中的最后一个对象  |
+| with()        | "AA"          | 编译错误  | 作用域中的最后一个对象  |
+
+### 函数特点汇总
+
+| 函数           | 接收者（this）  | 传参（it）| 返回值（result）      |
+| ------------- |---------------|----------|---------------------|
+| T.run()       |   "AA"        | 编译错误  | 作用域中的最后一个对象  |
+| run()         | this@Myclass  | 编译错误  | 作用域中的最后一个对象  |
+| with()        | "AA"          | 编译错误  | 作用域中的最后一个对象  |
+| T.let()       | this@Myclass  |  "AA"    | 作用域中的最后一个对象  |
+| T.also()      | this@Myclass  |  "AA"    |   "AA" 对象（本身）   |
+| T.apply()     | "AA"          | 编译错误  |   "AA" 对象（本身）   |
 
 ## 函数选择
 
