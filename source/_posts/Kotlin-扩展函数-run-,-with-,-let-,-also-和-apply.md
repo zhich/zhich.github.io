@@ -42,7 +42,7 @@ fun runTest1() {
 }
 ```
 
-> run() 函数在 runTest1 函数中又提供了自己的作用域，并且 run() 函数中可以重新定义一个 name 变量，该变量只存在于 run() 函数中。
+> run() 函数在 runTest1 函数中又提供了自己的作用域，并且 run() 函数中可以重新定义一个 name 变量，该变量只存在于 run() 函数中。以下介绍的几个函数和 run() 函数同理，都是提供了自己的作用域。
 
 ```Java
 fun runTest2() {
@@ -58,7 +58,7 @@ fun runTest2() {
 }
 ```
 
-> **run 返回作用域中的最后一个对象**。
+> **run() 返回作用域中的最后一个对象**。
 
 ### T.run()
 
@@ -89,7 +89,7 @@ fun tRunTest() {
 }
 ```
 
-> T.run() 函数中通过 this 来获取 "ABCDEF" 对象，然后输出 length . **T.run() 返回作用域中的最后一个对象**。
+> T.run() 中通过 this 来获取 "ABCDEF" 对象，然后输出 length . **T.run() 返回作用域中的最后一个对象**。
 
 ### with()
 
@@ -235,7 +235,7 @@ class MyClass {
 
 | 函数           | 接收者（this）  | 传参（it）| 返回值（result）      |
 | ------------- |---------------|----------|---------------------|
-| T.run()       |   "AA"        | 编译错误  | 作用域中的最后一个对象  |
+| T.run()       |   "AA"        | 编译错误   | 作用域中的最后一个对象  |
 | T.let()       | this@Myclass  |  "AA"    | 作用域中的最后一个对象  |
 | T.also()      | this@Myclass  |  "AA"    |   "AA" 对象（本身）   |
 | T.apply()     | "AA"          | 编译错误  |   "AA" 对象（本身）   |
@@ -255,7 +255,7 @@ class MyClass {
     }
 
     fun withTest() {
-        val str = "AB"
+        val str = "AA"
         var result = with(str) {
             print(this) // 接收者
             print(it) // 传参
