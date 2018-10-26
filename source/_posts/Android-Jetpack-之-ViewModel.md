@@ -24,19 +24,112 @@ UI 控制器一般只负责显示和处理用户操作，加载数据库数据�
 
 ### ViewModel 使用
 
+比如，一个 ViewModelActivity 需要展示一个 User 的列表数据，那么可以定义一个 UserViewModel 来获取数据，然后传给 ViewModelActivity 来展示。
 
+```Kotlin
+class UserViewModel : ViewModel() {
 
+    private lateinit var users: MutableLiveData<List<User>>
 
+    fun getUsers(): LiveData<List<User>> {
+        if (!::users.isInitialized) {
+            users = MutableLiveData()
+            loadUsers()
+        }
+        return users
+    }
 
+    private fun loadUsers() {
+        // Do an asynchronous operation to fetch users .
+        Thread(Runnable {
+            Thread.sleep(3000)
+            // 由于在子线程发送值需要用 postValue , 否则用 setValue 就可以了。
+            users.postValue(listOf(User("1", "AA"), User("2", "BB")))
+        }).start()
+    }
+}
+```
 
+```Kotlin
+class ViewModelActivity : AppCompatActivity() {
 
+    private val TAG = "ViewModelActivity"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_view_model)
 
+        // 就算配置更改（如屏幕旋转）了，获取到的 userViewModel 对象还会是上一次的 UserViewModel 对象
+        val userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
 
+        // 这里的 this 需要用实现了 LifecycleOwner 的类的 this . 如 AppCompatActivity、FragmentActivity
+        userViewModel.getUsers().observe(this, Observer {
+            Log.e(TAG, it.toString())
+            // 打印结果：[User(id=1, name=AA), User(id=2, name=BB)]
+        })
+    }
+}
+```
 
+查看源码可知，ViewModelProviders.of(this) 获取了一个全新的 ViewModelProvider 对象，
 
+```Kotlin
+public static ViewModelProvider of(@NonNull FragmentActivity activity,
+            @Nullable Factory factory) {
+        Application application = checkApplication(activity);
+        if (factory == null) {
+            factory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);
+        }
+        return new ViewModelProvider(ViewModelStores.of(activity), factory);
+    }
+```
 
+ViewModelProvider 对象调用 get() 方法获取到我们需要的 ViewModel 对象。追踪一下 get() 方法可以知道，ViewModel 对象是存储在一个 ViewModelStore 类的对象中的，该类里面使用 HashMap 来保存和获取 ViewModel . 
 
+```Kotlin
+ViewModel viewModel = mViewModelStore.get(key);
+```
 
+获取 ViewModel 使用的 key 相对具体的 ViewModel 类是不会变化的，因此从 ViewModelStore 中取出的 ViewModel 对象也不会变。包括在配置更改后也可以获取到之前的 ViewModel .
 
+当宿主 Activity 调用了 finish() 方法，系统会调用 ViewModel 对象的 onCleared() 方法来让它清理掉资源，到这里之后 ViewModel 才会被释放掉。
+
+> ViewModel 里面不要引用 View、或者任何持有 Activity 类的 context , 否则会引发内存泄漏问题。
+
+当 ViewModel 需要 Application 类的 context 来获取资源、查找系统服务等，可以继承 **AndroidViewModel **类。 
+
+```Kotlin
+class MyAndroidViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val app
+        get() = getApplication<Application>()
+
+    fun getStatus(code: Int): String {
+        return when (code) {
+            1 -> app.resources.getString(R.string.be_late) // 迟到
+            2 -> app.resources.getString(R.string.leave_early) // 早退
+            else -> app.resources.getString(R.string.absenteeism) // 旷工
+        }
+    }
+}
+```
+
+```Kotlin
+val myAndroidViewModel = ViewModelProviders.of(this).get(MyAndroidViewModel::class.java)
+Log.e(TAG, myAndroidViewModel.getStatus(2))
+// 打印结果：早退
+```
+
+### ViewModel 的生命周期
+
+ViewModel 会一直保留在内存中，直到 Activity / Fragment 在以下情况下才会销毁：
+
+- 宿主 Activity 被 finish 后调用 onDestroy 方法。
+- 宿主 Fragment 被 detached 后调用 onDetach 方法。
+
+下图展示了一个 Activity 经历了旋转然后调用 finish 的各种生命周期状态，同时展示了关联了该 Activity 的 ViewModel 的生命周期。（UI 控制器是 Fragment 的情况也类似。）
+
+![Mou icon](http://pcckwdbix.bkt.clouddn.com/viewmodel-lifecycle.png)
+
+### Fragment 之间共享数据
 
