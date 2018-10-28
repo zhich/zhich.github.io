@@ -16,15 +16,15 @@ tags:
 
 在 Android 中，ViewModel 的作用就是在 **UI 控制器**（ 如 Activity、Fragment）的生命周期中保存和管理 UI 相关的数据。ViewModel 保存的数据在配置更改（如屏幕旋转）后会依然存在，不会丢失。
 
-如屏幕旋转的时候，Activity 会重建，为了不让数据丢失，我们通常的做法是在 `onSaveInstanceState()` 方法中通过 bundle 保存数据，然后在 `onCreate()` 或 `onRestoreInstanceState()` 方法中取出 bundle 数据来恢复。然而，这种方式是有一定的局限性的，它只适用于**可序列化然后反序列化**的少量数据，对于 Bitmap 等比较大的数据就不适用了。
+在屏幕旋转的时候，Activity 会重建，为了不让数据丢失，我们通常的做法是在 `onSaveInstanceState()` 方法中通过 bundle 保存数据，然后在 `onCreate()` 或 `onRestoreInstanceState()` 方法中取出 bundle 来恢复数据。然而，这种方式有一定的局限性，它只适用于**可序列化然后反序列化**的少量数据，对于 Bitmap 等比较大的数据就不适用了。
 
 另一方面，UI 控制器通常需要做一些耗时的异步调用操作，并且需要去管理这些调用。UI 控制器需要确保系统在销毁后去清理掉这些异步调用，以避免潜在的内存泄漏，这种管理方式需要大量的维护工作。而且，在配置更改后重建对象是很浪费资源的，因为该对象可能必须重新发出之前已经发出过的调用。
 
 UI 控制器一般只负责显示和处理用户操作，加载数据库数据或网络数据的工作应该委托给其它类，这样会让测试工作更加容易地进行。因此，**将视图数据相关操作从 UI 控制器逻辑中分离出来是很有必要。**
 
-### ViewModel 使用
+### ViewModel使用
 
-比如，一个 ViewModelActivity 需要展示一个 User 的列表数据，那么可以定义一个 UserViewModel 来获取数据，然后传给 ViewModelActivity 来展示。
+比如，一个 ViewModelActivity 需要展示一个 User 的列表数据，那么可以定义一个 UserViewModel 来获取数据，然后在 ViewModelActivity 中创建一个 UserViewModel 对象来获取到 User 的列表数据。
 
 ```Kotlin
 class UserViewModel : ViewModel() {
@@ -43,7 +43,7 @@ class UserViewModel : ViewModel() {
         // Do an asynchronous operation to fetch users .
         Thread(Runnable {
             Thread.sleep(3000)
-            // 由于在子线程发送值需要用 postValue , 否则用 setValue 就可以了。
+            // 在子线程发送值用 postValue , 否则用 setValue .
             users.postValue(listOf(User("1", "AA"), User("2", "BB")))
         }).start()
     }
@@ -120,7 +120,7 @@ Log.e(TAG, myAndroidViewModel.getStatus(2))
 // 打印结果：早退
 ```
 
-### ViewModel 的生命周期
+### ViewModel的生命周期
 
 ViewModel 会一直保留在内存中，直到 Activity / Fragment 在以下情况下才会销毁：
 
@@ -131,5 +131,81 @@ ViewModel 会一直保留在内存中，直到 Activity / Fragment 在以下情�
 
 ![Mou icon](http://pcckwdbix.bkt.clouddn.com/viewmodel-lifecycle.png)
 
-### Fragment 之间共享数据
+### Fragment之间共享数据
 
+假设我们有这样的需求：在一个 MasterFragment 中有一个 User 列表，点击列表项后将点中的 User 对象传递给 DetailFragment 用于展示详细的 User 信息。
+
+我们一般的做法是：在两个 Fragment 中定义一些通信接口，并且宿主 Activity 需要把它们绑定起来，这样做相当繁琐。并且两个 Fragment 还需要处理另外的 Fragment 尚未创建或者可见的场景。
+
+为了避免以上繁琐的做法，我们可以通过两个 Fragment 之间共享一个 ViewModel 的方式来实现数据通信。
+
+```Kotlin
+class SharedViewModel : ViewModel() {
+
+    val selected = MutableLiveData<User>()
+
+    fun select(user: User) {
+        selected.value = user
+    }
+}
+```
+
+```Kotlin
+class MasterFragment : Fragment() {
+
+    private val dataList = listOf(User("1", "张三"), User("2", "李四"), User("3", "王五"))
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_master, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var model = activity?.run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+
+        lvMaster.adapter = ArrayAdapter<User>(
+                activity,
+                android.R.layout.simple_expandable_list_item_1,
+                dataList)
+
+        lvMaster.setOnItemClickListener { _, _, position, _ ->
+            model.select(dataList[position])
+        }
+    }
+}
+```
+
+```Kotlin
+class DetailFragment : Fragment() {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var model: SharedViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+        
+        model.selected.observe(this, Observer<User> { item ->
+            tvDetail.setText("${item?.id} : ${item?.name}")
+        })
+    }
+}
+```
+
+> 需要特别注意，两个 Fragment 都需要使用它们的宿主 Activty 的 this 来获取 ViewModelProviders ， 这样才确保它们获取到的是同一个 ViewModel 对象。
+
+这种数据通信的方式有以下几个好处：
+
+- 宿主 Activity 不需要做任何的事情，也完全不知道 Fragment 之间的通信；
+- 一个 Fragment 不需要知道另一个 Fragment 中除了 ViewModel 契约之外的其它事情，哪怕另一个 Fragment 消失了，它也继续保持正常工作；
+- 每个 Fragment 都有自己的生命周期，它们之间互不影响，哪怕某一个 Fragment 被其它 Fragment 替换了，UI 还是会继续工作，没有任何问题。
+
+
+[文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
