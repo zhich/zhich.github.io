@@ -23,7 +23,7 @@ tags:
 
 UI 控制器一般只负责显示和处理用户操作，加载数据库数据或网络数据的工作应该委托给其它类，这样会让测试工作更加容易地进行。因此，**将视图数据相关操作从 UI 控制器逻辑中分离出来是很有必要。**
 
-### ViewModel使用
+### ViewModel 使用
 
 比如，一个 ViewModelActivity 需要展示一个 User 的列表数据，那么可以定义一个 UserViewModel 来获取数据，然后在 ViewModelActivity 中创建一个 UserViewModel 对象来获取到 User 的列表数据。
 
@@ -121,7 +121,7 @@ Log.e(TAG, myAndroidViewModel.getStatus(2))
 // 打印结果：早退
 ```
 
-### ViewModel的生命周期
+### ViewModel 的生命周期
 
 ViewModel 会一直保留在内存中，直到 Activity / Fragment 在以下情况下才会销毁：
 
@@ -132,7 +132,7 @@ ViewModel 会一直保留在内存中，直到 Activity / Fragment 在以下情�
 
 ![Mou icon](http://pcckwdbix.bkt.clouddn.com/viewmodel-lifecycle.png)
 
-### Fragment之间共享数据
+### Fragment 之间共享数据
 
 假设我们有这样的需求：在一个 MasterFragment 中有一个 User 列表，点击列表项后将点中的 User 对象传递给 DetailFragment 用于展示详细的 User 信息。
 

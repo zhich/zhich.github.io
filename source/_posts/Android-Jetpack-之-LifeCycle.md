@@ -19,7 +19,7 @@ tags:
 
 LifeCycle 是一个类，它持有 Activity / Fragment 生命周期状态的信息，并允许其它对象观察此状态。
 
-### Lifecycle使用
+### Lifecycle 使用
 
 场景：让 MVP 中的 Presenter 观察 Activity 的 onCreate 和 onDestroy 状态。
 
@@ -51,12 +51,12 @@ class MyPresenter : IPresenter {
     }
 
     override fun onLifecycleChanged(owner: LifecycleOwner, event: Lifecycle.Event) {
-        Log.e(javaClass.simpleName, "onLifecycleChanged")
+//        Log.e(javaClass.simpleName, "onLifecycleChanged")
     }
 }
 ```
 
-- 在 Activity 中添加 Observer
+- 在 Activity 中添加 LifecycleObserver
 
 ```Kotlin
 class MyLifeCycleActivity : AppCompatActivity() {
@@ -80,7 +80,77 @@ class MyLifeCycleActivity : AppCompatActivity() {
 }
 ```
 
+启动 Activity 会打印：
 
+```Kotlin
+MyLifeCycleActivity: onCreate
+MyPresenter: onCreate
+```
 
+finish Activity 会打印：
+
+```Kotlin
+MyPresenter: onDestroy
+MyLifeCycleActivity: onDestroy
+```
+
+以上 Presenter 对象只观察了 Activity 的 onCreate 方法和 onDestroy 方法，我们还可以观察其它的生命周期方法。在 LifeCycle 类内部有个枚举类 Event , 它包含了 LifecycleObserver 能够观察到的所有生命周期方法，只需要添加上相应的注解即可。
+
+```Kotlin
+enum class Event {
+    /**
+     * Constant for onCreate event of the [LifecycleOwner].
+     */
+    ON_CREATE,
+    /**
+     * Constant for onStart event of the [LifecycleOwner].
+     */
+    ON_START,
+    /**
+     * Constant for onResume event of the [LifecycleOwner].
+     */
+    ON_RESUME,
+    /**
+     * Constant for onPause event of the [LifecycleOwner].
+     */
+    ON_PAUSE,
+    /**
+     * Constant for onStop event of the [LifecycleOwner].
+     */
+    ON_STOP,
+    /**
+     * Constant for onDestroy event of the [LifecycleOwner].
+     */
+    ON_DESTROY,
+    /**
+     * An [Event] constant that can be used to match all events.
+     */
+    ON_ANY
+}
+```
+
+> ON_ANY 注解能观察到其它所有的生命周期方法。
+
+### 一些重要类的概念
+
+- **LifecycleObserver 接口**
+
+  `Lifecycle 观察者`。实现了该接口的类，被 LifeCycleOwner 类的 addObserver 方法注册后，通过注解的方式即可观察到 LifeCycleOwner 的生命周期方法。
+
+- **LifeCycleOwner 接口**
+
+  `Lifecycle 持有者`。实现了该接口的类持有生命周期（Lifecycle 对象），该接口生命周期（Lifecycle 对象）的改变会被其注册的观察者 LifecycleObserver 观察到并触发其对应的事件。
+
+- **Lifecycle 类**
+
+  `生命周期`。和 LifecycleOwner 不同，LifecycleOwner 通过 getLifecycle() 方法获取到内部的 Lifecycle 对象。
+
+- **State**
+  
+  `当前生命周期所处状态`。
+
+- **Event**
+
+  `当前生命周期改变对应的事件`。当 Lifecycle 发生改变，如进入 onCreate , 会自动发出 ON_CREATE 事件。
 
 [文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
