@@ -15,9 +15,9 @@ tags:
 
 ### 前言
 
-在日常的开发中，我们通常需要在 Activity / Fragment 的生命周期方法中进行一些繁重的操作，这样使代码看起来十分臃肿。LifeCycle 的引入主要是用来管理和响应 Activity / Fragment 的生命周期的变化，帮助我们编写出更易于组织且通常更加轻量级的代码，让代码变得更易于维护。
+在日常的开发中，我们通常需要在 Activity / Fragment 的生命周期方法中进行一些繁重的操作，这样使代码看起来十分臃肿。Lifecycle 的引入主要是用来管理和响应 Activity / Fragment 的生命周期的变化，帮助我们编写出更易于组织且通常更加轻量级的代码，让代码变得更易于维护。
 
-LifeCycle 是一个类，它持有 Activity / Fragment 生命周期状态的信息，并允许其它对象观察此状态。
+Lifecycle 是一个类，它持有 Activity / Fragment 生命周期状态的信息，并允许其它对象观察此状态。
 
 ### Lifecycle 使用
 
@@ -34,7 +34,7 @@ interface IPresenter : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy(owner: LifecycleOwner)
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+    @OnLifecycleEvent(Lifecycle.Event.ON_ANY) // ON_ANY 注解能观察到其它所有的生命周期方法
     fun onLifecycleChanged(owner: LifecycleOwner, event: Lifecycle.Event)
 }
 ```
@@ -59,7 +59,7 @@ class MyPresenter : IPresenter {
 - 在 Activity 中添加 LifecycleObserver
 
 ```Kotlin
-class MyLifeCycleActivity : AppCompatActivity() {
+class MyLifecycleActivity : AppCompatActivity() {
 
     private lateinit var myPresenter: MyPresenter
 
@@ -83,7 +83,7 @@ class MyLifeCycleActivity : AppCompatActivity() {
 启动 Activity 会打印：
 
 ```Kotlin
-MyLifeCycleActivity: onCreate
+MyLifecycleActivity: onCreate
 MyPresenter: onCreate
 ```
 
@@ -91,7 +91,7 @@ finish Activity 会打印：
 
 ```Kotlin
 MyPresenter: onDestroy
-MyLifeCycleActivity: onDestroy
+MyLifecycleActivity: onDestroy
 ```
 
 以上 Presenter 对象只观察了 Activity 的 onCreate 方法和 onDestroy 方法，我们还可以观察其它的生命周期方法。在 LifeCycle 类内部有个枚举类 Event , 它包含了 LifecycleObserver 能够观察到的所有生命周期方法，只需要添加上相应的注解即可。
@@ -129,28 +129,101 @@ enum class Event {
 }
 ```
 
-> ON_ANY 注解能观察到其它所有的生命周期方法。
+在一般开发中，当 Activity 拥有多个 Presenter 并需要在各个生命周期做一些特殊逻辑时，代码可能是：
 
-### 一些重要类的概念
+```Kotlin
+override fun onStop() {
+    presenter1.onStop()
+    presenter2.onStop()
+    presenter3.onStop()
+    super.onStop()
+}
+
+override fun onDestroy() {
+    presenter1.onDestroy()
+    presenter2.onDestroy()
+    presenter3.onDestroy()
+    super.onDestroy()
+}
+```
+
+这样会使 Activity 的逻辑变得相当复杂。
+
+如果用 LifeCycle , 只需将持有 LifeCycle 对象的 Activity 的生命周期的响应分发到各个 LifecycleObserver 观察者中即可。
+
+```Kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_my_lifecycle)
+    
+    lifecycle.addObserver(presenter1) // 添加 LifecycleObserver
+    lifecycle.addObserver(presenter2) // 添加 LifecycleObserver
+    lifecycle.addObserver(presenter3) // 添加 LifecycleObserver
+}
+```
+
+### 基本原理
+
+**几个概念**
 
 - **LifecycleObserver 接口**
 
-  `Lifecycle 观察者`。实现了该接口的类，被 LifeCycleOwner 类的 addObserver 方法注册后，通过注解的方式即可观察到 LifeCycleOwner 的生命周期方法。
+  Lifecycle 观察者。实现了该接口的类，被 LifecycleOwner 类的 addObserver 方法注册后，通过注解的方式即可观察到 LifecycleOwner 的生命周期方法。
 
-- **LifeCycleOwner 接口**
+- **LifecycleOwner 接口**
 
-  `Lifecycle 持有者`。实现了该接口的类持有生命周期（Lifecycle 对象），该接口生命周期（Lifecycle 对象）的改变会被其注册的观察者 LifecycleObserver 观察到并触发其对应的事件。
+  Lifecycle 持有者。实现了该接口的类持有生命周期（Lifecycle 对象），该接口生命周期（Lifecycle 对象）的改变会被其注册的观察者 LifecycleObserver 观察到并触发其对应的事件。
 
 - **Lifecycle 类**
 
-  `生命周期`。和 LifecycleOwner 不同，LifecycleOwner 通过 getLifecycle() 方法获取到内部的 Lifecycle 对象。
+  生命周期。和 LifecycleOwner 不同，LifecycleOwner 通过 getLifecycle() 方法获取到内部的 Lifecycle 对象。
 
 - **State**
   
-  `当前生命周期所处状态`。
+  当前生命周期所处状态。Lifecycle 将 Activity 的生命周期函数对应成 State .
 
 - **Event**
 
-  `当前生命周期改变对应的事件`。当 Lifecycle 发生改变，如进入 onCreate , 会自动发出 ON_CREATE 事件。
+  当前生命周期改变对应的事件。State 变化将触发 Event 事件，从而被已注册的 LifecycleObserver 接收。
+
+**实现原理**
+
+- AppCompatActivity（LifecycleOwner）
+
+  AppCompatActivity 的父类 `SupportActivity` 和 `Fragment` 一样，实现了 LifecycleOwner 接口，因此它们都拥有 Lifecycle 对象。
+
+```Java
+public class SupportActivity extends Activity implements LifecycleOwner, Component {
+   
+    // ... 
+   
+    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+
+    public Lifecycle getLifecycle() {
+        return this.mLifecycleRegistry;
+    }
+    
+    // ...
+}
+```
+
+```Java
+public interface LifecycleOwner {
+    /**
+     * Returns the Lifecycle of the provider.
+     *
+     * @return The lifecycle of the provider.
+     */
+    @NonNull
+    Lifecycle getLifecycle();
+}
+```
+
+从源码可知 getLifecycle() 方法返回的是 `LifecycleRegistry` 对象，而 LifecycleRegistry 是 Lifecycle 的子类，所有对LifecycleObserver 的操作都是由 LifecycleRegistry 完成的。
+
+- LifecycleRegistry
+
+  生命周期登记处。
+
 
 [文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
