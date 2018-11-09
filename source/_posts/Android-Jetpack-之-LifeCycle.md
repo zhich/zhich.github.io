@@ -94,7 +94,7 @@ MyPresenter: onDestroy
 MyLifecycleActivity: onDestroy
 ```
 
-以上 Presenter 对象只观察了 Activity 的 onCreate 方法和 onDestroy 方法，我们还可以观察其它的生命周期方法。在 LifeCycle 类内部有个枚举类 Event , 它包含了 LifecycleObserver 能够观察到的所有生命周期方法，只需要添加上相应的注解即可。
+以上 Presenter 对象只观察了 Activity 的 onCreate 方法和 onDestroy 方法，我们还可以观察其它的生命周期方法。在 Lifecycle 内部有个枚举类 Event , 它包含了 LifecycleObserver 能够观察到的所有生命周期方法，只需要添加上相应的注解即可。
 
 ```Kotlin
 enum class Event {
@@ -129,6 +129,62 @@ enum class Event {
 }
 ```
 
+同时 Lifecycle 内部还有代表了各个**生命周期所处状态**的枚举类 State
+
+```Kotlin
+enum class State {
+    /**
+     * Destroyed state for a LifecycleOwner. After this event, this Lifecycle will not dispatch
+     * any more events. For instance, for an [android.app.Activity], this state is reached
+     * **right before** Activity's [onDestroy][android.app.Activity.onDestroy] call.
+     */
+    DESTROYED,
+
+    /**
+     * Initialized state for a LifecycleOwner. For an [android.app.Activity], this is
+     * the state when it is constructed but has not received
+     * [onCreate][android.app.Activity.onCreate] yet.
+     */
+    INITIALIZED,
+
+    /**
+     * Created state for a LifecycleOwner. For an [android.app.Activity], this state
+     * is reached in two cases:
+     *
+     *  * after [onCreate][android.app.Activity.onCreate] call;
+     *  * **right before** [onStop][android.app.Activity.onStop] call.
+     *
+     */
+    CREATED,
+
+    /**
+     * Started state for a LifecycleOwner. For an [android.app.Activity], this state
+     * is reached in two cases:
+     *
+     *  * after [onStart][android.app.Activity.onStart] call;
+     *  * **right before** [onPause][android.app.Activity.onPause] call.
+     *
+     */
+    STARTED,
+
+    /**
+     * Resumed state for a LifecycleOwner. For an [android.app.Activity], this state
+     * is reached after [onResume][android.app.Activity.onResume] is called.
+     */
+    RESUMED;
+
+    /**
+     * Compares if this State is greater or equal to the given `state`.
+     *
+     * @param state State to compare with
+     * @return true if this State is greater or equal to the given `state`
+     */
+    fun isAtLeast(state: State): Boolean {
+        return compareTo(state) >= 0
+    }
+}
+```
+
 在一般开发中，当 Activity 拥有多个 Presenter 并需要在各个生命周期做一些特殊逻辑时，代码可能是：
 
 ```Kotlin
@@ -147,9 +203,9 @@ override fun onDestroy() {
 }
 ```
 
-这样会使 Activity 的逻辑变得相当复杂。
+这样会使 Activity 的代码变得很臃肿。
 
-如果用 LifeCycle , 只需将持有 LifeCycle 对象的 Activity 的生命周期的响应分发到各个 LifecycleObserver 观察者中即可。
+如果用 Lifecycle , 只需将持有 Lifecycle 对象的 Activity 的生命周期的响应分发到各个 LifecycleObserver 观察者中即可。
 
 ```Kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -223,7 +279,27 @@ public interface LifecycleOwner {
 
 - LifecycleRegistry
 
-  生命周期登记处。
+  生命周期登记处。作为 Lifecycle 的子类，它的作用是添加观察者、响应生命周期事件和分发生命周期事件。
+
+```Java
+public class LifecycleRegistry extends Lifecycle {
+
+    // LifecycleObserver Map , 每一个 Observer 都有一个 State
+    private FastSafeIterableMap<LifecycleObserver, ObserverWithState> mObserverMap =
+            new FastSafeIterableMap<>();
+
+    // 当前的状态
+    private State mState;
+
+    // Lifecycle 持有者，如继承了 LifecycleOwner 的 SupportActivity
+    private final WeakReference<LifecycleOwner> mLifecycleOwner;
+
+    public LifecycleRegistry(@NonNull LifecycleOwner provider) {
+        mLifecycleOwner = new WeakReference<>(provider);
+        mState = INITIALIZED;
+    }
+}
+```
 
 
 [文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
