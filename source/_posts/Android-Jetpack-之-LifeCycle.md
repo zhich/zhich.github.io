@@ -129,21 +129,22 @@ enum class Event {
 }
 ```
 
-同时 Lifecycle 内部还有代表了各个**生命周期所处状态**的枚举类 State
+Lifecycle 内部还有代表了各个**生命周期所处状态**的枚举类 State
 
 ```Kotlin
 enum class State {
+
     /**
      * Destroyed state for a LifecycleOwner. After this event, this Lifecycle will not dispatch
      * any more events. For instance, for an [android.app.Activity], this state is reached
-     * **right before** Activity's [onDestroy][android.app.Activity.onDestroy] call.
+     * before Activity's [onDestroy] call.
      */
     DESTROYED,
 
     /**
      * Initialized state for a LifecycleOwner. For an [android.app.Activity], this is
      * the state when it is constructed but has not received
-     * [onCreate][android.app.Activity.onCreate] yet.
+     * [onCreate] yet.
      */
     INITIALIZED,
 
@@ -151,9 +152,8 @@ enum class State {
      * Created state for a LifecycleOwner. For an [android.app.Activity], this state
      * is reached in two cases:
      *
-     *  * after [onCreate][android.app.Activity.onCreate] call;
-     *  * **right before** [onStop][android.app.Activity.onStop] call.
-     *
+     * after [onCreate] call;
+     * before [onStop] call.
      */
     CREATED,
 
@@ -161,15 +161,14 @@ enum class State {
      * Started state for a LifecycleOwner. For an [android.app.Activity], this state
      * is reached in two cases:
      *
-     *  * after [onStart][android.app.Activity.onStart] call;
-     *  * **right before** [onPause][android.app.Activity.onPause] call.
-     *
+     * after [onStart] call;
+     * before [onPause] call.
      */
     STARTED,
 
     /**
      * Resumed state for a LifecycleOwner. For an [android.app.Activity], this state
-     * is reached after [onResume][android.app.Activity.onResume] is called.
+     * is reached after [onResume] is called.
      */
     RESUMED;
 
@@ -298,8 +297,230 @@ public class LifecycleRegistry extends Lifecycle {
         mLifecycleOwner = new WeakReference<>(provider);
         mState = INITIALIZED;
     }
+
+   /**
+    * 添加 LifecycleObserver 观察者，并将之前的状态分发给这个 Observer , 例如我们在 onResume 之后注册这个 Observer , 
+    * 该 Observer 依然能收到 ON_CREATE 事件
+    */
+    @Override
+    public void addObserver(@NonNull LifecycleObserver observer) {
+        // ...
+        // 例如：Observer 初始状态是 INITIALIZED , 当前状态是 RESUMED , 需要将 INITIALIZED 到 RESUMED 之间的
+        // 所有事件分发给 Observer
+        while ((statefulObserver.mState.compareTo(targetState) < 0
+                && mObserverMap.contains(observer))) {
+            pushParentState(statefulObserver.mState);
+            statefulObserver.dispatchEvent(lifecycleOwner, upEvent(statefulObserver.mState));
+            popParentState();
+            // mState / subling may have been changed recalculate
+            targetState = calculateTargetState(observer);
+        }
+        // ...
+    }
+
+    /**
+     * 处理生命周期事件
+     */
+    public void handleLifecycleEvent(@NonNull Lifecycle.Event event) {
+        State next = getStateAfter(event);
+        moveToState(next);
+    }
+
+    /**
+     * 改变状态
+     */
+    private void moveToState(State next) {
+        if (mState == next) {
+            return;
+        }
+        mState = next;
+        // ...
+        sync();
+        // ...
+    }
+
+    /**
+     * 同步 Observer 状态，并分发事件
+     */
+    private void sync() {
+        LifecycleOwner lifecycleOwner = mLifecycleOwner.get();
+        if (lifecycleOwner == null) {
+            Log.w(LOG_TAG, "LifecycleOwner is garbage collected, you shouldn't try dispatch "
+                    + "new events from it.");
+            return;
+        }
+        while (!isSynced()) {
+            mNewEventOccurred = false;
+            // State中，状态值是从 DESTROYED - INITIALIZED - CREATED - STARTED - RESUMED 增大
+            // 如果当前状态值 < Observer 状态值，需要通知 Observer 减小状态值，直到等于当前状态值
+            if (mState.compareTo(mObserverMap.eldest().getValue().mState) < 0) {
+                backwardPass(lifecycleOwner);
+            }
+            Entry<LifecycleObserver, ObserverWithState> newest = mObserverMap.newest();
+            // 如果当前状态值 > Observer 状态值，需要通知 Observer 增大状态值，直到等于当前状态值
+            if (!mNewEventOccurred && newest != null
+                    && mState.compareTo(newest.getValue().mState) > 0) {
+                forwardPass(lifecycleOwner);
+            }
+        }
+        mNewEventOccurred = false;
+    }
+
+    /**
+     * 向前传递事件。
+     * 增加 Observer 的状态值，直到状态值等于当前状态值
+     */
+    private void forwardPass(LifecycleOwner lifecycleOwner) {
+        Iterator<Entry<LifecycleObserver, ObserverWithState>> ascendingIterator =
+                mObserverMap.iteratorWithAdditions();
+        while (ascendingIterator.hasNext() && !mNewEventOccurred) {
+            Entry<LifecycleObserver, ObserverWithState> entry = ascendingIterator.next();
+            ObserverWithState observer = entry.getValue();
+            while ((observer.mState.compareTo(mState) < 0 && !mNewEventOccurred
+                    && mObserverMap.contains(entry.getKey()))) {
+                pushParentState(observer.mState);
+                // 分发状态改变事件
+                observer.dispatchEvent(lifecycleOwner, upEvent(observer.mState));
+                popParentState();
+            }
+        }
+    }
+
+    /**
+     * 向后传递事件。
+     * 减小 Observer 的状态值，直到状态值等于当前状态值
+     */
+    private void backwardPass(LifecycleOwner lifecycleOwner) {
+        Iterator<Entry<LifecycleObserver, ObserverWithState>> descendingIterator =
+                mObserverMap.descendingIterator();
+        while (descendingIterator.hasNext() && !mNewEventOccurred) {
+            Entry<LifecycleObserver, ObserverWithState> entry = descendingIterator.next();
+            ObserverWithState observer = entry.getValue();
+            while ((observer.mState.compareTo(mState) > 0 && !mNewEventOccurred
+                    && mObserverMap.contains(entry.getKey()))) {
+                Event event = downEvent(observer.mState);
+                pushParentState(getStateAfter(event));
+                observer.dispatchEvent(lifecycleOwner, event);
+                popParentState();
+            }
+        }
+    }
 }
 ```
+根据上面的分析，我们知道 LifecycleRegistry 才是真正替 Lifecycle 去埋头干粗活的类！
+
+接下来继续来看看实现了 LifecycleOwner 接口的 SupportActivity 类是如何将事件分发给 LifecycleRegistry 的。
+
+```Java
+public class SupportActivity extends Activity implements LifecycleOwner, Component {
+
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ReportFragment.injectIfNeededIn(this);
+    }
+}
+```
+
+注意到 SupportActivity 的 onCreate() 方法里面有行 `ReportFragment.injectIfNeededIn(this)` 代码，再进入 ReportFragment 类分析。
+
+- ReportFragment
+
+```Java
+public class ReportFragment extends Fragment {
+
+    public static void injectIfNeededIn(Activity activity) {
+        android.app.FragmentManager manager = activity.getFragmentManager();
+        if (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == null) {
+            manager.beginTransaction().add(new ReportFragment(), REPORT_FRAGMENT_TAG).commit();
+            manager.executePendingTransactions();
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        dispatchCreate(mProcessListener);
+        dispatch(Lifecycle.Event.ON_CREATE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        dispatchStart(mProcessListener);
+        dispatch(Lifecycle.Event.ON_START);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dispatchResume(mProcessListener);
+        dispatch(Lifecycle.Event.ON_RESUME);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dispatch(Lifecycle.Event.ON_PAUSE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        dispatch(Lifecycle.Event.ON_STOP);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dispatch(Lifecycle.Event.ON_DESTROY);
+        // just want to be sure that we won't leak reference to an activity
+        mProcessListener = null;
+    }
+
+    /**
+     * 分发事件
+     */
+    private void dispatch(Lifecycle.Event event) {
+        Activity activity = getActivity();
+        if (activity instanceof LifecycleRegistryOwner) {
+            ((LifecycleRegistryOwner) activity).getLifecycle().handleLifecycleEvent(event);
+            return;
+        }
+
+        if (activity instanceof LifecycleOwner) {
+            Lifecycle lifecycle = ((LifecycleOwner) activity).getLifecycle();
+            if (lifecycle instanceof LifecycleRegistry) {
+                ((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);
+            }
+        }
+    }
+}
+```
+
+不难看出这是一个没有 UI 的后台 Fragment , 一般可以为 Activity 提供一些后台行为。在 ReportFragment 的各个生命周期中都调用了 LifecycleRegistry.handleLifecycleEvent() 方法来分发生命周期事件。
+
+**为什么不直接在 SupportActivity 的生命周期函数中给 Lifecycle 分发生命周期事件，而是要加一个 Fragment 呢？**
+
+在 ReportFragment 的 injectIfNeededIn() 方法中找到答案：
+
+```Java
+public static void injectIfNeededIn(Activity activity) {
+    // ProcessLifecycleOwner should always correctly work and some activities may not extend
+    // FragmentActivity from support lib, so we use framework fragments for activities
+    android.app.FragmentManager manager = activity.getFragmentManager();
+    if (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == null) {
+        manager.beginTransaction().add(new ReportFragment(), REPORT_FRAGMENT_TAG).commit();
+        // Hopefully, we are the first to make a transaction.
+        manager.executePendingTransactions();
+    }
+}
+```
+
+有两个原因：为了能让 ProcessLifecycleOwner 正确地工作；②、并非所有的 Activity 都是继承来自 support 包的 FragmentActivity 类的。因此封装一个同样具有生命周期的后台 Fragment 来给 Lifecycle 分发生命周期事件。
+
+**另一方面，假如我们的 Activity 没有继承自 SupportActivity , 那我们如何分发生命周期事件呢？**
+
+鼠标停在 ReportFragment 类，同时按下 `Ctrl + Shift + Alt + F7` 在 Project and Libraries 的范围下搜索 ReportFragment 被引用的地方。我们发现还有 LifecycleDispatcher 和 ProcessLifecycleOwner 两个类有使用到 ReportFragment .
 
 
 [文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
