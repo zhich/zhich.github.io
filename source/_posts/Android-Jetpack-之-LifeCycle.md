@@ -23,6 +23,8 @@ Lifecycle 是一个类，它持有 Activity / Fragment 生命周期状态的信�
 
 场景：让 MVP 中的 Presenter 观察 Activity 的 onCreate 和 onDestroy 状态。
 
+[添加相关依赖](https://developer.android.com/topic/libraries/architecture/adding-components)
+
 - Presenter 继承 LifecycleObserver 接口
 
 ```Kotlin
@@ -243,7 +245,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 **实现原理**
 
-- AppCompatActivity（LifecycleOwner）
+#### LifecycleOwner
 
   AppCompatActivity 的父类 `SupportActivity` 和 `Fragment` 一样，实现了 LifecycleOwner 接口，因此它们都拥有 Lifecycle 对象。
 
@@ -276,7 +278,7 @@ public interface LifecycleOwner {
 
 从源码可知 getLifecycle() 方法返回的是 `LifecycleRegistry` 对象，而 LifecycleRegistry 是 Lifecycle 的子类，所有对LifecycleObserver 的操作都是由 LifecycleRegistry 完成的。
 
-- LifecycleRegistry
+#### LifecycleRegistry
 
   生命周期登记处。作为 Lifecycle 的子类，它的作用是添加观察者、响应生命周期事件和分发生命周期事件。
 
@@ -423,7 +425,7 @@ public class SupportActivity extends Activity implements LifecycleOwner, Compone
 
 注意到 SupportActivity 的 onCreate() 方法里面有行 `ReportFragment.injectIfNeededIn(this)` 代码，再进入 ReportFragment 类分析。
 
-- ReportFragment
+#### ReportFragment
 
 ```Java
 public class ReportFragment extends Fragment {
@@ -522,5 +524,101 @@ public static void injectIfNeededIn(Activity activity) {
 
 鼠标停在 ReportFragment 类，同时按下 `Ctrl + Shift + Alt + F7` 在 Project and Libraries 的范围下搜索 ReportFragment 被引用的地方。我们发现还有 LifecycleDispatcher 和 ProcessLifecycleOwner 两个类有使用到 ReportFragment .
 
+#### LifecycleDispatcher
+
+生命周期分发者。当我们的 Activity 没有继承自 SupportActivity 时，我们可以在我们的 Activity 中使用 
+LifecycleDispatcher 来分发生命周期事件。
+
+```Java
+class LifecycleDispatcher {
+
+    // ...
+
+    static void init(Context context) {
+        if (sInitialized.getAndSet(true)) {
+            return;
+        }
+        ((Application) context.getApplicationContext())
+                .registerActivityLifecycleCallbacks(new DispatcherActivityCallback());
+    }
+
+    // 通过注册 Application.registerActivityLifecycleCallbacks 来获取 Activity 的生命周期回调
+    static class DispatcherActivityCallback extends EmptyActivityLifecycleCallbacks {
+        private final FragmentCallback mFragmentCallback;
+
+        DispatcherActivityCallback() {
+            mFragmentCallback = new FragmentCallback();
+        }
+
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            if (activity instanceof FragmentActivity) {
+                ((FragmentActivity) activity).getSupportFragmentManager()
+                        .registerFragmentLifecycleCallbacks(mFragmentCallback, true);
+            }
+            // 给每个 Activity 添加 ReportFragment
+            ReportFragment.injectIfNeededIn(activity);
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+            if (activity instanceof FragmentActivity) {
+                markState((FragmentActivity) activity, CREATED);
+            }
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            if (activity instanceof FragmentActivity) {
+                markState((FragmentActivity) activity, CREATED);
+            }
+        }
+    }
+
+    /**
+     * 通过递归形式给所有子 Fragment 设置 State
+     */
+    private static void markState(FragmentManager manager, State state) {
+        Collection<Fragment> fragments = manager.getFragments();
+        if (fragments == null) {
+            return;
+        }
+        for (Fragment fragment : fragments) {
+            if (fragment == null) {
+                continue;
+            }
+            markStateIn(fragment, state);
+            if (fragment.isAdded()) {
+                // 递归
+                markState(fragment.getChildFragmentManager(), state);
+            }
+        }
+    }
+
+    private static void markStateIn(Object object, State state) {
+        if (object instanceof LifecycleRegistryOwner) {
+            LifecycleRegistry registry = ((LifecycleRegistryOwner) object).getLifecycle();
+            registry.markState(state);
+        }
+    }
+
+    /**
+     * 将某 Activity 及其所有子 Fragment 的 State 设置为某状态 
+     */
+    private static void markState(FragmentActivity activity, State state) {
+        markStateIn(activity, state);
+        markState(activity.getSupportFragmentManager(), state);
+    }
+
+    // ...
+}
+```
+
+从源码可知，LifecycleDispatcher 是通过注册 Application.registerActivityLifecycleCallbacks 来监听 Activity 的生命周期回调的。
+
+- 在 onActivityCreated 中添加 ReportFragment , 将 Activity 的生命周期交给 ReportFragment 去分发给 LifecycleRegistry ;
+- 在 onActivityStopped() 以及 onActivitySaveInstanceState() 中，将 Activity 及其所有子 Fragment 的 State 置为 CREATED .
+
+#### ProcessLifecycleOwner 
 
 [文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
