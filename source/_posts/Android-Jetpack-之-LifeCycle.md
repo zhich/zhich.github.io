@@ -21,9 +21,9 @@ Lifecycle 是一个类，它持有 Activity / Fragment 生命周期状态的信�
 
 ### Lifecycle 使用
 
-场景：让 MVP 中的 Presenter 观察 Activity 的 onCreate 和 onDestroy 状态。
-
 [添加相关依赖](https://developer.android.com/topic/libraries/architecture/adding-components)
+
+场景：让 MVP 中的 Presenter 观察 Activity 的 onCreate 和 onDestroy 状态。
 
 - Presenter 继承 LifecycleObserver 接口
 
@@ -520,14 +520,13 @@ public static void injectIfNeededIn(Activity activity) {
 
 有两个原因：为了能让 ProcessLifecycleOwner 正确地工作；②、并非所有的 Activity 都是继承来自 support 包的 FragmentActivity 类的。因此封装一个同样具有生命周期的后台 Fragment 来给 Lifecycle 分发生命周期事件。
 
-**另一方面，假如我们的 Activity 没有继承自 SupportActivity , 那我们如何分发生命周期事件呢？**
+**另一方面，假如我们不继承自 SupportActivity , 那 Lifecycle 是如何通过 ReportFragment 分发生命周期事件呢？**
 
 鼠标停在 ReportFragment 类，同时按下 `Ctrl + Shift + Alt + F7` 在 Project and Libraries 的范围下搜索 ReportFragment 被引用的地方。我们发现还有 LifecycleDispatcher 和 ProcessLifecycleOwner 两个类有使用到 ReportFragment .
 
 #### LifecycleDispatcher
 
-生命周期分发者。当我们的 Activity 没有继承自 SupportActivity 时，我们可以在我们的 Activity 中使用 
-LifecycleDispatcher 来分发生命周期事件。
+生命周期分发者。
 
 ```Java
 class LifecycleDispatcher {
@@ -619,6 +618,143 @@ class LifecycleDispatcher {
 - 在 onActivityCreated 中添加 ReportFragment , 将 Activity 的生命周期交给 ReportFragment 去分发给 LifecycleRegistry ;
 - 在 onActivityStopped() 以及 onActivitySaveInstanceState() 中，将 Activity 及其所有子 Fragment 的 State 置为 CREATED .
 
-#### ProcessLifecycleOwner 
+#### ProcessLifecycleOwner
+
+为整个 App 进程提供生命周期的类。
+
+```Java
+public class ProcessLifecycleOwner implements LifecycleOwner {
+
+    static final long TIMEOUT_MS = 700; //mls
+
+    // ...
+
+    static void init(Context context) {
+        sInstance.attach(context);
+    }
+
+    private ActivityInitializationListener mInitializationListener =
+            new ActivityInitializationListener() {
+                @Override
+                public void onCreate() {
+                }
+
+                @Override
+                public void onStart() {
+                    activityStarted();
+                }
+
+                @Override
+                public void onResume() {
+                    activityResumed();
+                }
+            };
+
+    void activityStarted() {
+        mStartedCounter++;
+        if (mStartedCounter == 1 && mStopSent) {
+            mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
+            mStopSent = false;
+        }
+    }
+
+    void activityResumed() {
+        mResumedCounter++;
+        if (mResumedCounter == 1) {
+            if (mPauseSent) {
+                mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
+                mPauseSent = false;
+            } else {
+                mHandler.removeCallbacks(mDelayedPauseRunnable);
+            }
+        }
+    }
+
+    void activityPaused() {
+        mResumedCounter--;
+        if (mResumedCounter == 0) {
+            mHandler.postDelayed(mDelayedPauseRunnable, TIMEOUT_MS);
+        }
+    }
+
+    void activityStopped() {
+        mStartedCounter--;
+        dispatchStopIfNeeded();
+    }
+
+    void attach(Context context) {
+        mHandler = new Handler();
+        mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+        Application app = (Application) context.getApplicationContext();
+        app.registerActivityLifecycleCallbacks(new EmptyActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                ReportFragment.get(activity).setProcessListener(mInitializationListener);
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                activityPaused();
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                activityStopped();
+            }
+        });
+    }
+}
+```
+
+从源码可知：
+
+- ProcessLifecycleOwner 是用来监听 Application 生命周期的，它只会分发一次 ON_CREATE 事件，并不会分发 ON_DESTROY 事件；
+- ProcessLifecycleOwner 在 Activity 的 onResume 中调用 Handle.postDelayed() , 在 onPause 中调用了 mHandler.removeCallbacks(mDelayedPauseRunnable) , 是为了处理 Activity 重建时比如横竖屏幕切换时，不会发送事件；
+- ProcessLifecycleOwner 一般用来判断应用是在前台还是后台，但由于使用了 Handle.postDelayed() , TIMEOUT_MS = 700，因此这个判断不是即时的，有 700ms 的延迟；
+- ProcessLifecycleOwner 与 LifecycleDispatcher 一样，都是通过注册 Application.registerActivityLifecycleCallbacks 来监听 Activity 的生命周期回调，来给每个 Activity 添加 ReportFragment 的。
+
+最后，通过点击 init() 方法，我们发现 LifecycleDispatcher 和 ProcessLifecycleOwner 都是在 ProcessLifecycleOwnerInitializer 类下完成初始化的，而 ProcessLifecycleOwnerInitializer 是一个 ContentProvider .
+
+```Java
+public class ProcessLifecycleOwnerInitializer extends ContentProvider {
+    
+    @Override
+    public boolean onCreate() {
+        LifecycleDispatcher.init(getContext());
+        ProcessLifecycleOwner.init(getContext());
+        return true;
+    }
+
+    // ...
+}
+```
+
+Lifecycle 会自动在我们的 AndroidManifest.xml 中添加以下代码用于初始化 ProcessLifecycleOwner 与 LifecycleDispatcher , 这样就不需要我们在 Application 中写代码来初始化了。
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  // ...
+  <provider
+    android:name="android.arch.lifecycle.ProcessLifecycleOwnerInitializer"
+    android:authorities="me.baron.achitecturelearning.lifecycle-trojan"
+    android:exported="false"
+    android:multiprocess="true" />
+</manifest>
+```
+
+### Lifecycle 的最佳实践
+
+- 保持 Activity / Fragment 尽可能的精简，它们不应该试图去获取它们所需的数据，要用 ViewModel 来获取，并观察 LiveData 对象将数据变化反映到视图中；
+- 尝试编写数据驱动（data-driven）的 UI , 即 UI 控制器的责任是在数据改变时更新视图或者将用户的操作通知给 ViewModel ;
+- 将数据逻辑放到 ViewModel 类中，ViewModel 应该作为 UI 控制器和应用程序其它部分的连接服务。注意：不是由 ViewModel 负责获取数据（例如：从网络获取）。相反，ViewModel 调用相应的组件获取数据，然后将数据获取结果提供给 UI 控制器；
+- 使用 Data Binding 来保持视图和 UI 控制器之间的接口干净。这样可以让视图更具声明性，并且尽可能减少在 Activity 和 Fragment 中编写更新代码。如果你喜欢在 Java 中执行该操作，请使用像 Butter Knife 这样的库来避免使用样板代码并进行更好的抽象化；
+- 如果 UI 很复杂，可以考虑创建一个 Presenter 类来处理 UI 的修改。虽然通常这样做不是必要的，但可能会让 UI 更容易测试；
+- 不要在 ViewModel 中引用 View 或者 Activity 的 context . 因为如果 ViewModel 存活的比 Activity 时间长（在配置更改的情况下），Activity 将会被泄漏并且无法被正确的回收。
 
 [文中 Demo GitHub 地址](https://github.com/zhich/AndroidJetpackDemo)
+
+参考资料：
+
+- [Android-Lifecycle超能解析-生命周期的那些事儿](https://segmentfault.com/a/1190000016443108#articleHeader9)
+- [Android官方架构组件:Lifecycle详解&原理分析](https://blog.csdn.net/mq2553299/article/details/79029657)
+- [Android Developers](https://developer.android.com/topic/libraries/architecture/lifecycle)
