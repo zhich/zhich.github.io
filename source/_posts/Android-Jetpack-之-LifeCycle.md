@@ -1,6 +1,6 @@
 ---
 title: Android Jetpack 之 Lifecycle
-date: 2018-11 6 21:15:00
+date: 2018-11-6 21:15:00
 categories: "Android"
 tags:
      - Android

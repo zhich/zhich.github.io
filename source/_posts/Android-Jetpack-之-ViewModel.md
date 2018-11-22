@@ -1,6 +1,6 @@
 ---
 title: Android Jetpack 之 ViewModel
-date: 2018-10 27 8:38:00
+date: 2018-10-27 8:38:00
 categories: "Android"
 tags:
      - Android
