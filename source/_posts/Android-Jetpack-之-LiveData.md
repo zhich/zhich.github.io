@@ -21,11 +21,16 @@ tags:
 
 ### 使用
 
+LiveData 有两种使用方式，结合 ViewModel 使用以及直接继承 LiveData 类。
 
+**结合 ViewModel 使用**
+
+以下代码场景：点击按钮提示一个名字。
 
 ```Kotlin
 class MyViewModel : ViewModel() {
 
+    // 创建一个 String 类型的 LiveData
     private lateinit var name: MutableLiveData<String>
 
     fun getName(): MutableLiveData<String> {
@@ -46,14 +51,21 @@ class LiveDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_data)
 
+        // 创建并注册观察者
         myViewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
         myViewModel.getName().observe(this, Observer {
+            // LiveData 数据更新回调，it 代表被观察对象的数据，此处为 name
             Toast.makeText(baseContext, it, Toast.LENGTH_SHORT).show()
         })
 
         btnSetName.setOnClickListener {
+            // 使用 setValue 更新 LiveData 数据
             myViewModel.getName().value = "张三"
         }
     }
 }
 ```
+
+> 让数据（name）和组件（LiveDataActivity）分离，当 Activity 重建时，数据（name）不会丢失。
+
+**直接继承 LiveData 类**
