@@ -69,3 +69,90 @@ class LiveDataActivity : AppCompatActivity() {
 > 让数据（name）和组件（LiveDataActivity）分离，当 Activity 重建时，数据（name）不会丢失。
 
 **直接继承 LiveData 类**
+
+以下代码场景：在 Activity 中监听 Wifi 信号强度。
+
+```Kotlin
+class WifiLiveData private constructor(context: Context) : LiveData<Int>() {
+
+    private var mContext: WeakReference<Context> = WeakReference(context)
+
+    companion object {
+
+        private var instance: WifiLiveData? = null
+
+        fun getInstance(context: Context): WifiLiveData {
+            if (instance == null) {
+                instance = WifiLiveData(context)
+            }
+            return instance!!
+        }
+    }
+
+    override fun onActive() {
+        super.onActive()
+        registerReceiver()
+    }
+
+    override fun onInactive() {
+        super.onInactive()
+        unregisterReceiver()
+    }
+
+    /**
+     * 注册广播，监听 Wifi 信号强度
+     */
+    private fun registerReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(WifiManager.RSSI_CHANGED_ACTION)
+        mContext.get()!!.registerReceiver(mReceiver, intentFilter)
+    }
+
+    /**
+     * 注销广播
+     */
+    private fun unregisterReceiver() {
+        mContext.get()!!.unregisterReceiver(mReceiver)
+    }
+
+    private val mReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent) {
+            when (intent.action) {
+                WifiManager.RSSI_CHANGED_ACTION -> getWifiLevel()
+            }
+        }
+    }
+
+    private fun getWifiLevel() {
+        val wifiManager = mContext.get()!!.applicationContext.getSystemService(android.content.Context.WIFI_SERVICE) as WifiManager
+        val wifiInfo = wifiManager.connectionInfo
+        val level = wifiInfo.rssi
+
+        instance!!.value = level // 发送 Wifi 的信号强度给观察者
+    }
+}
+```
+
+```Kotlin
+class LiveDataActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_live_data)
+
+        withExtendsLiveDataTest()
+    }
+
+    /**
+     * 直接继承 LiveData 类
+     */
+    private fun withExtendsLiveDataTest() {
+        WifiLiveData.getInstance(this).observe(this, Observer {
+            Log.e("LiveDataActivity", it.toString()) // 打印 Wifi 信号强度
+        })
+    }
+}
+```
+
+> 当 Activity 处于激活状态（onActive）时注册广播，处于非激活状态时注销广播（onInactive）。
