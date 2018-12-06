@@ -212,7 +212,13 @@ public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer
 }
 ```
 
-从上面的代码可知，observe() 方法最终是会调用 **LifecycleOwner.getLifecycle().addObserver(LifecycleObserver)** ，因此 LiveData 是能够感知观察者的生命周期变化的。
+从上面的代码可知，observe() 方法最终是会调用：
+
+```Java
+LifecycleOwner.getLifecycle().addObserver(LifecycleObserver)
+```
+
+因此 LiveData 是能够感知观察者的生命周期变化的。
 
 #### 感知生命周期变化
 
