@@ -288,6 +288,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2018/06/23/Java-一个方法返回多个整型值/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="明年今日">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/kobe.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明年今日">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/23/Java-一个方法返回多个整型值/" itemprop="url">Java 一个方法返回多个整型值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-23T12:51:00+08:00">
+                2018-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/二进制/" itemprop="url" rel="index">
+                    <span itemprop="name">二进制</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/23/Java-一个方法返回多个整型值/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/06/23/Java-一个方法返回多个整型值/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/06/23/Java-一个方法返回多个整型值/" class="leancloud_visitors" data-flag-title="Java 一个方法返回多个整型值">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  362
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Android 开发中会经常用到 RecyclerView , 当 RecyclerView 的 item 类型有多种时，我们需要重写 getItemViewType 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>getItemViewType 方法指定返回一个 int 值，如果我们需要返回多个值怎么办？</p>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>当我们做 IM 的聊天消息展示时，可能会有 state 代表消息状态（接收的已读消息、接收的未读消息、发送成功的消息、发送失败的消息），type 代表消息类型（文字、图片、视频、音频）。此时，我们可能需要 getItemViewType 返回 state 和 type 两个值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> state = mMessageList.get(i).state;</span><br><span class="line">    <span class="keyword">int</span> type = mMessageList.get(i).type;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>一个 int 类型有 32 位，我们用左边的高 16 位存储 state 的值，用右边的低 16 位存储 type 的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> state = mMessageList.get(i).state;</span><br><span class="line">    <span class="keyword">int</span> type = mMessageList.get(i).type;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> result = (state &amp; <span class="number">0x7fff</span>) &lt;&lt; <span class="number">16</span>;</span><br><span class="line">    result |= (type &amp; <span class="number">0x7fff</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 onCreateViewHolder 中通过 viewType 解析出 state 和 type .</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> AbstractChatHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">     ViewHolder viewHolder;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">int</span> type = viewType &amp; <span class="number">0x7fff</span>;</span><br><span class="line">     <span class="keyword">int</span> state = (viewType &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0x7fff</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 根据 state 和 type 创建各种 ViewHolder ......</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">// 省略其它代码 ......</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> viewHolder;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li>state 和 type 的取值范围都是 [0,32767]，即最小值为 0，最大值为 32767（十六进制的 0x7fff），因为它们实际各占 15 位</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2018/06/02/Java-子类和父类相关成员执行顺序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2396,204 +2590,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2017/12/06/Chrome-插件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="明年今日">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/kobe.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="明年今日">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/06/Chrome-插件/" itemprop="url">Chrome 插件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-06T00:00:00+08:00">
-                2017-12-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/06/Chrome-插件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/12/06/Chrome-插件/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/12/06/Chrome-插件/" class="leancloud_visitors" data-flag-title="Chrome 插件">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,359
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Insight-io-for-Github"><a href="#Insight-io-for-Github" class="headerlink" title="Insight.io for Github"></a><a href="https://chrome.google.com/webstore/detail/insightio-for-github/pmhfgjjhhomfplgmbalncpcohgeijonh?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Insight.io for Github</a></h3><p>GitHub 代码浏览插件。提供的功能有：跳到定义处、查找引用、目录树结构、基于符号的代码搜索、跳转到 Insight.io 里面。</p>
-<h3 id="Octotree"><a href="#Octotree" class="headerlink" title="Octotree"></a><a href="https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Octotree</a></h3><p>可以在 GitHub 和 GitLab 左侧显示目录树结构。</p>
-<h3 id="GitCodeTree"><a href="#GitCodeTree" class="headerlink" title="GitCodeTree"></a><a href="https://chrome.google.com/webstore/detail/gitcodetree/inaaldjpdbkaodlmdcplgpoibohcmmlj?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">GitCodeTree</a></h3><p>基于 octotree 的<a href="http://gitee.com" target="_blank" rel="noopener">码云</a>文件树插件。</p>
-<h3 id="jsonView-jsonViewer-json-formatter-格式化"><a href="#jsonView-jsonViewer-json-formatter-格式化" class="headerlink" title="jsonView jsonViewer json formatter 格式化"></a><a href="https://chrome.google.com/webstore/detail/jsonview-jsonviewer-json/hdmbdioamgdkppmocchpkjhbpfmpjiei?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">jsonView jsonViewer json formatter 格式化</a></h3><p>格式化、着色、美观、易读 … jsonView 处理了其他该类插件中文字符的 bug , 支持 json 和 jsonp 格式。</p>
-<h3 id="Adblock"><a href="#Adblock" class="headerlink" title="Adblock"></a><a href="https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom" target="_blank" rel="noopener">Adblock</a></h3><p>号称最受欢迎的 Chrome 扩展，拥有超过 4000 万用户！屏蔽整个互联网上的广告。</p>
-<h3 id="广告终结者"><a href="#广告终结者" class="headerlink" title="广告终结者"></a>广告终结者</h3><p>清除网页上的所有广告：浮动广告，购物广告，恶意弹窗，跟踪代码，视频广告。让你浏览网页更快更清爽。</p>
-<h3 id="Axure-RP-Extension-for-Chrome"><a href="#Axure-RP-Extension-for-Chrome" class="headerlink" title="Axure RP Extension for Chrome"></a><a href="https://chrome.google.com/webstore/detail/axure-rp-extension-for-ch/dogkpdfcklifaemcdfbildhcofnopogp" target="_blank" rel="noopener">Axure RP Extension for Chrome</a></h3><p>原型设计工具。</p>
-<h3 id="Google文档、表格及幻灯片的Office编辑扩展程序"><a href="#Google文档、表格及幻灯片的Office编辑扩展程序" class="headerlink" title="Google文档、表格及幻灯片的Office编辑扩展程序"></a><a href="https://chrome.google.com/webstore/detail/office-editing-for-docs-s/gbkeegbaiigmenfmjfclcdgdpimamgkj?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Google文档、表格及幻灯片的Office编辑扩展程序</a></h3><p>使用 Google 文档、表格和幻灯片来查看和编辑 Microsoft Word、Excel 和 PowerPoint 文件。</p>
-<h3 id="Clear-Cache"><a href="#Clear-Cache" class="headerlink" title="Clear Cache"></a><a href="https://chrome.google.com/webstore/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Clear Cache</a></h3><p>Clear your cache and browsing data with a single click of a button .</p>
-<h3 id="Convertio-文件格式转换不再是问题"><a href="#Convertio-文件格式转换不再是问题" class="headerlink" title="Convertio : 文件格式转换不再是问题"></a><a href="https://chrome.google.com/webstore/detail/convertio/eppjkefeiehhflmgkhdooajgbkkegpcl?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Convertio : 文件格式转换不再是问题</a></h3><p>Convertio , 一个在线解决格式转换的插件，支持超过 2500 种不同的格式转换（归档转换器 、音频转换器、文档转换器、PDF 工具、电子书转换器、演示文稿转换器 、OCR 工具等等），史上最全的格式转换小助手了！无论是音频，文档还是视频，它都能方便快捷的转换到你想要的格式，非常齐全！</p>
-<h3 id="Infinity-自定义新标签页，极速访问页面"><a href="#Infinity-自定义新标签页，极速访问页面" class="headerlink" title="Infinity : 自定义新标签页，极速访问页面"></a><a href="https://chrome.google.com/webstore/detail/infinity-new-tab-producti/dbfmnekepjoapopniengjbcpnbljalfg?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Infinity : 自定义新标签页，极速访问页面</a></h3><p>使用该插件可以自定义 Chrome 的新标签页来实现快速拨号、邮件提醒、天气预报、笔记功能、待办事项、壁纸、历史记录管理等功能。同时还可以在右上角的 “＋” 可以看到各种设置选项，根据自己的喜好来添加或者删除标签页上的项目，也可更改壁纸和搜索栏。偶尔浏览到感兴趣的页面时，看到一个不错的话题，你也可以添加到 infinity 新标签页。相比其他浏览器的标签页功能，它确实功能更丰富，操作更方便。</p>
-<h3 id="OneTab-一键收纳N个标签页，还你一个清爽的浏览器"><a href="#OneTab-一键收纳N个标签页，还你一个清爽的浏览器" class="headerlink" title="OneTab : 一键收纳N个标签页，还你一个清爽的浏览器"></a><a href="https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">OneTab : 一键收纳N个标签页，还你一个清爽的浏览器</a></h3><p>一次打开太多网页，来回切换容易乱，并且出现电脑卡顿，轻拓展 OneTab 可以派上用场了! 点击扩展栏的 OneTab 图标，它能够将当前窗口所有标签集合为一个标签。不仅让你浏览器瞬间整洁无暇，还能节省 95% 的内存。当你想要恢复浏览某个页面的时候，在列表中点击一个链接，即可重新打开。你也可以通过快捷键 <code>alt + shift + 1</code> 来快速打开。最后，OneTab 还能检查是否有重复链接，并且不会重复添加链接。这种小贴士，一般人我可不告诉她。</p>
-<h3 id="Kami-PDF-阅读、批注、OCR"><a href="#Kami-PDF-阅读、批注、OCR" class="headerlink" title="Kami : PDF 阅读、批注、OCR"></a><a href="https://chrome.google.com/webstore/detail/kami-extension-pdf-and-do/ecnphlgnajanjnkcmbpancdjoidceilk?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Kami : PDF 阅读、批注、OCR</a></h3><p>PDF 软件那么多，为什么要用 Kami ? 因为它轻巧好用，还免费！首先，它支持 PDF (pdf) , 文件（DOX），PowerPoint(PPTX) , 常见的图像文件（jpg，jpeg，png，gif），使用 Kami 工具，您可以在 PDF、文档或图像文件上批注、标记和协作。在浏览器中查看文件、与他人共享文件、高亮文本、添加文本、下划线文本、添加评论、实时协作、徒手画、OCR 字符识别 扫描版 PDF 文件（检测扫描文件上的文本）、离线支持。这些操作都免费！PDF 软件有的它都有，既生瑜何生亮呀！</p>
-<h3 id="Save-to-Pocket-一键保存任何内容，以供离线查看"><a href="#Save-to-Pocket-一键保存任何内容，以供离线查看" class="headerlink" title="Save to Pocket : 一键保存任何内容，以供离线查看"></a><a href="https://chrome.google.com/webstore/detail/save-to-pocket/niloccemoadcdkdjlinkgdfekeahmflj?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Save to Pocket : 一键保存任何内容，以供离线查看</a></h3><p>Pocket - 口袋，顾名思义，它将任何内容(文章、视频、微博等等）可汇聚到一个地方，以便在任何设备上随时查看。最重要的是！可以离线查看！当你发现感兴趣的内容却没有时间看完或者想先收藏再细细品味时，如果你直接关闭了网页，下次可能找不到了。这时候一款可以“临时”保存当前正在阅读的文章或者视频的工具派上用场，你可以将它放入 Pocket , 方便你在手机或者电脑端随时查看。</p>
-<h3 id="Fireshot-网页截图和另存为-PDF"><a href="#Fireshot-网页截图和另存为-PDF" class="headerlink" title="Fireshot : 网页截图和另存为 PDF"></a><a href="https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Fireshot : 网页截图和另存为 PDF</a></h3><p>很多用户经常有这个问题：“这个网页很重要，我想整页打印出来怎么办？”，“我如何将整个网页另存为图片？” 诸如此类问题的答案就是一款免费的 Fireshot 插件。 它可以对网页中整个屏幕或者是网页的部分视图进行截图操作，在截图之后用户还可以对当前截图的图片进行编辑，包括添加注释，添加线条等操作。除开截图，它还能打印、另存为 PDF 等功能，小巧实用！</p>
-<h3 id="Dark-Reader-护眼扩展程序"><a href="#Dark-Reader-护眼扩展程序" class="headerlink" title="Dark Reader - 护眼扩展程序"></a><a href="https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Dark Reader - 护眼扩展程序</a></h3><p>黑色主题，适用于任何网站。关爱眼睛，就使用 Dark Reader 进行夜间和日间浏览。这是一个护眼扩展程序，通过实时生成黑色主题，为每一个网站启用夜间模式。Dark Reader 反转明亮的颜色，使其网页内容具有高对比度并且在易于夜间阅读。您可以调整亮度，对比度，应用棕褐色滤镜，黑暗模式，设置字体和忽略的网站列表。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2648,7 +2644,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2723,7 +2719,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2737,7 +2733,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.6k</span>
+    <span title="Site words total count">30.3k</span>
   
 </div>
 
