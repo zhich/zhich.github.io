@@ -76,3 +76,42 @@ Pocket - 口袋，顾名思义，它将任何内容(文章、视频、微博等�
 
 黑色主题，适用于任何网站。关爱眼睛，就使用 Dark Reader 进行夜间和日间浏览。这是一个护眼扩展程序，通过实时生成黑色主题，为每一个网站启用夜间模式。Dark Reader 反转明亮的颜色，使其网页内容具有高对比度并且在易于夜间阅读。您可以调整亮度，对比度，应用棕褐色滤镜，黑暗模式，设置字体和忽略的网站列表。
 
+### [LastPass：密码管理软件](https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd)
+LastPass，全球知名在线密码管理工具之一，采用军事级加密算法，支持自动填充网站用户名和密码，与朋友分享登录信息等实用功能，且在全平台同步免费，无需订阅 Premium，即可在手机、网页、电脑端同步你的所有 LastPass 信息。
+
+### [二维码（QR 码）生成器](https://chrome.google.com/webstore/detail/%E4%BA%8C%E7%BB%B4%E7%A0%81qr%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8qr-code-generato/pflgjjogbmmcmfhfcnlohagkablhbpmg)
+
+在线的二维码生成器。可以把当前的网页直接生成二维码，进行编辑，还可以把文字生成二维码，这个很重要！
+
+### [下载+](https://chrome.google.com/webstore/detail/download-plus/gokgophibdidjjpildcdbfpmcahilaaf)
+Chrome 的下载管理在二级菜单里，进去很不方便，装了这个插件就可以直接看和管理，很好用。
+
+### [快捷扩展管理](https://chrome.google.com/webstore/detail/one-click-extensions-mana/pbgjpgbpljobkekbhnnmlikbbfhbhmem?utm_source=chrome-ntp-icon)
+Chrome 其实很占内存，尤其当插件装多了以后会卡顿，有了这个以后，可以一键管理所有扩展，快速激活、禁用插件。
+
+### [购物党](https://chrome.google.com/webstore/detail/%E8%B4%AD%E7%89%A9%E5%85%9A%E8%87%AA%E5%8A%A8%E6%AF%94%E4%BB%B7%E5%B7%A5%E5%85%B7/jgphnjokjhjlcnnajmfjlacjnjkhleah)
+在线的比价工具，网购的时候可以看价格历史记录，以及各大网站的价格对比，也有查快递的快捷方式。
+
+### [右键搜](https://chrome.google.com/webstore/detail/context-menus/phlfmkfpmphogkomddckmggcfpmfchpn)
+Chrome 默认的搜索是谷歌搜索，没有翻墙的童鞋可能用起来不方便，但有这个这个就不用担心了。
+
+### [Cloudbleed Bookmark Checker：检测书签是否有死链](https://chrome.google.com/webstore/detail/cloudbleed-bookmark-check/egoobjhmbpflgogbgbihhdeibdfnedii?utm_campaign=en)
+对于书签收藏的狂魔同志，收藏夹里的网页肯定有很多都无法访问了吧！这款扩展就是来检测书签是否有死链的，因为不怎么常用，所以才三颗星。
+
+### [Imagus](https://chrome.google.com/webstore/detail/imagus/immpkjjlgappgfkkfieppnmlhakdmaab?utm_source=chrome-app-launcher-info-dialog)
+鼠标指针悬停在链接或缩略图上时直接在当前页面的弹出视图上显示这些图片、HTML5 视频/音频和内容专辑。
+
+### [WhatRuns](https://chrome.google.com/webstore/detail/whatruns/cmkdbmfndkfgebldhnkbfhlneefdaaip)
+WhatRuns 是一款用于了解网站技术的 Chrome 网站技术分析工具，主要能通过分析网站页面所使用的框架、代码等技术以及页面所使用的样式等方面，让使用者能直观的了解网站的整体技术信息。在安装了这款插件后，使用者可以通过点击 WhatRuns 图标来打开插件窗口，通过该窗口使用者可以轻松了解网站的技术信息。
+
+### [Reader View：Chrome 也有 Safari 的阅读模式](https://chrome.google.com/webstore/detail/reader-view/iibolhpkjjmoepndefdmdlmbpfhlgjpl)
+将网页转换成 Safari 阅读模式的样式，让你更方便舒适的阅读网页文字，当你访问文章网页的时候，扩展程序的按钮会显示在地址栏末端，点击就能轻松享受更好的阅读模式。
+
+### [为什么你们就是不能加个空格呢](https://chrome.google.com/webstore/detail/%E7%82%BA%E4%BB%80%E9%BA%BC%E4%BD%A0%E5%80%91%E5%B0%B1%E6%98%AF%E4%B8%8D%E8%83%BD%E5%8A%A0%E5%80%8B%E7%A9%BA%E6%A0%BC%E5%91%A2%EF%BC%9F/paphcfdffjnbcgkokihcdjliihicmbpd)
+每次看到文章中的英文、数字、中文写在一起，你知道我的内心是什么样吗？
+你们能不能在它们之间加个空格呢？！不过自从装上了「为什么你们就是不能加个空格呢？」，插件会自动把网页中所有中文、英文、数字、符号之间插入一个空格，从此告别此痛苦，又能和大家好好玩耍啦。
+
+### [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
+相信开发者朋友一定知道这款插件，这是一款强大的 API & HTTP 请求调试工具，它不仅可以调试简单的 HTML、CSS 以及脚本等简单的网页基本信息，这款 Chrome 插件甚至还能发送几乎所有的 HTTP 请求，可谓是 Web 开发者的一大利器。
+
+
