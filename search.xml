@@ -32,8 +32,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Jetpack</tag>
         <tag>LiveData</tag>
+        <tag>Jetpack</tag>
       </tags>
   </entry>
   <entry>
@@ -58,8 +58,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>ViewModel</tag>
         <tag>Jetpack</tag>
+        <tag>ViewModel</tag>
       </tags>
   </entry>
   <entry>
