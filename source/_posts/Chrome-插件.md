@@ -114,4 +114,5 @@ WhatRuns 是一款用于了解网站技术的 Chrome 网站技术分析工具，
 ### [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
 相信开发者朋友一定知道这款插件，这是一款强大的 API & HTTP 请求调试工具，它不仅可以调试简单的 HTML、CSS 以及脚本等简单的网页基本信息，这款 Chrome 插件甚至还能发送几乎所有的 HTTP 请求，可谓是 Web 开发者的一大利器。
 
-
+### [Picee（基于 Github API 的图床）](https://chrome.google.com/webstore/detail/picee/nmeeieecbmdnilkkaliknhkkakonobbc/related)
+具体介绍可以参考[基于 Github API 的图床 Chrome 插件开发全纪录](https://juejin.im/post/5cd38990e51d453a543f9e3e)
