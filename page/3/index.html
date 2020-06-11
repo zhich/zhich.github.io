@@ -288,6 +288,465 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2018/01/09/Android-代码优化小提示/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="明年今日">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明年今日">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/09/Android-代码优化小提示/" itemprop="url">Android 代码优化小提示</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T22:35:29+08:00">
+                2018-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/09/Android-代码优化小提示/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/09/Android-代码优化小提示/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/01/09/Android-代码优化小提示/" class="leancloud_visitors" data-flag-title="Android 代码优化小提示">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,089
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="代码逻辑相关"><a href="#代码逻辑相关" class="headerlink" title="代码逻辑相关"></a>代码逻辑相关</h2><h3 id="遍历一个List集合"><a href="#遍历一个List集合" class="headerlink" title="遍历一个List集合"></a>遍历一个List集合</h3><p>bad:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; userList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; userList.size(); i++) &#123;</span><br><span class="line">    User user = <span class="keyword">new</span> User();</span><br><span class="line">   	 <span class="comment">//省略 n 行代码...</span></span><br><span class="line">    userList.add(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>better:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; userList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">User user = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, size = userList.size(); i &lt; size; i++) &#123;</span><br><span class="line">    user = <span class="keyword">new</span> User();</span><br><span class="line">    <span class="comment">//省略 n 行代码...</span></span><br><span class="line">    userList.add(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>①、第二种方式把 userList.size() 用变量 size 存值避免了每次迭代都去调用该方法（不要在 for 循环的第二个表达式的判 断调用对象的方法或字段）；②、把 user 变量的声明放到循环外边，避免每次使用都去声明一下 User 对象。 ③、getCount() 方法的处理也类似，如用 int count = xxx.getCount() 缓存起来。</p>
+</blockquote>
+<h3 id="遍历HashMap的最佳方法"><a href="#遍历HashMap的最佳方法" class="headerlink" title="遍历HashMap的最佳方法"></a>遍历HashMap的最佳方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, User&gt; userMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">Iterator it = userMap.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">    Map.Entry entry = (Map.Entry) it.next();</span><br><span class="line">    System.out.println(entry.getKey() + <span class="string">" = "</span> + entry.getValue());</span><br><span class="line">    <span class="comment">//迭代器方法遍历过程中可以通过 it.remove(); 删除当前遍历的元素</span></span><br><span class="line">    it.remove(); <span class="comment">// 避免抛 ConcurrentModificationException 异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="判断字符串str是否为null或空串"><a href="#判断字符串str是否为null或空串" class="headerlink" title="判断字符串str是否为null或空串"></a>判断字符串str是否为null或空串</h4><p>bad:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">null</span> == str || <span class="string">""</span>.equals(str)) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>better:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (TextUtils.isEmpty(str)) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>TextUtils 是一个非常好用的工具类，把 List 转成字符串，逗号分隔；逗号分隔的 String 字符串，切割成 List ，分别可以    用 TextUtils 的 join 和 split 方法。</p>
+</blockquote>
+<h3 id="容易报空指针的情况"><a href="#容易报空指针的情况" class="headerlink" title="容易报空指针的情况"></a>容易报空指针的情况</h3><h4 id="判断一个字符串的内容是否为某值"><a href="#判断一个字符串的内容是否为某值" class="headerlink" title="判断一个字符串的内容是否为某值"></a>判断一个字符串的内容是否为某值</h4><p>bad:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (str.equals(<span class="string">"hello"</span>)) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>better:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 避免空指针异常，应该把常量写在前面</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">"hello"</span>.equals(str)) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="判断集合某个元素对象的某个字段是否为空"><a href="#判断集合某个元素对象的某个字段是否为空" class="headerlink" title="判断集合某个元素对象的某个字段是否为空"></a>判断集合某个元素对象的某个字段是否为空</h4><p>bad:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果元素对象为 null 这里就挂了吧</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">null</span> != userList.get(i).name) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>better:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用对象的方法或字段时，考虑下对象本身是否可能为 null</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">null</span> != userList.get(i) &amp;&amp; <span class="keyword">null</span> != userList.get(i).name) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="常用资源释放"><a href="#常用资源释放" class="headerlink" title="常用资源释放"></a>常用资源释放</h3><h4 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    cursor = context.getContentResolver().query(Uri.parse(PROVIDER_SETTINGFILE), <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">    <span class="comment">//省略 n 行代码...</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(cursor != <span class="keyword">null</span>)&#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">            cursor.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="流文件"><a href="#流文件" class="headerlink" title="流文件"></a>流文件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        FileReader fr = <span class="keyword">null</span>;</span><br><span class="line">        FileWriter fw = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fr = <span class="keyword">new</span> FileReader(<span class="string">"origin.txt"</span>);</span><br><span class="line">            fw = <span class="keyword">new</span> FileWriter(<span class="string">"destination.txt"</span>);</span><br><span class="line">            <span class="keyword">char</span>[] buf = <span class="keyword">new</span> <span class="keyword">char</span>[BUFFER_SIZE];</span><br><span class="line">            <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> ((len = fr.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                fw.write(buf, <span class="number">0</span>, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"读写失败"</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (fw != <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fw.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            <span class="keyword">if</span> (fr != <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fr.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="WebView"><a href="#WebView" class="headerlink" title="WebView"></a>WebView</h4><ul>
+<li>首先就是使用自己封装的 WebView , 不在 xml 里面声明，而是直接代码 new 个对象，传入 application context 防止 activity 引用滥用。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">webView =  <span class="keyword">new</span> BridgeWebView(getContext().getApplicationContext());</span><br><span class="line">webFrameLayout.addView(webView, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在使用了这个方式后，基本上 90% 的 webview 内存泄漏的问题便得以解决。</p>
+</blockquote>
+<ul>
+<li>而在 Android 4.4 版本以下，会出现 Android Webview 无法自动释放，如在 Fragment 中，使用 onDetach 来释放 Webview 是比较好的时机。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    releaseWebViews();</span><br><span class="line">    <span class="keyword">super</span>.onDetach();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">releaseWebViews</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(webView != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(webView.getParent() != <span class="keyword">null</span>) &#123;</span><br><span class="line">                ((ViewGroup) webView.getParent()).removeView(webView);</span><br><span class="line">            &#125;</span><br><span class="line">            webView.destroy();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        RefWatcher refWatcher = FApplication.getRefWatcher();</span><br><span class="line">        refWatcher.watch(webView);</span><br><span class="line">        webView = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<p><a href="https://www.jianshu.com/p/95d4d73be3d1" target="_blank" rel="noopener">Android WebView: 性能优化不得不说的事</a></p>
+<p><a href="https://www.jianshu.com/p/c2412918b2b5#fn2" target="_blank" rel="noopener">android内存优化之webview</a></p>
+<h4 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h4><ul>
+<li>使用弱引用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoLeakActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> NoLeakHandler mNoLeakHandler;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        mNoLeakHandler = <span class="keyword">new</span> NoLeakHandler(<span class="keyword">this</span>);</span><br><span class="line">        Message message = Message.obtain();</span><br><span class="line">        mNoLeakHandler.sendMessageDelayed(message, <span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">NoLeakHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> WeakReference&lt;NoLeakActivity&gt; mActivity;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">NoLeakHandler</span><span class="params">(NoLeakActivity activity)</span> </span>&#123;</span><br><span class="line">            mActivity = <span class="keyword">new</span> WeakReference&lt;&gt;(activity);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>及时清除消息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoLeakActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Handler mHandler = <span class="keyword">new</span> Handler();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//                startMainActivity();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">2000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 把所有的消息和回调移除</span></span><br><span class="line">        mHandler.removeCallbacksAndMessages(<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 把所有的消息和回调移除（onDestroy 执行不确定，因此这里需执行一遍）</span></span><br><span class="line">        mHandler.removeCallbacksAndMessages(<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">super</span>.onBackPressed();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><h4 id="反面判断条件"><a href="#反面判断条件" class="headerlink" title="反面判断条件"></a>反面判断条件</h4><p>bad:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">(ArrayList&lt;User&gt; userList)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != userList &amp;&amp; userList.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, size = userList.size(); i &lt; size; i++) &#123;</span><br><span class="line">			<span class="comment">// ...</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>better:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">(ArrayList&lt;User&gt; userList)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == userList || userList.isEmpty()) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, size = userList.size(); i &lt; size; i++) &#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>很多比较复杂的层级判断都可以从这些判断的反面出发，来降低程序的复杂性，从而提高可读性。</p>
+</blockquote>
+<h4 id="if与return搭配"><a href="#if与return搭配" class="headerlink" title="if与return搭配"></a>if与return搭配</h4><p>bad:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">testIfElse</span><span class="params">(String cmd)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">"1"</span>.equals(cmd)) &#123;</span><br><span class="line">   	 <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"2"</span>.equals(cmd)) &#123;</span><br><span class="line">   	 <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"3"</span>.equals(cmd)) &#123;</span><br><span class="line">   	 <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   	 <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>better:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">testIfElse</span><span class="params">(String cmd)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (<span class="string">"1"</span>.equals(cmd)) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (<span class="string">"2"</span>.equals(cmd)) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (<span class="string">"3"</span>.equals(cmd)) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h4><p>Android 中的序列化官方推荐 Parceble , 其实 Parceble 最好用于内存之间数据的交换，如果要把数据写入硬盘的话，推荐实现 Serializable .</p>
+<h4 id="SharedPreferences"><a href="#SharedPreferences" class="headerlink" title="SharedPreferences"></a>SharedPreferences</h4><p><code>SharedPreferences.Editor.commit</code> 这个方法是同步的，一直到把数据同步到 Flash 上面之后才会返回，由于 IO 操作的不可控，尽量使用 apply 方法代替。apply 只在 API Level &gt;= 9 才会支持，需要做兼容。不过，最新的 support v4 包已经为我们做好了处理，使用  <code>SharedPreferencesCompat.EditorCompat.getInstance().apply(editor)</code> 即可。</p>
+<h4 id="其它优化"><a href="#其它优化" class="headerlink" title="其它优化"></a>其它优化</h4><ul>
+<li><p>静态变量不要直接或者间接引用 Activity、Service 等。这会使 Activity 以及它所引用的所有对象无法释放，然后，用户操作时间一长，内存就会狂升。</p>
+</li>
+<li><p>Handler 机制有一个特点是不会随着 Activity、Service 的生命周期结束而结束。也就是说，如果你 Post 了一个 Delay 的 Runnable , 然后在 Runnable 执行之前退出了 Activity , Runnable 到时间之后还是要执行的。如果 Runnable 里面包含更新 View 的操作，程序崩溃了。</p>
+</li>
+<li><p>不少人在子线程中更新 View 时喜欢使用 <code>Context.runOnUiThread</code> , 这个方法有个缺点，就是一但 Context 生命周期结束，比如 Activity 已经销毁时，一调用就会崩溃。</p>
+</li>
+<li><p>Application 的生命周期就是进程的生命周期。只有进程被干掉时，Application 才会销毁。哪怕是没有 Activity、Service 在运行，Application 也会存在。所以，为了减少内存压力，尽量不要在 Application 里面引用大对象、Context 等。</p>
+</li>
+<li><p>Activity 的 onDestroy 方法调用时机是不确定的（有时候离开界面很久之后才会调用 onDestroy 方法），应该避免指望通过 onDestroy 方法去释放与 Activity 相关的资源，否则会导致一些随机 bug .</p>
+</li>
+<li><p>如果使用 <code>Context.startActivity</code> 启动外部应用，最好做一下异常预防，因为寻找不到对应的应用时，会抛出异常。如果你要打开的是应用内的 Activity , 不防使用显式 Intent , 这样能提高系统搜索目标 Activity 的效率。</p>
+</li>
+<li><p>如果子类实现 Serializable 接口而父类未实现时，父类不会被序列化，但此时父类必须有个无参构造方法，否则会抛 InvalidClassException 异常。</p>
+</li>
+<li><p><code>transient</code> 关键字修饰变量可以限制序列化。</p>
+</li>
+<li><p><code>View.getContext</code> 获取控件上下文，写 RecyclerView 的 Adapter 的时候，为了使用 LayoutInflater , 不用在构造函数中传入一个外部的 context .</p>
+</li>
+</ul>
+<h2 id="UI相关"><a href="#UI相关" class="headerlink" title="UI相关"></a>UI相关</h2><h3 id="Space"><a href="#Space" class="headerlink" title="Space"></a>Space</h3><p>Space 经常用于组件之间的缝隙，其 <code>draw()</code> 为空，减少了绘制渲染的过程。组件之间的距离使用 Space 会提高了绘制效率，特别是对于动态设置间距会很方便高效。正是因为 draw()为空，对该 view 没有做任务绘制渲染，所以不能对 Space 设置背景色。</p>
+<h3 id="tools标签"><a href="#tools标签" class="headerlink" title="tools标签"></a>tools标签</h3><p>tools 标签可以很好的帮助开发者实时预览 xml 的效果，并且运行以后 tools 标签的内容不会展示出来。例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:text</span>=<span class="string">"这段话只在预览时能看到,运行以后就看不到了"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="ContextCompat"><a href="#ContextCompat" class="headerlink" title="ContextCompat"></a>ContextCompat</h3><p>Android 6.0 之后 <code>getResources().getColor()</code> 被废弃了，可用 <code>ContextCompat.getColor(context, R.color.color_name)</code> 替换，ContextCompat 是 v4 包里的，请放心使用，另外还有 <code>getDrawable()</code> 等方法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2018/01/06/Android-一个应用多个数据库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="明年今日">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明年今日">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/06/Android-一个应用多个数据库/" itemprop="url">Android 一个应用多个数据库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-06T00:42:00+08:00">
+                2018-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/06/Android-一个应用多个数据库/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/06/Android-一个应用多个数据库/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/01/06/Android-一个应用多个数据库/" class="leancloud_visitors" data-flag-title="Android 一个应用多个数据库">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  691
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在做一个 IM 的项目，需要存储大量数据到本地数据库。考虑到同一台手机可能会被多个账号登录使用，为了提升数据库查询的效率，以分库的方式来存储不同账号的数据（使用用户账号来作为数据库名称）。</p>
+<p>以存储用户信息为例：</p>
+<ul>
+<li>先贴出使用代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mUserDAO = <span class="keyword">new</span> UserDAO(<span class="keyword">this</span>, account); <span class="comment">// 此处的 account 就是要操作的数据库名称</span></span><br><span class="line">mUserDAO.insert(<span class="keyword">new</span> User(account, userName));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>以下为三个关键类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数据库帮助类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zch</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018-01-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DBHelper</span> <span class="keyword">extends</span> <span class="title">SQLiteOpenHelper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DB_VERSION = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TABLE_NAME = <span class="string">"user"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DBHelper</span><span class="params">(Context context, String dbName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, dbName, <span class="keyword">null</span>, DB_VERSION);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(SQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">        String sql = <span class="string">"create table if not exists "</span> + TABLE_NAME + <span class="string">" (account text primary key , userName text)"</span>;</span><br><span class="line">        db.execSQL(sql);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpgrade</span><span class="params">(SQLiteDatabase db, <span class="keyword">int</span> oldVersion, <span class="keyword">int</span> newVersion)</span> </span>&#123;</span><br><span class="line">        String sql = <span class="string">"drop table if exists "</span> + TABLE_NAME;</span><br><span class="line">        db.execSQL(sql);</span><br><span class="line">        onCreate(db);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户实体类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zch</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018-01-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String account; <span class="comment">// 用户账号，假设唯一，用它作为数据库名称（dbName）</span></span><br><span class="line">    <span class="keyword">public</span> String userName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String account, String userName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.account = account;</span><br><span class="line">        <span class="keyword">this</span>.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户数据表相关操作</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zch</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2018-01-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDAO</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> DBHelper mDBHelper;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserDAO</span><span class="params">(Context context, String dbName)</span> </span>&#123;</span><br><span class="line">        mDBHelper = <span class="keyword">new</span> DBHelper(context, dbName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入一条数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">insert</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            db = mDBHelper.getWritableDatabase();</span><br><span class="line">            db.beginTransaction();</span><br><span class="line">            ContentValues values = <span class="keyword">new</span> ContentValues();</span><br><span class="line">            values.put(<span class="string">"account"</span>, user.account);</span><br><span class="line">            values.put(<span class="string">"userName"</span>, user.userName);</span><br><span class="line">            db.insertOrThrow(DBHelper.TABLE_NAME, <span class="keyword">null</span>, values);</span><br><span class="line">            db.setTransactionSuccessful();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != db) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    db.endTransaction();</span><br><span class="line">                    db.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除一条数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">delete</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            db = mDBHelper.getWritableDatabase();</span><br><span class="line">            db.beginTransaction();</span><br><span class="line">            db.delete(DBHelper.TABLE_NAME, <span class="string">"account = ?"</span>, <span class="keyword">new</span> String[]&#123;user.account&#125;);</span><br><span class="line">            db.setTransactionSuccessful();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != db) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    db.endTransaction();</span><br><span class="line">                    db.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取所有数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getUserList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = <span class="keyword">null</span>;</span><br><span class="line">        Cursor cursor = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            db = mDBHelper.getReadableDatabase();</span><br><span class="line">            cursor = db.query(DBHelper.TABLE_NAME,</span><br><span class="line">                    <span class="keyword">new</span> String[]&#123;<span class="string">"account"</span>, <span class="string">"userName"</span>&#125;,</span><br><span class="line">                    <span class="keyword">null</span>,</span><br><span class="line">                    <span class="keyword">null</span>,</span><br><span class="line">                    <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (cursor.getCount() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                List&lt;User&gt; userList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                <span class="keyword">while</span> (cursor.moveToNext()) &#123;</span><br><span class="line">                    User user = <span class="keyword">new</span> User(cursor.getString(cursor.getColumnIndex(<span class="string">"account"</span>)), cursor.getString(cursor.getColumnIndex(<span class="string">"userName"</span>)));</span><br><span class="line">                    userList.add(user);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> userList;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != cursor) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    cursor.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != db) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    db.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2017/12/09/剑指-Offer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1011,7 +1470,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1022,7 +1481,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1033,7 +1492,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1086,7 +1545,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1100,7 +1559,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">32.1k</span>
+    <span title="Site words total count">35.9k</span>
   
 </div>
 

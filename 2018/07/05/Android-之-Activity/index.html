@@ -89,12 +89,12 @@
 <meta property="og:site_name" content="明年今日">
 <meta property="og:description" content="Activity正常生命周期流程Activity 的生命周期回调方法有：onCreate() , onStart() , onResume() , onPause() , onStop() , onRestart() , onDestroy() .   onCreate() Activity 正在被创建。这是生命周期的第一个方法，在整个生命周期中只会被调用一次，一般在此做一些初始化工作。参数 sa">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://pcckwdbix.bkt.clouddn.com/activity_lifecycle.png">
-<meta property="og:updated_time" content="2018-10-25T00:35:06.552Z">
+<meta property="og:image" content="https://github.com/zhich/images/blob/master/blog/activity_lifecycle.png?raw=true">
+<meta property="og:updated_time" content="2020-06-11T02:46:17.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 之 Activity">
 <meta name="twitter:description" content="Activity正常生命周期流程Activity 的生命周期回调方法有：onCreate() , onStart() , onResume() , onPause() , onStop() , onRestart() , onDestroy() .   onCreate() Activity 正在被创建。这是生命周期的第一个方法，在整个生命周期中只会被调用一次，一般在此做一些初始化工作。参数 sa">
-<meta name="twitter:image" content="http://pcckwdbix.bkt.clouddn.com/activity_lifecycle.png">
+<meta name="twitter:image" content="https://github.com/zhich/images/blob/master/blog/activity_lifecycle.png?raw=true">
 
 
 
@@ -448,7 +448,7 @@
 <blockquote>
 <p>通常情况下：onCreate() 和 onDestroy() 成对存在；onStart() 和 onStop() 成对存在；onResume() 和 onPause() 成对存在。</p>
 </blockquote>
-<p><img src="http://pcckwdbix.bkt.clouddn.com/activity_lifecycle.png" alt="Mou icon"></p>
+<p><img src="https://github.com/zhich/images/blob/master/blog/activity_lifecycle.png?raw=true" alt="activity_lifecycle"></p>
 <h3 id="Activity异常情况生命周期分析"><a href="#Activity异常情况生命周期分析" class="headerlink" title="Activity异常情况生命周期分析"></a>Activity异常情况生命周期分析</h3><ul>
 <li><p>系统资源配置发生改变导致 Activity 被杀死并重新创建</p>
 <p>当系统配置发生变化（如旋转屏幕），Activity 会被销毁，其 onPause、onStop、onDestroy 均会被调用，同时由于 Activity 是在异常情况下终止的，系统会调用 <strong>onSaveInstanceState</strong> 来保存当前 Activity 的状态。<strong>onSaveInstanceState 方法的调用时机是在 onStop 之前</strong>，它和 onPause 没有既定的时序关系。当 Activity 被重建后，系统会调用 <strong>onRestoreInstanceState</strong> , 并把 Activity 销毁时的 onSaveInstanceState 方法所保存的 Bundle 对象作为参数同时传递给 onRestoreInstanceState 和 onCreate 方法。因此可以通过 onRestoreInstanceState 和 onCreate 方法来判断 Activity 是否被重建了，如果被重建了，我们就可以取出之前保存的数据并恢复，从时序上说，<strong>onRestoreInstanceState 的调用时机在 onStart 之后。</strong></p>
@@ -660,7 +660,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -671,7 +671,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -682,7 +682,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -751,7 +751,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -765,7 +765,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">32.1k</span>
+    <span title="Site words total count">35.9k</span>
   
 </div>
 
