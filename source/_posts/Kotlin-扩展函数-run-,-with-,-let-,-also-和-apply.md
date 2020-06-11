@@ -284,7 +284,7 @@ class MyClass {
 
 ## 函数选择
 
-![Mou icon](http://pcckwdbix.bkt.clouddn.com/20.png)
+![Mou icon](https://github.com/zhich/images/blob/master/blog/1.png?raw=true)
 
 
 
