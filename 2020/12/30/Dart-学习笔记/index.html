@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="环境搭建要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK 官方文档：https://dart.dev/get-dart1234567891011windows(推荐):  http://www.gekorm.com/dart-windows/mac：  如果 mac 电脑没有安装 brew 这个工具首先第一步需要安装它： https://brew.sh/  brew tap da">
+<meta name="description" content="本笔记整理自大地老师的 Dart 笔记，同时加入了自己写的一些测试例子。  环境搭建要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK 官方文档：https://dart.dev/get-dart1234567891011windows(推荐):  http://www.gekorm.com/dart-windows/mac：  如果 mac 电脑没有安装 brew 这个工具首先">
 <meta name="keywords" content="Dart">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dart 学习笔记">
 <meta property="og:url" content="https://zhich.github.io/2020/12/30/Dart-学习笔记/index.html">
 <meta property="og:site_name" content="明年今日">
-<meta property="og:description" content="环境搭建要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK 官方文档：https://dart.dev/get-dart1234567891011windows(推荐):  http://www.gekorm.com/dart-windows/mac：  如果 mac 电脑没有安装 brew 这个工具首先第一步需要安装它： https://brew.sh/  brew tap da">
+<meta property="og:description" content="本笔记整理自大地老师的 Dart 笔记，同时加入了自己写的一些测试例子。  环境搭建要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK 官方文档：https://dart.dev/get-dart1234567891011windows(推荐):  http://www.gekorm.com/dart-windows/mac：  如果 mac 电脑没有安装 brew 这个工具首先">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-12-30T08:05:16.046Z">
+<meta property="og:updated_time" content="2021-01-04T08:14:11.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dart 学习笔记">
-<meta name="twitter:description" content="环境搭建要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK 官方文档：https://dart.dev/get-dart1234567891011windows(推荐):  http://www.gekorm.com/dart-windows/mac：  如果 mac 电脑没有安装 brew 这个工具首先第一步需要安装它： https://brew.sh/  brew tap da">
+<meta name="twitter:description" content="本笔记整理自大地老师的 Dart 笔记，同时加入了自己写的一些测试例子。  环境搭建要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK 官方文档：https://dart.dev/get-dart1234567891011windows(推荐):  http://www.gekorm.com/dart-windows/mac：  如果 mac 电脑没有安装 brew 这个工具首先">
 
 
 
@@ -394,7 +394,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6,802
+                  6,831
                 </span>
               
 
@@ -419,7 +419,10 @@
       
 
       
-        <h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK</p>
+        <blockquote>
+<p>本笔记整理自大地老师的 Dart 笔记，同时加入了自己写的一些测试例子。</p>
+</blockquote>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK</p>
 <p>官方文档：<a href="https://dart.dev/get-dart" target="_blank" rel="noopener">https://dart.dev/get-dart</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">windows(推荐):</span><br><span class="line"></span><br><span class="line">  http://www.gekorm.com/dart-windows/</span><br><span class="line"></span><br><span class="line">mac：</span><br><span class="line"></span><br><span class="line">  如果 mac 电脑没有安装 brew 这个工具首先第一步需要安装它： https://brew.sh/</span><br><span class="line"></span><br><span class="line">  brew tap dart-lang/dart</span><br><span class="line">    </span><br><span class="line">  brew install dart</span><br></pre></td></tr></table></figure></p>
 <h3 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Dart 的开发工具有很多： IntelliJ IDEA  、 WebStorm、 Atom、Vscode 等</span><br><span class="line"></span><br><span class="line">这里我们主要给大家讲解的是如果在 vscode 中配置 Dart。</span><br><span class="line">    </span><br><span class="line">1、找到 vscode 插件安装 Dart</span><br><span class="line"></span><br><span class="line">2、找到 vscode 插件安装 code runner, Code Runner 可以运行我们的文件</span><br></pre></td></tr></table></figure>
 <h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>Dart 中定义变量可以使用具体的类型（int、double、String、bool 等）申明 ，也可以通过 var 关键字来申明变量。</p>
