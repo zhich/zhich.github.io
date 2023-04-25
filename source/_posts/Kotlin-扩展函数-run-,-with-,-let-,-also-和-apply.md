@@ -281,19 +281,3 @@ class MyClass {
 | T.let()       | this@Myclass  |  "AA"    | 作用域中的最后一个对象  |
 | T.also()      | this@Myclass  |  "AA"    |   "AA" 对象（本身）   |
 | T.apply()     | "AA"          | 编译错误  |   "AA" 对象（本身）   |
-
-## 函数选择
-
-![Mou icon](http://pcckwdbix.bkt.clouddn.com/20.png)
-
-
-
-参考资料：
-
-[Kotlin基础 — 操作符：run、with、let、also、apply、takeIf、takeUnless、repeat](https://blog.csdn.net/Love667767/article/details/79376813)
-
-[Kotlin 操作符：run、with、let、also、apply 的差异与选择](https://www.jianshu.com/p/01e28c4cc730)
-
-[聊一聊Kotlin扩展函数run,with,let,also和apply的使用和区别](https://blog.csdn.net/ljd2038/article/details/79576091)
-
-

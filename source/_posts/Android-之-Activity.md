@@ -46,7 +46,7 @@ Activity 的生命周期回调方法有：onCreate() , onStart() , onResume() , 
 
 > 通常情况下：onCreate() 和 onDestroy() 成对存在；onStart() 和 onStop() 成对存在；onResume() 和 onPause() 成对存在。
 
-![Mou icon](http://pcckwdbix.bkt.clouddn.com/activity_lifecycle.png)
+![](https://gitee.com/zch0304/images/raw/master/note/activity_lifecycle.png) 
 
 ### Activity异常情况生命周期分析
 

@@ -169,4 +169,3 @@ val consumer3 : Consumer<Food> = American()  // Error
 [In and out type variant of Kotlin](https://medium.com/@elye.project/in-and-out-type-variant-of-kotlin-587e4fa2944c)
 
 [Kotlin 泛型中的 in 和 out](https://zhuanlan.zhihu.com/p/32583310)
-

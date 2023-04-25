@@ -130,7 +130,7 @@ ViewModel 会一直保留在内存中，直到 Activity / Fragment 在以下情�
 
 下图展示了一个 Activity 经历了旋转然后调用 finish 的各种生命周期状态，同时展示了关联了该 Activity 的 ViewModel 的生命周期。（UI 控制器是 Fragment 的情况也类似。）
 
-![Mou icon](http://pcckwdbix.bkt.clouddn.com/viewmodel-lifecycle.png)
+![](https://gitee.com/zch0304/images/raw/master/note/viewmodel-lifecycle.png) 
 
 ### Fragment 之间共享数据
 
