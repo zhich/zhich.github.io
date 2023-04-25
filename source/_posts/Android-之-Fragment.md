@@ -211,12 +211,13 @@ transaction.commit(); //提交一个事务
 ## Fragment生命周期
 
 - Fragment必须依存于Activity
-
-  ![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle_0.png) 
+    ![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle_0.png) 
 
 - Fragment依附于Activity的生命状态
 
   ![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle.png) 
+=======
+
 
 **Fragment生命周期回调方法含义**
 
