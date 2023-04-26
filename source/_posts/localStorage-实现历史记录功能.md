@@ -6,6 +6,8 @@ tags:
      - localStorage
 ---
 
+<meta name="referrer" content="no-referrer">
+
 
 
 

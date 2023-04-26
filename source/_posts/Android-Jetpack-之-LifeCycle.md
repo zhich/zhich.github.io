@@ -8,6 +8,8 @@ tags:
      - Jetpack
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 

@@ -7,6 +7,8 @@ tags:
      - Kotlin
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 

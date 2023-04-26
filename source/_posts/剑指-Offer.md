@@ -6,6 +6,8 @@ tags:
      - 算法
 ---
 
+<meta name="referrer" content="no-referrer">
+
 
 
 

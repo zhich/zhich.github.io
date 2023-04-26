@@ -8,6 +8,8 @@ tags:
      - 二进制
 ---
 
+<meta name="referrer" content="no-referrer">
+
 
 
 ### 前言

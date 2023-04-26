@@ -7,6 +7,8 @@ tags:
      - Android Studio
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 [技巧](#技巧)
@@ -88,106 +90,106 @@ Log.i(TAG, "onCreate: ");
     当代码写完了，突然出现一个 bug 需要加一行 Log 进行调试，但又不想为了这一行 Log 而重新编译一遍整个工程。此时可以使用日志断点解决这个问题。首先，在需要断点的地方打上一个普通断点，然后在断点处右键，选择 suspend 属性为 false，并在下方的 Log evaluated expression 中写入日志信息即可。如此设置后，在程序运行时则无需重新编译即可在断点处打出日志信息。
 
 ### 代码模板
-  - 内置模板
-    `Ctrl + J` 调出代码模板。这些模板在设置的 Live Templates 标签中。这里不仅提供了 Java 代码的快捷模板，连 Android 注释、Log、甚至 XML 都有非常多的快捷模板。
+#### 内置模板
+`Ctrl + J` 调出代码模板。这些模板在设置的 Live Templates 标签中。这里不仅提供了 Java 代码的快捷模板，连 Android 注释、Log、甚至 XML 都有非常多的快捷模板。
 
-  - 后缀模板
- `Ctrl + J` 调出代码模板后。如需遍历一个 List 类型的变量 list，只需输入 list.for 快速生成遍历模板、输入 list.cast 快速生成类型转换模板。
+#### 后缀模板
+`Ctrl + J` 调出代码模板后。如需遍历一个 List 类型的变量 list，只需输入 list.for 快速生成遍历模板、输入 list.cast 快速生成类型转换模板。
 
-  - 自定义模板
-  
-    **方法注释**
+#### 自定义模板
 
-     ①、打开设置，选择 “Live Templates”；②、点击右栏的加号，选择增加一个 Template Group，并在该 Group 下新增一个 Template；③、选中自定义的注释模板，如 ma ，在下方的编辑区域中进行注释代码的编辑，如下代码模板；④、经过这样的配置后，在方法前输入 “ma” 即可弹出该模板，按 Enter 键后确认输入。
-    
-    ```java
-       /**
-          * $desc$
-          *
-          * @author zch
-          * create at $date$
-          */
-    ```
-    
-    **文件、类注释**  
-    
-    ①、打开设置，选择 “File and Code Templates”；②、选择 Includes 标签，创建名称为 “ClassHeader” 的模板和名称为 “FileHeader” 的模板；③、有了这两个模板就可以组合这些模板来创建新的完整类、文件模板。如在 Files 标签中新建一个名称为 “MyActivity” 的模板文件，并设置代码模板。④、新建文件的时候选择 “MyActivity” 即可创建该种模板的文件。
-    
-    
-    
-    ClassHeader 模板：
-    
-      ```java
-    /**
-     * class description here
-     * @author ${USER}
-     * @version 1.0.0
-     * @since ${YEAR}-${MONTH}-${DAY}
-     */
-      ```
-    
-    FileHeader模板：
-    
-     ```java
-    /*
-     * ${NAME}      ${YEAR}-${MONTH}-${DAY}
-     * Copyright (c) ${YEAR} jufuns. All right reserved.
-     *
-     */
-    #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
-     ```
-    
-    MyActivity模板：
-    
-    ```java
-    #parse("FileHeader.java")
-    
-    import android.app.Activity;
-    import android.os.Bundle;
-    
-    #parse("ClassHeader.java")
-    public class ${NAME} extends Activity{
-    
-       @Override
-        public void onCreate(Bundle savedInstanceState){
-               super.onCreate(savedInstanceState);
-        }
-    
+**方法注释**
+
+ ①、打开设置，选择 “Live Templates”；②、点击右栏的加号，选择增加一个 Template Group，并在该 Group 下新增一个 Template；③、选中自定义的注释模板，如 ma ，在下方的编辑区域中进行注释代码的编辑，如下代码模板；④、经过这样的配置后，在方法前输入 “ma” 即可弹出该模板，按 Enter 键后确认输入。
+
+```java
+   /**
+      * $desc$
+      *
+      * @author zch
+      * create at $date$
+      */
+```
+
+**文件、类注释**  
+
+①、打开设置，选择 “File and Code Templates”；②、选择 Includes 标签，创建名称为 “ClassHeader” 的模板和名称为 “FileHeader” 的模板；③、有了这两个模板就可以组合这些模板来创建新的完整类、文件模板。如在 Files 标签中新建一个名称为 “MyActivity” 的模板文件，并设置代码模板。④、新建文件的时候选择 “MyActivity” 即可创建该种模板的文件。
+
+
+
+ClassHeader 模板：
+
+```java
+/**
+ * class description here
+ * @author ${USER}
+ * @version 1.0.0
+ * @since ${YEAR}-${MONTH}-${DAY}
+ */
+```
+
+FileHeader模板：
+
+```java
+/*
+ * ${NAME}      ${YEAR}-${MONTH}-${DAY}
+ * Copyright (c) ${YEAR} jufuns. All right reserved.
+ *
+ */
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+```
+
+MyActivity模板：
+
+```java
+#parse("FileHeader.java")
+
+import android.app.Activity;
+import android.os.Bundle;
+
+#parse("ClassHeader.java")
+public class ${NAME} extends Activity{
+
+   @Override
+    public void onCreate(Bundle savedInstanceState){
+           super.onCreate(savedInstanceState);
     }
-    ```
-    
-    用 MyActivity 模板新建的 LoginActivity：
-    
-    ```java
-    /*
-     * LoginActivity      2016-10-07
-     * Copyright (c) 2016 jufuns. All right reserved.
-     *
-     */
-    package com.jiejue.catwalk.ui.ac;
-    
-    import android.app.Activity;
-    import android.os.Bundle;
-    
-    /**
-     * class description here
-     *
-     * @author zch
-     * @version 1.0.0
-     * @since 2016-10-07
-     */
-    public class LoginActivity extends Activity {
-    
-        @Override
-       	public void onCreate(Bundle savedInstanceState) {
-           	super.onCreate(savedInstanceState);
-           	
-       	}
+
+}
+```
+
+用 MyActivity 模板新建的 LoginActivity：
+
+```java
+/*
+ * LoginActivity      2016-10-07
+ * Copyright (c) 2016 jufuns. All right reserved.
+ *
+ */
+package com.jiejue.catwalk.ui.ac;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+/**
+ * class description here
+ *
+ * @author zch
+ * @version 1.0.0
+ * @since 2016-10-07
+ */
+public class LoginActivity extends Activity {
+
+    @Override
+   	public void onCreate(Bundle savedInstanceState) {
+       	super.onCreate(savedInstanceState);
        	
-    }
-    ```
-    
-    >  类似地，我们也可以建立 Adapter、单例等等的模板代码。
+   	}
+   	
+}
+```
+
+>  类似地，我们也可以建立 Adapter、单例等等的模板代码。
 
 ### 立即停止 AndroidStudio 编译
 

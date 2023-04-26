@@ -6,6 +6,12 @@ tags:
      - Java
 ---
 
+<meta name="referrer" content="no-referrer">
+
+
+
+
+
 
 > 先说结论，再通过运行程序去验证。
 

@@ -6,7 +6,7 @@ tags:
      - Android
 ---
 
-
+<meta name="referrer" content="no-referrer">
 
 
 

@@ -8,6 +8,8 @@ tags:
      - 调试
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 
@@ -185,7 +187,7 @@ tags:
 - Scope
 
   可以查看此时局部变量和全局变量的值。
- 
+
 - Breakpoints
 
   展示当前所有 js 断点，通过点击按钮可以去掉或加上断点，点击下方的代码表达式可跳转到该断点的程序代码处。

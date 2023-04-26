@@ -6,6 +6,11 @@ tags:
      - Android
 ---
 
+<meta name="referrer" content="no-referrer">
+
+
+
+
 
 ### 介绍
 

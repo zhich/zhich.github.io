@@ -7,14 +7,16 @@ tags:
      - Fragment
 ---
 
+<meta name="referrer" content="no-referrer" />
 
 
-## 产生原因
+
+### 产生原因
 
 Android 在 Android 3.0（API 级别 11）中引入了 Fragment（**片段**），主要是为了给大屏幕（如平板电脑）上更加动态和灵活的 UI 设计提供支持。由于平板电脑的屏幕比手机屏幕大得多，因此可用于组合和交换 UI 组件的空间更大。利用 Fragment 实现此类设计时，无需管理对视图层次结构的复杂更改。 通过将 Activity 布局分成 Fragment , 可以在运行时修改 Activity 的外观，并在由 Activity 管理的返回栈中保留这些更改。
 
 
-## 简述
+### 简述
 
 Fragment 可视为 Activity 的模块化组成部分，它具有自己的生命周期。Fragment 必须始终嵌入在 Activity 中，其生命周期直接受宿主 Activity 生命周期的影响。
 
@@ -23,7 +25,7 @@ Fragment 可视为 Activity 的模块化组成部分，它具有自己的生命�
 当 Activity 正在运行（处于已恢复生命周期状态）时，可独立操纵每个 Fragment , 如添加或移除它们。当执行此类 Fragment 事务时，也可以将其添加到由 `Activity 管理的返回栈` — **Activity 中的每个返回栈条目都是一条已发生 Fragment 事务的记录**。返回栈让用户可以通过按返回按钮撤消 Fragment 事务（后退）。
 
 
-## 创建Fragment
+### 创建Fragment
 
 要创建一个 Fragment 必须扩展 Fragment 类（或已有的其子类 DialogFragment、ListFragment、PreferenceFragment）。
 
@@ -40,13 +42,13 @@ Fragment 可视为 Activity 的模块化组成部分，它具有自己的生命�
   以列表形式显示 Preference 对象的层次结构，类似于 PreferenceActivity . 这在为您的应用创建“设置” Activity 时很有用处。
 
 
-### 添加用户界面
+#### 添加用户界面
 
 Fragment 通常用作 Activity 用户界面的一部分，将其自己的布局融入 Activity . 要想为 Fragment 提供布局，必须实现 onCreateView() 回调方法，Android 系统会在 Fragment 需要绘制其布局时调用该方法。此方法返回的 View 必须是 Fragment 布局的根视图。
 
 > 如果是 ListFragment 的子类，则默认实现会从 onCreateView() 返回一个 ListView，因此无需实现它。
 
-### 创建布局
+#### 创建布局
 
 ```Java
 public static class ExampleFragment extends Fragment {
@@ -65,9 +67,9 @@ inflate() 方法带有三个参数：
 - 将作为扩展布局父项的 ViewGroup
 - 指示是否应该在扩展期间将扩展布局附加至 ViewGroup（第二个参数）的布尔值。（在本例中，其值为 false , 因为系统已经将扩展布局插入 container — 传递 true 值会在最终布局中创建一个多余的视图组。）
 
-### 向Activity添加片段
+#### 向Activity添加片段
 
-#### 在Activity的布局文件内声明Fragment
+##### 在Activity的布局文件内声明Fragment
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -103,7 +105,7 @@ inflate() 方法带有三个参数：
 - 为 android:tag 属性提供唯一字符串
 - 如果未给以上两个属性提供值，系统会使用容器视图的 ID
 
-#### 或者通过编程方式将Fragment添加到某个现有ViewGroup
+##### 或者通过编程方式将Fragment添加到某个现有ViewGroup
 
 ```Java
 FragmentManager fragmentManager = getFragmentManager();
@@ -115,13 +117,13 @@ fragmentTransaction.commit();
 
 可以在 Activity 运行期间随时将 Fragment 添加到 Activity 布局中。在 Activity 中执行 Fragment 事务（如添加、移除或替换片段），必须使用 FragmentTransaction 中的 API . 一旦通过 FragmentTransaction 做出了更改，就必须调用 commit() 以使更改生效。
 
-#### 添加没有UI的Fragment
+##### 添加没有UI的Fragment
 
 还可以使用 Fragment 为 Activity 提供后台行为，而不显示额外 UI . 只能通过 `add (Fragment fragment,  String tag)` 的方式添加，用 tag 做唯一标识符。获取该 Fragment 则需要使用 `findFragmentByTag()` . 由于它并不与 Activity 布局中的视图关联，因此**不会收到对 onCreateView() 的调用**。因此，不需要实现该方法。
 
 将没有 UI 的 Fragment 用作后台工作线程的示例 Activity 位于：SDK 示例（通过 Android SDK 管理器提供）中，以 <sdk_root>/APIDemos/app/src/main/java/com/example/android/apis/app/FragmentRetainInstance.java 形式位于您的系统中。
 
-## 管理Fragment
+### 管理Fragment
 
 要管理 Fragment , 需要使用 FragmentManager , FragmentManager 执行的操作包括：
 
@@ -129,7 +131,7 @@ fragmentTransaction.commit();
 - 通过 popBackStack()（模拟用户发出的返回命令）将 Fragment 从返回栈中弹出。
 - 通过 addOnBackStackChangedListener() 注册一个侦听返回栈变化的侦听器。
 
-## 管理Fragment回退栈
+### 管理Fragment回退栈
 
 - 跟踪回退栈状态
 
@@ -154,7 +156,7 @@ fragmentTransaction.commit();
   - getSupportFragmentManager().popBackStack(String name, int flags) // 根据 name 立刻弹出栈顶的 Fragment
   - getSupportFragmentManager().popBackStack(int id, int flags) // 根据 id 立刻弹出栈顶的 Fragment
 
-## Fragment常用的API
+### Fragment常用的API
 
 - android.support.v4.app.Fragment 主要用于定义 Fragment
 - android.support.v4.app.FragmentManager 主要用于在 Activity 中操作 Fragment , 可以使用 FragmentManager.findFragmenById、FragmentManager.findFragmentByTag 等方法去找到一个 Fragment
@@ -166,7 +168,7 @@ fragmentTransaction.commit();
   ```
 - FragmentTransaction 的一些操作方法
 
-## 执行Fragment事务
+### 执行Fragment事务
 
 在 Activity 中使用 Fragment 的一大优点是，可以根据用户行为通过它们执行添加、移除、替换以及其他操作。 提交给 Activity 的每组更改都称为事务，可以使用 FragmentTransaction 中的 API 来执行一项事务。也可以**将每个事务**保存到由 Activity 管理的返回栈内，从而让用户能够回退 Fragment 更改（类似于回退 Activity）。
 
@@ -208,18 +210,17 @@ transaction.commit(); //提交一个事务
 - 只能在 Activity 保存其状态（用户离开 Activity）之前使用 commit() 提交事务。如果试图在该时间点后提交，则会引发异常。 这是因为如需恢复 Activity , 则提交后的状态可能会丢失。 对于丢失提交无关紧要的情况，请使用 commitAllowingStateLoss() .
 
 
-## Fragment生命周期
+### Fragment生命周期
 
-- Fragment必须依存于Activity
-    ![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle_0.png) 
+**1、Fragment必须依存于Activity**
 
-- Fragment依附于Activity的生命状态
+![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle_0.png) 
 
-  ![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle.png) 
-=======
+**2、Fragment依附于Activity的生命状态**
 
+![](https://gitee.com/zch0304/images/raw/master/note/activity_fragment_lifecycle.png)
 
-**Fragment生命周期回调方法含义**
+**3、Fragment生命周期回调方法含义**
 
 - public void onAttach(Context context)
 
@@ -269,8 +270,7 @@ transaction.commit(); //提交一个事务
 
   取消 Fragment 与 Activity 的关联时调用。
 
-  
-## 与Activity通信
+### 与Activity通信
 
 Fragment 可通过 getActivity() 访问 Activity 实例，并轻松地执行在 Activity 布局中查找 View 等任务。
 
@@ -321,7 +321,7 @@ public static class FragmentA extends ListFragment {
 
 实现时，mListener 成员会保留对 Activity 的 OnArticleSelectedListener 实现的引用，以便 FragmentA 可以通过调用 OnArticleSelectedListener 接口定义的方法与 Activity 共享事件。
 
-## Fragment状态的持久化
+### Fragment状态的持久化
 
 由于 Activity 会经常性地发生配置变化，所以依附于它的 Fragment 就可能需要将其状态保存起来。有两个常用的方法可将 Fragment 的状态持久化。
 

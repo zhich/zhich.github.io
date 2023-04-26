@@ -7,6 +7,8 @@ tags:
      - 工具
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 
