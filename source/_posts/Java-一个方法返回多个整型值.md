@@ -12,6 +12,8 @@ tags:
 
 
 
+
+
 ### 前言
 
 在 Android 开发中会经常用到 RecyclerView , 当 RecyclerView 的 item 类型有多种时，我们需要重写 getItemViewType 方法。

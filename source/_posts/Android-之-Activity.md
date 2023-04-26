@@ -12,6 +12,8 @@ tags:
 
 
 
+
+
 ### Activity正常生命周期流程
 
 Activity 的生命周期回调方法有：onCreate() , onStart() , onResume() , onPause() , onStop() , onRestart() , onDestroy() . 

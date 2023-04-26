@@ -13,6 +13,8 @@ tags:
 
 
 
+
+
 ### 前言
 
 在 Android 中，ViewModel 的作用就是在 **UI 控制器**（ 如 Activity、Fragment）的生命周期中保存和管理 UI 相关的数据。ViewModel 保存的数据在配置更改（如屏幕旋转）后会依然存在，不会丢失。

@@ -11,8 +11,6 @@ tags:
 
 
 
-
-
 我们知道 **localStorage 的生命周期是永久的**。除非用户在浏览器上手动删除 localStorage 信息，否则这些信息将永久存在。
 
 **sessionStorage 的生命周期为当前窗口或者标签页**。用户一旦关闭了窗口或者标签页，那么通过 sessionStorage 存储的数据也将被清空。
