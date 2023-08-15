@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="OX0xLEpC6yLbJpIcLUvU5DxbdzXBR44MdZfuQByVE3c">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Chrome,工具,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Insight.io for GithubGitHub 代码浏览插件。提供的功能有：跳到定义处、查找引用、目录树结构、基于符号的代码搜索、跳转到 Insight.io 里面。 Octotree可以在 GitHub 和 GitLab 左侧显示目录树结构。 GitCodeTree基于 octotree 的码云文件树插件。 jsonView jsonViewer json formatte">
+<meta name="keywords" content="Chrome,工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrome 插件">
+<meta property="og:url" content="https://zhich.github.io/2017/12/06/Chrome-插件/index.html">
+<meta property="og:site_name" content="明年今日">
+<meta property="og:description" content="Insight.io for GithubGitHub 代码浏览插件。提供的功能有：跳到定义处、查找引用、目录树结构、基于符号的代码搜索、跳转到 Insight.io 里面。 Octotree可以在 GitHub 和 GitLab 左侧显示目录树结构。 GitCodeTree基于 octotree 的码云文件树插件。 jsonView jsonViewer json formatte">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-08-14T14:46:08.404Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chrome 插件">
+<meta name="twitter:description" content="Insight.io for GithubGitHub 代码浏览插件。提供的功能有：跳到定义处、查找引用、目录树结构、基于符号的代码搜索、跳转到 Insight.io 里面。 Octotree可以在 GitHub 和 GitLab 左侧显示目录树结构。 GitCodeTree基于 octotree 的码云文件树插件。 jsonView jsonViewer json formatte">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhich.github.io/2017/12/06/Chrome-插件/">
+
+
+
+
+
+  <title>Chrome 插件 | 明年今日</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">明年今日</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhich.github.io/2017/12/06/Chrome-插件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="明年今日">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明年今日">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Chrome 插件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-06T00:00:00+08:00">
+                2017-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/06/Chrome-插件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/06/Chrome-插件/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/06/Chrome-插件/" class="leancloud_visitors" data-flag-title="Chrome 插件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,244
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+
+
+
+<h3 id="Insight-io-for-Github"><a href="#Insight-io-for-Github" class="headerlink" title="Insight.io for Github"></a><a href="https://chrome.google.com/webstore/detail/insightio-for-github/pmhfgjjhhomfplgmbalncpcohgeijonh?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Insight.io for Github</a></h3><p>GitHub 代码浏览插件。提供的功能有：跳到定义处、查找引用、目录树结构、基于符号的代码搜索、跳转到 Insight.io 里面。</p>
+<h3 id="Octotree"><a href="#Octotree" class="headerlink" title="Octotree"></a><a href="https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Octotree</a></h3><p>可以在 GitHub 和 GitLab 左侧显示目录树结构。</p>
+<h3 id="GitCodeTree"><a href="#GitCodeTree" class="headerlink" title="GitCodeTree"></a><a href="https://chrome.google.com/webstore/detail/gitcodetree/inaaldjpdbkaodlmdcplgpoibohcmmlj?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">GitCodeTree</a></h3><p>基于 octotree 的<a href="http://gitee.com" target="_blank" rel="noopener">码云</a>文件树插件。</p>
+<h3 id="jsonView-jsonViewer-json-formatter-格式化"><a href="#jsonView-jsonViewer-json-formatter-格式化" class="headerlink" title="jsonView jsonViewer json formatter 格式化"></a><a href="https://chrome.google.com/webstore/detail/jsonview-jsonviewer-json/hdmbdioamgdkppmocchpkjhbpfmpjiei?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">jsonView jsonViewer json formatter 格式化</a></h3><p>格式化、着色、美观、易读 … jsonView 处理了其他该类插件中文字符的 bug , 支持 json 和 jsonp 格式。</p>
+<h3 id="Adblock"><a href="#Adblock" class="headerlink" title="Adblock"></a><a href="https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom" target="_blank" rel="noopener">Adblock</a></h3><p>号称最受欢迎的 Chrome 扩展，拥有超过 4000 万用户！屏蔽整个互联网上的广告。</p>
+<h3 id="广告终结者"><a href="#广告终结者" class="headerlink" title="广告终结者"></a>广告终结者</h3><p>清除网页上的所有广告：浮动广告，购物广告，恶意弹窗，跟踪代码，视频广告。让你浏览网页更快更清爽。</p>
+<h3 id="Axure-RP-Extension-for-Chrome"><a href="#Axure-RP-Extension-for-Chrome" class="headerlink" title="Axure RP Extension for Chrome"></a><a href="https://chrome.google.com/webstore/detail/axure-rp-extension-for-ch/dogkpdfcklifaemcdfbildhcofnopogp" target="_blank" rel="noopener">Axure RP Extension for Chrome</a></h3><p>原型设计工具。</p>
+<h3 id="Google文档、表格及幻灯片的Office编辑扩展程序"><a href="#Google文档、表格及幻灯片的Office编辑扩展程序" class="headerlink" title="Google文档、表格及幻灯片的Office编辑扩展程序"></a><a href="https://chrome.google.com/webstore/detail/office-editing-for-docs-s/gbkeegbaiigmenfmjfclcdgdpimamgkj?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Google文档、表格及幻灯片的Office编辑扩展程序</a></h3><p>使用 Google 文档、表格和幻灯片来查看和编辑 Microsoft Word、Excel 和 PowerPoint 文件。</p>
+<h3 id="Clear-Cache"><a href="#Clear-Cache" class="headerlink" title="Clear Cache"></a><a href="https://chrome.google.com/webstore/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Clear Cache</a></h3><p>Clear your cache and browsing data with a single click of a button .</p>
+<h3 id="Convertio-文件格式转换不再是问题"><a href="#Convertio-文件格式转换不再是问题" class="headerlink" title="Convertio : 文件格式转换不再是问题"></a><a href="https://chrome.google.com/webstore/detail/convertio/eppjkefeiehhflmgkhdooajgbkkegpcl?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Convertio : 文件格式转换不再是问题</a></h3><p>Convertio , 一个在线解决格式转换的插件，支持超过 2500 种不同的格式转换（归档转换器 、音频转换器、文档转换器、PDF 工具、电子书转换器、演示文稿转换器 、OCR 工具等等），史上最全的格式转换小助手了！无论是音频，文档还是视频，它都能方便快捷的转换到你想要的格式，非常齐全！</p>
+<h3 id="Infinity-自定义新标签页，极速访问页面"><a href="#Infinity-自定义新标签页，极速访问页面" class="headerlink" title="Infinity : 自定义新标签页，极速访问页面"></a><a href="https://chrome.google.com/webstore/detail/infinity-new-tab-producti/dbfmnekepjoapopniengjbcpnbljalfg?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Infinity : 自定义新标签页，极速访问页面</a></h3><p>使用该插件可以自定义 Chrome 的新标签页来实现快速拨号、邮件提醒、天气预报、笔记功能、待办事项、壁纸、历史记录管理等功能。同时还可以在右上角的 “＋” 可以看到各种设置选项，根据自己的喜好来添加或者删除标签页上的项目，也可更改壁纸和搜索栏。偶尔浏览到感兴趣的页面时，看到一个不错的话题，你也可以添加到 infinity 新标签页。相比其他浏览器的标签页功能，它确实功能更丰富，操作更方便。</p>
+<h3 id="OneTab-一键收纳N个标签页，还你一个清爽的浏览器"><a href="#OneTab-一键收纳N个标签页，还你一个清爽的浏览器" class="headerlink" title="OneTab : 一键收纳N个标签页，还你一个清爽的浏览器"></a><a href="https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">OneTab : 一键收纳N个标签页，还你一个清爽的浏览器</a></h3><p>一次打开太多网页，来回切换容易乱，并且出现电脑卡顿，轻拓展 OneTab 可以派上用场了! 点击扩展栏的 OneTab 图标，它能够将当前窗口所有标签集合为一个标签。不仅让你浏览器瞬间整洁无暇，还能节省 95% 的内存。当你想要恢复浏览某个页面的时候，在列表中点击一个链接，即可重新打开。你也可以通过快捷键 <code>alt + shift + 1</code> 来快速打开。最后，OneTab 还能检查是否有重复链接，并且不会重复添加链接。这种小贴士，一般人我可不告诉她。</p>
+<h3 id="Kami-PDF-阅读、批注、OCR"><a href="#Kami-PDF-阅读、批注、OCR" class="headerlink" title="Kami : PDF 阅读、批注、OCR"></a><a href="https://chrome.google.com/webstore/detail/kami-extension-pdf-and-do/ecnphlgnajanjnkcmbpancdjoidceilk?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Kami : PDF 阅读、批注、OCR</a></h3><p>PDF 软件那么多，为什么要用 Kami ? 因为它轻巧好用，还免费！首先，它支持 PDF (pdf) , 文件（DOX），PowerPoint(PPTX) , 常见的图像文件（jpg，jpeg，png，gif），使用 Kami 工具，您可以在 PDF、文档或图像文件上批注、标记和协作。在浏览器中查看文件、与他人共享文件、高亮文本、添加文本、下划线文本、添加评论、实时协作、徒手画、OCR 字符识别 扫描版 PDF 文件（检测扫描文件上的文本）、离线支持。这些操作都免费！PDF 软件有的它都有，既生瑜何生亮呀！</p>
+<h3 id="Save-to-Pocket-一键保存任何内容，以供离线查看"><a href="#Save-to-Pocket-一键保存任何内容，以供离线查看" class="headerlink" title="Save to Pocket : 一键保存任何内容，以供离线查看"></a><a href="https://chrome.google.com/webstore/detail/save-to-pocket/niloccemoadcdkdjlinkgdfekeahmflj?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Save to Pocket : 一键保存任何内容，以供离线查看</a></h3><p>Pocket - 口袋，顾名思义，它将任何内容(文章、视频、微博等等）可汇聚到一个地方，以便在任何设备上随时查看。最重要的是！可以离线查看！当你发现感兴趣的内容却没有时间看完或者想先收藏再细细品味时，如果你直接关闭了网页，下次可能找不到了。这时候一款可以“临时”保存当前正在阅读的文章或者视频的工具派上用场，你可以将它放入 Pocket , 方便你在手机或者电脑端随时查看。</p>
+<h3 id="Fireshot-网页截图和另存为-PDF"><a href="#Fireshot-网页截图和另存为-PDF" class="headerlink" title="Fireshot : 网页截图和另存为 PDF"></a><a href="https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Fireshot : 网页截图和另存为 PDF</a></h3><p>很多用户经常有这个问题：“这个网页很重要，我想整页打印出来怎么办？”，“我如何将整个网页另存为图片？” 诸如此类问题的答案就是一款免费的 Fireshot 插件。 它可以对网页中整个屏幕或者是网页的部分视图进行截图操作，在截图之后用户还可以对当前截图的图片进行编辑，包括添加注释，添加线条等操作。除开截图，它还能打印、另存为 PDF 等功能，小巧实用！</p>
+<h3 id="Dark-Reader-护眼扩展程序"><a href="#Dark-Reader-护眼扩展程序" class="headerlink" title="Dark Reader - 护眼扩展程序"></a><a href="https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Dark Reader - 护眼扩展程序</a></h3><p>黑色主题，适用于任何网站。关爱眼睛，就使用 Dark Reader 进行夜间和日间浏览。这是一个护眼扩展程序，通过实时生成黑色主题，为每一个网站启用夜间模式。Dark Reader 反转明亮的颜色，使其网页内容具有高对比度并且在易于夜间阅读。您可以调整亮度，对比度，应用棕褐色滤镜，黑暗模式，设置字体和忽略的网站列表。</p>
+<h3 id="LastPass：密码管理软件"><a href="#LastPass：密码管理软件" class="headerlink" title="LastPass：密码管理软件"></a><a href="https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener">LastPass：密码管理软件</a></h3><p>LastPass，全球知名在线密码管理工具之一，采用军事级加密算法，支持自动填充网站用户名和密码，与朋友分享登录信息等实用功能，且在全平台同步免费，无需订阅 Premium，即可在手机、网页、电脑端同步你的所有 LastPass 信息。</p>
+<h3 id="二维码（QR-码）生成器"><a href="#二维码（QR-码）生成器" class="headerlink" title="二维码（QR 码）生成器"></a><a href="https://chrome.google.com/webstore/detail/%E4%BA%8C%E7%BB%B4%E7%A0%81qr%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8qr-code-generato/pflgjjogbmmcmfhfcnlohagkablhbpmg" target="_blank" rel="noopener">二维码（QR 码）生成器</a></h3><p>在线的二维码生成器。可以把当前的网页直接生成二维码，进行编辑，还可以把文字生成二维码，这个很重要！</p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载+"></a><a href="https://chrome.google.com/webstore/detail/download-plus/gokgophibdidjjpildcdbfpmcahilaaf" target="_blank" rel="noopener">下载+</a></h3><p>Chrome 的下载管理在二级菜单里，进去很不方便，装了这个插件就可以直接看和管理，很好用。</p>
+<h3 id="快捷扩展管理"><a href="#快捷扩展管理" class="headerlink" title="快捷扩展管理"></a><a href="https://chrome.google.com/webstore/detail/one-click-extensions-mana/pbgjpgbpljobkekbhnnmlikbbfhbhmem?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">快捷扩展管理</a></h3><p>Chrome 其实很占内存，尤其当插件装多了以后会卡顿，有了这个以后，可以一键管理所有扩展，快速激活、禁用插件。</p>
+<h3 id="购物党"><a href="#购物党" class="headerlink" title="购物党"></a><a href="https://chrome.google.com/webstore/detail/%E8%B4%AD%E7%89%A9%E5%85%9A%E8%87%AA%E5%8A%A8%E6%AF%94%E4%BB%B7%E5%B7%A5%E5%85%B7/jgphnjokjhjlcnnajmfjlacjnjkhleah" target="_blank" rel="noopener">购物党</a></h3><p>在线的比价工具，网购的时候可以看价格历史记录，以及各大网站的价格对比，也有查快递的快捷方式。</p>
+<h3 id="右键搜"><a href="#右键搜" class="headerlink" title="右键搜"></a><a href="https://chrome.google.com/webstore/detail/context-menus/phlfmkfpmphogkomddckmggcfpmfchpn" target="_blank" rel="noopener">右键搜</a></h3><p>Chrome 默认的搜索是谷歌搜索，没有翻墙的童鞋可能用起来不方便，但有这个这个就不用担心了。</p>
+<h3 id="Cloudbleed-Bookmark-Checker：检测书签是否有死链"><a href="#Cloudbleed-Bookmark-Checker：检测书签是否有死链" class="headerlink" title="Cloudbleed Bookmark Checker：检测书签是否有死链"></a><a href="https://chrome.google.com/webstore/detail/cloudbleed-bookmark-check/egoobjhmbpflgogbgbihhdeibdfnedii?utm_campaign=en" target="_blank" rel="noopener">Cloudbleed Bookmark Checker：检测书签是否有死链</a></h3><p>对于书签收藏的狂魔同志，收藏夹里的网页肯定有很多都无法访问了吧！这款扩展就是来检测书签是否有死链的，因为不怎么常用，所以才三颗星。</p>
+<h3 id="Imagus"><a href="#Imagus" class="headerlink" title="Imagus"></a><a href="https://chrome.google.com/webstore/detail/imagus/immpkjjlgappgfkkfieppnmlhakdmaab?utm_source=chrome-app-launcher-info-dialog" target="_blank" rel="noopener">Imagus</a></h3><p>鼠标指针悬停在链接或缩略图上时直接在当前页面的弹出视图上显示这些图片、HTML5 视频/音频和内容专辑。</p>
+<h3 id="WhatRuns"><a href="#WhatRuns" class="headerlink" title="WhatRuns"></a><a href="https://chrome.google.com/webstore/detail/whatruns/cmkdbmfndkfgebldhnkbfhlneefdaaip" target="_blank" rel="noopener">WhatRuns</a></h3><p>WhatRuns 是一款用于了解网站技术的 Chrome 网站技术分析工具，主要能通过分析网站页面所使用的框架、代码等技术以及页面所使用的样式等方面，让使用者能直观的了解网站的整体技术信息。在安装了这款插件后，使用者可以通过点击 WhatRuns 图标来打开插件窗口，通过该窗口使用者可以轻松了解网站的技术信息。</p>
+<h3 id="Reader-View：Chrome-也有-Safari-的阅读模式"><a href="#Reader-View：Chrome-也有-Safari-的阅读模式" class="headerlink" title="Reader View：Chrome 也有 Safari 的阅读模式"></a><a href="https://chrome.google.com/webstore/detail/reader-view/iibolhpkjjmoepndefdmdlmbpfhlgjpl" target="_blank" rel="noopener">Reader View：Chrome 也有 Safari 的阅读模式</a></h3><p>将网页转换成 Safari 阅读模式的样式，让你更方便舒适的阅读网页文字，当你访问文章网页的时候，扩展程序的按钮会显示在地址栏末端，点击就能轻松享受更好的阅读模式。</p>
+<h3 id="为什么你们就是不能加个空格呢"><a href="#为什么你们就是不能加个空格呢" class="headerlink" title="为什么你们就是不能加个空格呢"></a><a href="https://chrome.google.com/webstore/detail/%E7%82%BA%E4%BB%80%E9%BA%BC%E4%BD%A0%E5%80%91%E5%B0%B1%E6%98%AF%E4%B8%8D%E8%83%BD%E5%8A%A0%E5%80%8B%E7%A9%BA%E6%A0%BC%E5%91%A2%EF%BC%9F/paphcfdffjnbcgkokihcdjliihicmbpd" target="_blank" rel="noopener">为什么你们就是不能加个空格呢</a></h3><p>每次看到文章中的英文、数字、中文写在一起，你知道我的内心是什么样吗？<br>你们能不能在它们之间加个空格呢？！不过自从装上了「为什么你们就是不能加个空格呢？」，插件会自动把网页中所有中文、英文、数字、符号之间插入一个空格，从此告别此痛苦，又能和大家好好玩耍啦。</p>
+<h3 id="Postman"><a href="#Postman" class="headerlink" title="Postman"></a><a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop" target="_blank" rel="noopener">Postman</a></h3><p>相信开发者朋友一定知道这款插件，这是一款强大的 API &amp; HTTP 请求调试工具，它不仅可以调试简单的 HTML、CSS 以及脚本等简单的网页基本信息，这款 Chrome 插件甚至还能发送几乎所有的 HTTP 请求，可谓是 Web 开发者的一大利器。</p>
+<h3 id="Picee（基于-Github-API-的图床）"><a href="#Picee（基于-Github-API-的图床）" class="headerlink" title="Picee（基于 Github API 的图床）"></a><a href="https://chrome.google.com/webstore/detail/picee/nmeeieecbmdnilkkaliknhkkakonobbc/related" target="_blank" rel="noopener">Picee（基于 Github API 的图床）</a></h3><p>具体介绍可以参考<a href="https://juejin.im/post/5cd38990e51d453a543f9e3e" target="_blank" rel="noopener">基于 Github API 的图床 Chrome 插件开发全纪录</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Chrome/" rel="tag"># Chrome</a>
+          
+            <a href="/tags/工具/" rel="tag"># 工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/25/Android-Studio-的一些技巧/" rel="next" title="Android Studio 的一些技巧">
+                <i class="fa fa-chevron-left"></i> Android Studio 的一些技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/09/剑指-Offer/" rel="prev" title="剑指 Offer">
+                剑指 Offer <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="明年今日">
+            
+              <p class="site-author-name" itemprop="name">明年今日</p>
+              <p class="site-description motion-element" itemprop="description">终身学习者。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhich" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhich112134@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Insight-io-for-Github"><span class="nav-number">1.</span> <span class="nav-text">Insight.io for Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Octotree"><span class="nav-number">2.</span> <span class="nav-text">Octotree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitCodeTree"><span class="nav-number">3.</span> <span class="nav-text">GitCodeTree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonView-jsonViewer-json-formatter-格式化"><span class="nav-number">4.</span> <span class="nav-text">jsonView jsonViewer json formatter 格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adblock"><span class="nav-number">5.</span> <span class="nav-text">Adblock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广告终结者"><span class="nav-number">6.</span> <span class="nav-text">广告终结者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Axure-RP-Extension-for-Chrome"><span class="nav-number">7.</span> <span class="nav-text">Axure RP Extension for Chrome</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google文档、表格及幻灯片的Office编辑扩展程序"><span class="nav-number">8.</span> <span class="nav-text">Google文档、表格及幻灯片的Office编辑扩展程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clear-Cache"><span class="nav-number">9.</span> <span class="nav-text">Clear Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Convertio-文件格式转换不再是问题"><span class="nav-number">10.</span> <span class="nav-text">Convertio : 文件格式转换不再是问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Infinity-自定义新标签页，极速访问页面"><span class="nav-number">11.</span> <span class="nav-text">Infinity : 自定义新标签页，极速访问页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OneTab-一键收纳N个标签页，还你一个清爽的浏览器"><span class="nav-number">12.</span> <span class="nav-text">OneTab : 一键收纳N个标签页，还你一个清爽的浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kami-PDF-阅读、批注、OCR"><span class="nav-number">13.</span> <span class="nav-text">Kami : PDF 阅读、批注、OCR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save-to-Pocket-一键保存任何内容，以供离线查看"><span class="nav-number">14.</span> <span class="nav-text">Save to Pocket : 一键保存任何内容，以供离线查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fireshot-网页截图和另存为-PDF"><span class="nav-number">15.</span> <span class="nav-text">Fireshot : 网页截图和另存为 PDF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dark-Reader-护眼扩展程序"><span class="nav-number">16.</span> <span class="nav-text">Dark Reader - 护眼扩展程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LastPass：密码管理软件"><span class="nav-number">17.</span> <span class="nav-text">LastPass：密码管理软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维码（QR-码）生成器"><span class="nav-number">18.</span> <span class="nav-text">二维码（QR 码）生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载"><span class="nav-number">19.</span> <span class="nav-text">下载+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快捷扩展管理"><span class="nav-number">20.</span> <span class="nav-text">快捷扩展管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#购物党"><span class="nav-number">21.</span> <span class="nav-text">购物党</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右键搜"><span class="nav-number">22.</span> <span class="nav-text">右键搜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloudbleed-Bookmark-Checker：检测书签是否有死链"><span class="nav-number">23.</span> <span class="nav-text">Cloudbleed Bookmark Checker：检测书签是否有死链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Imagus"><span class="nav-number">24.</span> <span class="nav-text">Imagus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WhatRuns"><span class="nav-number">25.</span> <span class="nav-text">WhatRuns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reader-View：Chrome-也有-Safari-的阅读模式"><span class="nav-number">26.</span> <span class="nav-text">Reader View：Chrome 也有 Safari 的阅读模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么你们就是不能加个空格呢"><span class="nav-number">27.</span> <span class="nav-text">为什么你们就是不能加个空格呢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Postman"><span class="nav-number">28.</span> <span class="nav-text">Postman</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Picee（基于-Github-API-的图床）"><span class="nav-number">29.</span> <span class="nav-text">Picee（基于 Github API 的图床）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">明年今日</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">70.8k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://zhich.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://zhich.github.io/2017/12/06/Chrome-插件/';
+          this.page.identifier = '2017/12/06/Chrome-插件/';
+          this.page.title = 'Chrome 插件';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://zhich.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'g3yLqM4jbfL9Q8753GxDD7be-gzGzoHsz',
+        appKey: 'y22uAIcHsFpd0KLcoA2OYz7z',
+        placeholder: '写评论 ......',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("g3yLqM4jbfL9Q8753GxDD7be-gzGzoHsz", "y22uAIcHsFpd0KLcoA2OYz7z");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
