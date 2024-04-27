@@ -20,7 +20,7 @@ tags:
 要在我们本地开发 Dart 程序的话首先需要安装 Dart SDK
 
 官方文档：https://dart.dev/get-dart
-```
+```dart
 windows(推荐):
 
   http://www.gekorm.com/dart-windows/
@@ -35,7 +35,7 @@ mac：
 ```
 
 ### 开发工具
-```
+```dart
 Dart 的开发工具有很多： IntelliJ IDEA  、 WebStorm、 Atom、Vscode 等
 
 这里我们主要给大家讲解的是如果在 vscode 中配置 Dart。
@@ -54,7 +54,7 @@ Dart 中定义变量可以使用具体的类型（int、double、String、bool �
 - const 值不变，一开始就得赋值。
 - final 可以开始不赋值，只能赋一次。而 final 不仅有 const 的编译时常量的特性，最重要的它是运行时常量，并且 final 是惰性初始化，即在运行时第一次使用前才初始化。
 - 注意：永远不改变的量，请使用 final 或 const 修饰它，而不是使用 var 或其他变量类型。
-```
+```dart
 main() {
   const PI = 3.14159;
   // PI = 3.14; // 报错
@@ -73,7 +73,7 @@ main() {
 
 ### 常用数据类型
 Dart 中支持以下常用数据类型：
-```
+```dart
 Numbers（数值）
     int
     double
@@ -88,10 +88,10 @@ Maps（字典）
 ```
 
 基本使用：
-```
+```dart
 main() {
   /**
-   * 1、字符串类型（int）
+   * 1、字符串类型（String）
    */
   var str1 = "Hello";
   String str2 = "World";
@@ -166,7 +166,7 @@ main() {
 }
 ```
 使用 `is` 关键词来判断类型
-```
+```dart
 main() {
   var x = 123;
   if (x is String) {
@@ -181,7 +181,7 @@ main() {
 
 ### 运算符
 Dart 运算符
-```
+```dart
 算术运算符
 
     +    -    *    /     ~/ (取整)     %（取余）
@@ -201,7 +201,7 @@ Dart 运算符
 ```
 
 基本使用：
-```
+```dart
 main() {
   /**
    * 1、算术运算符
@@ -255,7 +255,7 @@ main() {
 ```
 
 ### 条件表达式
-```
+```dart
 main() {
   /**
    * 1、if else / switch case
@@ -296,7 +296,7 @@ main() {
 ```
 
 ### 类型转换
-```
+```dart
 main() {
   /**
    * 1、Number 与 String 类型之间的转换
@@ -343,7 +343,7 @@ main() {
 ```
 
 ### 循环语句
-```
+```dart
 main() {
   /**
    * 1、++  --   表示自增 自减 1
@@ -414,7 +414,7 @@ main() {
 ### 集合类型
 
 #### List
-```
+```dart
 main() {
   /*
     List 里面常用的属性和方法：
@@ -456,7 +456,7 @@ main() {
 ```
 
 #### Set
-```
+```dart
 main() {
   /**
    * Set
@@ -479,7 +479,7 @@ main() {
 ```
 
 #### Map
-```
+```dart
 main() {
   /*
     映射（Maps）是无序的键值对：
@@ -519,7 +519,7 @@ main() {
 ```
 
 #### 集合的 forEach、map、where、any、every 方法使用
-```
+```dart
 main() {
   /**
    * List
@@ -580,7 +580,7 @@ main() {
 ### 函数
 
 #### 函数定义、作用域
-```
+```dart
 main() {
   /*
   内置方法/函数：
@@ -622,7 +622,7 @@ int getSum(int a, int b) {
 ```
 
 #### 函数传参、默认参数、可选参数、命名参数
-```
+```dart
 main() {
   /**
    * 1、基本传参
@@ -704,7 +704,7 @@ fun2(fn) {
 ```
 
 #### 箭头函数、匿名函数、自执行方法、方法递归
-```
+```dart
 main() {
   /**
    * 1、箭头函数
@@ -748,7 +748,7 @@ int fn(int n) {
 ```
 
 #### 闭包
-```
+```dart
 main() {
   /**
    * 全局变量特点：全局变量常驻内存、全局变量污染全局；
@@ -793,7 +793,7 @@ Dart 是一门使用类和**单继承**的面向对象语言，所有的对象�
 > Dart 和其他面向对象语言不一样，Dart 中没有 public、private、protected 这些访问修饰符，但是我们可以使用 `_` 把一个属性或者方法定义成私有。
 
 #### 类与对象的基本使用
-```
+```dart
 class Person {
   String _name; // 加了下划线表示私有属性
   int age;
@@ -824,7 +824,7 @@ class Person {
 }
 ```
 
-```
+```dart
 class Rect {
   int width;
   int height;
@@ -847,7 +847,7 @@ class Rect {
 }
 ```
 
-```
+```dart
 import 'Person.dart';
 import 'Rect.dart';
 
@@ -871,7 +871,7 @@ main() {
 ```
 
 #### 类中的初始化列表
-```
+```dart
 class Rect {
   int width;
   int height;
@@ -889,7 +889,7 @@ class Rect {
 }
 ```
 
-```
+```dart
 import 'Rect.dart';
 
 main() {
@@ -906,7 +906,7 @@ Dart 中的静态成员:
 
 2、静态方法不能访问非静态成员，非静态方法可以访问静态成员；
 
-```
+```dart
 class Person {
   static String name = '张三';
   static void showName() {
@@ -915,7 +915,7 @@ class Person {
 }
 ```
 
-```
+```dart
 import 'Person.dart';
 
 main() {
@@ -933,7 +933,7 @@ Dart 中的对象操作符：
 - `is` 类型判断
 - `..` 级联操作（连缀）
 
-```
+```dart
 class Person {
   String name;
   num age;
@@ -945,7 +945,7 @@ class Person {
 }
 ```
 
-```
+```dart
 import 'Person.dart';
 
 main() {
@@ -987,7 +987,7 @@ Dart 中的类的继承：
 - 子类会继承父类里面可见的属性和方法，但是不会继承构造函数；
 - 子类能复写父类的方法；
 
-```
+```dart
 class Person {
   String name;
   num age;
@@ -1000,7 +1000,7 @@ class Person {
 }
 ```
 
-```
+```dart
 import 'Person.dart';
 
 class Teacher extends Person {
@@ -1024,7 +1024,7 @@ class Teacher extends Person {
 }
 ```
 
-```
+```dart
 import 'Teacher.dart';
 
 main() {
@@ -1047,7 +1047,7 @@ Dart 抽象类主要用于定义标准，子类可以继承抽象类，也可以
 - 如果要复用抽象类里面的方法，并且要用抽象方法约束自类的话，我们就用 extends 继承抽象类；
 - 如果只是把抽象类当做标准的话，我们就用 implements 实现抽象类；
 
-```
+```dart
 abstract class Animal {
   eat(); // 抽象方法
   run(); // 抽象方法
@@ -1058,7 +1058,7 @@ abstract class Animal {
 }
 ```
 
-```
+```dart
 import 'Animal.dart';
 
 class Dog extends Animal {
@@ -1074,7 +1074,7 @@ class Dog extends Animal {
 }
 ```
 
-```
+```dart
 import 'Animal.dart';
 
 class Cat extends Animal {
@@ -1090,7 +1090,7 @@ class Cat extends Animal {
 }
 ```
 
-```
+```dart
 import 'Cat.dart';
 import 'Dog.dart';
 
@@ -1111,7 +1111,7 @@ main() {
 - 子类的实例赋值给父类的引用；
 - 多态就是父类定义一个方法不去实现，让继承他的子类去实现，每个子类有不同的表现；
 
-```
+```dart
 import 'Animal.dart';
 import 'Cat.dart';
 import 'Dog.dart';
@@ -1136,7 +1136,7 @@ main() {
 
 > 一个类可以实现多个接口。
 
-```
+```dart
 abstract class DB {
   // 当做接口   接口：就是约定 、规范
   String uri;
@@ -1145,7 +1145,7 @@ abstract class DB {
 }
 ```
 
-```
+```dart
 import 'DB.dart';
 
 class MySQL implements DB {
@@ -1164,7 +1164,7 @@ class MySQL implements DB {
 }
 ```
 
-```
+```dart
 import 'DB.dart';
 
 class MsSQL implements DB {
@@ -1183,7 +1183,7 @@ class MsSQL implements DB {
 }
 ```
 
-```
+```dart
 import 'DB.dart';
 import 'MySQL.dart';
 
@@ -1207,7 +1207,7 @@ mixins 的中文意思是混入，就是在类中混入其他功能。
 
 mixins 的实例类型就是其超类的子类型。mixins 使用 `with` 关键字实现其功能。
 
-```
+```dart
 class A {
   String info = "this is A";
   printA() {
@@ -1216,7 +1216,7 @@ class A {
 }
 ```
 
-```
+```dart
 class B {
   printB() {
     print("B");
@@ -1224,7 +1224,7 @@ class B {
 }
 ```
 
-```
+```dart
 import 'A.dart';
 import 'B.dart';
 import 'Person.dart';
@@ -1234,7 +1234,7 @@ class C extends Person with A, B {
 }
 ```
 
-```
+```dart
 import 'A.dart';
 import 'B.dart';
 import 'C.dart';
@@ -1257,7 +1257,7 @@ main() {
 通俗理解：泛型就是解决类、接口、方法的复用性、以及对不特定数据类型的支持（类型校验）。
 
 #### 泛型方法
-```
+```dart
 main() {
   print(getData(1)); // A
   print(getData2(2)); // 2
@@ -1274,7 +1274,7 @@ T getData2<T>(T value) {
 ```
 
 #### 泛型类
-```
+```dart
 main() {
   PrintClass p = new PrintClass<int>();
   p.add(1);
@@ -1305,7 +1305,7 @@ class PrintClass<T> {
 1. 定义一个泛型接口，约束实现它的子类必须有 getByKey(key) 和 setByKey(key,value)；
 2. 要求 setByKey 的时候的 value 的类型和实例化子类的时候指定的类型一致；
 
-```
+```dart
 main() {
   MemoryCache m = MemoryCache<Map>();
   m.setByKey("index", {"name": "张三", "age": 20}); // 我是内存缓存，把 key = index  value = {name: 张三, age: 20} 写入到了内存中
@@ -1343,9 +1343,9 @@ class FileCache<T> implements Cache<T> {
 
 ### 库
 
-在 Dart 中，库的使用时通过 `import` 关键字引入的。library 指令可以创建一个库，每个 Dart 文件都是一个库，即使没有使用 library 指令来指定。
+在 Dart 中，库的使用是通过 `import` 关键字引入的。library 指令可以创建一个库，每个 Dart 文件都是一个库，即使没有使用 library 指令来指定。
 
-```
+```dart
 Dart 中的库主要有三种：
 
     1、我们自定义的库     
@@ -1367,7 +1367,7 @@ Dart 中的库主要有三种：
 
 #### 导入自己本地库
 
-```
+```dart
 import 'Person.dart';
 
 main() {
@@ -1378,7 +1378,7 @@ main() {
 
 #### 导入系统内置库
 
-```
+```dart
 import 'dart:math';
 
 main() {
@@ -1389,7 +1389,7 @@ main() {
 
 #### 导入系统内置库实现请求数据
 
-```
+```dart
 import 'dart:convert';
 import 'dart:io';
 
@@ -1419,7 +1419,7 @@ getDataFromZhihuAPI() async {
 
 async 是让方法变成异步，await 是等待异步方法执行完成。
 
-```
+```dart
 main() async {
   var result = await testAsync();
   print(result); // testAsync
@@ -1431,7 +1431,7 @@ testAsync() async {
 ```
 
 #### 导入 pub 包管理系统中的库
-```
+```dart
 pub 包管理系统：
 
 1、从下面网址找到要用的库
@@ -1453,7 +1453,7 @@ pub 包管理系统：
 5、看文档引入库使用
 ```
 
-```
+```dart
 import 'package:date_format/date_format.dart';
 
 main() {
@@ -1462,7 +1462,7 @@ main() {
 ```
 
 #### 库重命名与冲突解决
-```
+```dart
 当引入两个库中有相同名称标识符的时候，如果是 Java, 通常我们通过写上完整的包名路径来指定使用的具体标识符，甚至不用 import 都可以，
 但是 Dart 里面是必须 import 的。当冲突的时候，可以使用 as 关键字来指定库的前缀。如下例子所示：
 
@@ -1475,7 +1475,7 @@ lib2.Element element2 = new lib2.Element(); // Uses Element from lib2.
 ```
 
 #### 部分导入
-```
+```dart
 如果只需要导入库的一部分，有两种模式：
 
 模式一：只导入需要的部分，使用 show 关键字，如下例子所示：
@@ -1488,7 +1488,7 @@ import 'package:lib2/lib2.dart' hide foo;
 ```
 
 MyMath.dart
-```
+```dart
 getOne() {
   return "one";
 }
@@ -1498,7 +1498,7 @@ getTwo() {
 }
 ```
 
-```
+```dart
 import 'MyMath.dart' show getOne;
 
 main() {
@@ -1508,7 +1508,7 @@ main() {
 ```
 
 #### 延迟加载
-```
+```dart
 延迟加载也称为懒加载，可以在需要的时候再进行加载。
 懒加载的最大好处是可以减少 APP 的启动时间。
 
@@ -1523,3 +1523,260 @@ greet() async {
     hello.printGreeting();
 }
 ```
+
+### 2.13 之后的一些新特性
+
+#### Null safety
+
+```dart
+/**
+  Null safety 翻译成中文的意思是空安全。
+
+  null safety 可以帮助开发者避免一些日常开发中很难被发现的错误，并且额外的好处是可以改善性能。
+
+  Flutter2.2.0（2021 年 5 月 19 日发布）之后的版本都要求使用 null safety。
+
+  1、? 可空类型
+  2、! 类型断言
+*/
+
+String? getData(apiUrl) {
+  if (apiUrl != null) {
+    return "this is server data";
+  }
+  return null;
+}
+
+void printLength(String? str) {
+  try {
+    print(str!.length);
+  } catch (e) {
+    print("str is null");
+  }
+}
+
+void main() {
+  // 1、? 可空类型
+  String? str = "abc"; // String?  表示 str 是一个可空类型
+  str = null; // 允许设置为 null
+  print(str);
+
+  print(getData("http://www.baidu.com"));
+  print(getData(null));
+
+  // 2、! 类型断言
+  String? str2 = "this is str";
+  // str2 = null;
+  // 如果 str2 不等于 null 会打印 str2 的长度，如果等于 null 会抛出异常
+  print(str2!.length);
+
+  printLength("str");
+  printLength(null);
+}
+```
+
+#### late 关键字
+
+```dart
+/**
+ * late 关键字主要用于延迟初始化。
+ */
+class Person {
+  late String name;
+  late int age;
+  void setInfo(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  String getInfo() {
+    return "${this.name}---${this.age}";
+  }
+}
+
+void main(args) {
+  Person p = new Person();
+  p.setInfo("张三", 20);
+  print(p.getInfo());
+}
+```
+
+#### required 关键字
+
+```dart
+/**
+ * required 翻译成中文的意思是需要、依赖
+ * 
+ * 最开始 @required 是注解，现在它已经作为内置修饰符，主要用于允许根据需要标记任何命名参数（函数或类），
+ * 使得它们不为空。因为可选参数中必须有个 required 参数或者该参数有个默认值。
+ */
+String printInfo(String username, {int age = 10, String sex = "男"}) {
+  return "姓名:$username---性别:$sex--年龄:$age";
+}
+
+String printInfo2(String username, {required int age, required String sex}) {
+  return "姓名:$username---性别:$sex--年龄:$age";
+}
+
+void main(args) {
+  print(printInfo('张三'));
+
+  print(printInfo('张三', age: 20, sex: "女"));
+
+  // age 和 sex 必须传入
+  print(printInfo2('张三', age: 22, sex: "女"));
+}
+```
+
+```dart
+/**
+ * name 可以传入也可以不传入，age 必须传入
+ */
+class Person {
+  String? name; // 可空属性
+  int age;
+  Person({this.name, required this.age}); // age 必须传入
+
+  String getInfo() {
+    return "${this.name}---${this.age}";
+  }
+}
+
+void main(args) {
+  Person p = new Person(name: "张三", age: 20);
+  print(p.getInfo()); // 张三---20
+
+  Person p1 = new Person(age: 20);
+  print(p1.getInfo()); // null---20
+}
+```
+
+### 性能优化
+
+#### 回顾 Dart 常量
+
+```dart
+/**
+Dart 常量: final 和 const 修饰符。
+  1、const 声明的常量是在编译时确定的，永远不会改变；
+  2、final 声明的常量允许声明后再赋值，赋值后不可改变，final 声明的变量是在运行时确定的；
+  3、final 不仅有 const 的编译时常量的特性，最重要的它是运行时常量，并且 final 是惰性初始化，即在运行时第一次使用前才初始化。
+*/
+
+void main() {
+  // const 常量
+  // const PI = 3.14;
+  // PI = 3.14159; // const 定义的常量没法改变
+  // print(PI);
+
+  // final 常量
+  // final PI = 3.14;
+  // print(PI);
+
+  final a;
+  a = 13;
+  // a = 14;
+  print(a);
+
+  final d = new DateTime.now();
+}
+```
+
+#### const、identical 函数
+
+```dart
+/**
+ dart:core 库中 identical 函数的用法介绍如下：
+
+用法:
+bool identical(
+   Object? a,    
+   Object? b   
+)
+检查两个引用是否指向同一个对象。
+ */
+
+void main() {
+  // var o1 = new Object();
+  // var o2 = new Object();
+  // print(identical(o1, o2)); // false，不共享存储空间
+  // print(identical(o1, o1)); // true，共享存储空间
+
+  // var o1 = Object();
+  // var o2 = Object();
+  // print(identical(o1, o2)); // false
+  // print(identical(o1, o1)); // true
+
+  // 表示实例化常量构造函数
+  // o1 和 o2 共享了存储空间
+  // var o1 = const Object();
+  // var o2 = const Object();
+  // print(identical(o1, o2)); // true，共享存储空间
+  // print(identical(o1, o1)); // true，共享存储空间
+
+  // print(identical([2], [2])); // false
+
+  // var a = [2];
+  // var b = [2];
+  // print(identical(a, b)); // false，不共享存储空间
+
+  const c = [2];
+  const d = [3];
+  print(identical(c, d)); // false，不共享存储空间
+
+  // 发现：const 关键词在多个地方创建相同的对象的时候，内存中只保留了一个对象。
+  // 共享存储空间条件：1、常量   2、值相等。
+}
+```
+
+#### 普通构造函数
+
+```dart
+class Container {
+  int width;
+  int height;
+  Container({required this.width, required this.height});
+}
+
+void main() {
+  var c1 = new Container(width: 100, height: 100);
+  var c2 = new Container(width: 100, height: 100);
+  print(identical(c1, c2)); // false，c1 和 c2 在内存中存储了 2 份
+}
+```
+
+#### 常量构造函数
+
+```dart
+/*
+常量构造函数总结如下几点：
+  1、常量构造函数需以 const 关键字修饰；
+  2、const 构造函数必须用于成员变量都是 final 的类；
+  3、如果实例化时不加 const 修饰符，即使调用的是常量构造函数，实例化的对象也不是常量实例；
+  4、实例化常量构造函数的时候，多个地方创建这个对象，如果传入的值相同，只会保留一个对象；
+  5、Flutter 中 const 修饰不仅仅是节省组件构建时的内存开销，Flutter 在需要重新构建组件的时候，由于这个组件是不应该改变的，重新构建没有任何意义，因此 Flutter 不会重新构建 const 组件。 
+*/
+
+// 常量构造函数
+class Container {
+  final int width;
+  final int height;
+  const Container({required this.width, required this.height});
+}
+
+void main() {
+  var c1 = Container(width: 100, height: 100);
+  var c2 = Container(width: 100, height: 100);
+  print(identical(c1, c2)); // false
+
+  var c3 = const Container(width: 100, height: 100);
+  var c4 = const Container(width: 100, height: 100);
+  print(identical(c3, c4)); // true
+
+  var c5 = const Container(width: 100, height: 110);
+  var c6 = const Container(width: 120, height: 100);
+  print(identical(c5, c6)); // false
+}
+// 实例化常量构造函数的时候，多个地方创建这个对象，如果传入的值相同，只会保留一个对象。
+```
+
