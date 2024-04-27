@@ -1,7 +1,7 @@
 ---
 title: Kotlin 教程
 date: 2023-04-26 21:47:00
-categories: "Android"
+categories: "Kotlin"
 tags:
      - Android
      - Kotlin
