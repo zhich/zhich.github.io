@@ -150,8 +150,8 @@ menu_settings:
 # 设置侧边栏位置
 sidebar:
   # Sidebar Position.
-  position: left
-  #position: right
+  # position: left
+  position: right
 
   # Manual define the sidebar width. If commented, will be default for:
   # Muse | Mist: 320
@@ -436,7 +436,7 @@ codeblock:
   # Fold code block 
   # 代码折叠，true：开启，false：禁用；NexT 8.18.0 Released 版本开始支持该功能
   fold:
-    enable: true
+    enable: false
     height: 500
 
 

@@ -79,3 +79,6 @@ deploy:
 # 自动生成sitemap
 sitemap:
   path: sitemap.xml
+
+server:
+  port: 5000
