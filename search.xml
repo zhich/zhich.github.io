@@ -4002,6 +4002,166 @@
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWNvbmZvbnQuY24v">https://www.iconfont.cn/<i class="fa fa-external-link-alt"></i></span></p>
 <h4 id="List-组件详解"><a href="#List-组件详解" class="headerlink" title="List 组件详解"></a>List 组件详解</h4><p>List 适合用于呈现同类数据类型或数据类型集，例如图片和文本。在列表中显示数据集合是许多应用程序中的常见要求（如通讯录、音乐列表、购物清单等）。</p>
 <p>List 包含 ListItem、ListItemGroup 子组件。</p>
+<h5 id="List-接口"><a href="#List-接口" class="headerlink" title="List 接口"></a>List 接口</h5><figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="title class_">List</span>(value?:&#123;space?: <span class="built_in">number</span> | <span class="built_in">string</span>, initialIndex?: <span class="built_in">number</span>, scroller?: <span class="title class_">Scroller</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>从 API version 9 开始，该接口支持在 ArkTS 卡片中使用。</p>
+<p>参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>必填</th>
+<th>参数描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>space</td>
+<td>number &#124; string</td>
+<td>否</td>
+<td>子组件主轴方向的间隔。默认值：0。说明：设置为除 -1 外其它负数或百分比时，按默认值显示。space 参数值小于 List 分割线宽度时，子组件主轴方向的间隔取分割线宽度。</td>
+</tr>
+<tr>
+<td>initialIndex</td>
+<td>number</td>
+<td>否</td>
+<td>设置当前 List 初次加载时视口起始位置显示的 item 的索引值。默认值：0。说明：设置为除 -1 外其它负数或超过了当前 List 最后一个 item 的索引值时视为无效取值，无效取值按默认值显示。</td>
+</tr>
+<tr>
+<td>scroller</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLXJlZmVyZW5jZXMtVjIvdHMtY29udGFpbmVyLXNjcm9sbC0wMDAwMDAxNDI3OTAyNDgwLVYyI1pILUNOX1RPUElDXzAwMDAwMDE1MjM2NDg3OTBfX3Njcm9sbGVy">Scroller<i class="fa fa-external-link-alt"></i></span></td>
+<td>否</td>
+<td>可滚动组件的控制器。用于与可滚动组件进行绑定。说明：不允许和其它滚动类组件绑定同一个滚动控制对象。</td>
+</tr>
+</tbody></table>
+<h5 id="List-属性"><a href="#List-属性" class="headerlink" title="List 属性"></a>List 属性</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>参数类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>listDirection</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLXJlZmVyZW5jZXMtVjIvdHMtYXBwZW5kaXgtZW51bXMtMDAwMDAwMTQ3ODA2MTc0MS1WMiNaSC1DTl9UT1BJQ18wMDAwMDAxNTc0MjQ4Nzg5X19heGlz">Axis<i class="fa fa-external-link-alt"></i></span></td>
+<td>设置 List 组件排列方向。默认值：Axis.Vertical。从 API version 9 开始，该接口支持在 ArkTS 卡片中使用。</td>
+</tr>
+<tr>
+<td>divider</td>
+<td>{ strokeWidth: Length;     color?: ResourceColor;     startMargin?: Length;     endMargin?: Length; } &#124; null</td>
+<td>设置 ListItem 分割线样式，默认无分割线。- strokeWidth：分割线的线宽。- color：分割线的颜色。- startMargin：分割线与列表侧边起始端的距离。- endMargin：分割线与列表侧边结束端的距离。从 API version 9 开始，该接口支持在ArkTS卡片中使用。endMargin + startMargin 不能超过列宽度。startMargin 和 endMargin 不支持设置百分比。List 的分割线画在主轴方向两个子组件之间，第一个子组件上方和最后一个子组件下方不会绘制分割线。多列模式下，ListItem 与 ListItem 之间的分割线起始边距从每一列的交叉轴方向起始边开始计算，其它情况从 List 交叉轴方向起始边开始计算。</td>
+</tr>
+<tr>
+<td>scrollBar</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLXJlZmVyZW5jZXMtVjIvdHMtYXBwZW5kaXgtZW51bXMtMDAwMDAwMTQ3ODA2MTc0MS1WMiNaSC1DTl9UT1BJQ18wMDAwMDAxNTc0MjQ4Nzg5X19iYXJzdGF0ZQ==">BarState<i class="fa fa-external-link-alt"></i></span></td>
+<td>设置滚动条状态。默认值：BarState.Oﬀ 从 API version 9 开始，该接口支持在 ArkTS卡片中使用。</td>
+</tr>
+<tr>
+<td>cachedCount</td>
+<td>number</td>
+<td>设置列表中 ListItem &#x2F; ListItemGroup 的预加载数量，其中 ListItemGroup 将作为一个整体进行计算，ListItemGroup 中的所有 ListItem 会一次性全部加载出来。具体使用可参考<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLWd1aWRlcy1WMi91aS10cy1wZXJmb3JtYW5jZS1pbXByb3ZlbWVudC1yZWNvbW1lbmRhdGlvbi0wMDAwMDAxNDc3OTgxMDAxLVYyI1pILUNOX1RPUElDXzAwMDAwMDE1MjM2NDg0MThfXyVFNSU4NyU4RiVFNSVCMCU5MSVFNSVCQSU5NCVFNyU5NCVBOCVFNiVCQiU5MSVFNSU4QSVBOCVFNyU5OSVCRCVFNSU5RCU5Nw==">减少应用白块说明<i class="fa fa-external-link-alt"></i></span>。默认值：1。从 API version 9 开始，该接口支持在 ArkTS 卡片中使用。说明：单列模式下，会在 List 显示的 ListItem 前后各缓存 cachedCount 个 ListItem。多列模式下，会在 List 显示的 ListItem 前后各缓存 cachedCount 个 ListItem。</td>
+</tr>
+<tr>
+<td>editMode(deprecated)</td>
+<td>boolean</td>
+<td>声明当前 List 组件是否处于可编辑模式。可参考<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLXJlZmVyZW5jZXMtVjIvdHMtY29udGFpbmVyLWxpc3QtMDAwMDAwMTQ3Nzk4MTIxMy1WMiNzZWN0aW9uNTE1NDE4MTQxMDEyMTk=">示例 3<i class="fa fa-external-link-alt"></i></span> 实现删除选中的 list 项。从 API version9 开始废弃。默认值：false。</td>
+</tr>
+<tr>
+<td>edgeEﬀect</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLXJlZmVyZW5jZXMtVjIvdHMtYXBwZW5kaXgtZW51bXMtMDAwMDAwMTQ3ODA2MTc0MS1WMiNaSC1DTl9UT1BJQ18wMDAwMDAxNTc0MjQ4Nzg5X19lZGdlZWZmZWN0">EdgeEﬀect<i class="fa fa-external-link-alt"></i></span></td>
+<td>设置组件的滑动效果。默认值：EdgeEﬀect.Spring。从 API version 9 开始，该接口支持在 ArkTS 卡片中使用。</td>
+</tr>
+<tr>
+<td>chainAnimation</td>
+<td>boolean</td>
+<td>设置当前 List 是否启用链式联动动效，开启后列表滑动以及顶部和底部拖拽时会有链式联动的效果。链式联动效果：List 内的 listitem 间隔一定距离，在基本的滑动交互行为下，主动对象驱动从动对象进行联动，驱动效果遵循弹簧物理动效。默认值：false。- false：不启用链式联动。- true：启用链式联动。从 API version 9 开始，该接口支持在 ArkTS 卡片中 使用。</td>
+</tr>
+<tr>
+<td>multiSelectable8+</td>
+<td>boolean</td>
+<td>是否开启鼠标框选。默认值：false。- false：关闭框选。- true：开启框选。从 API version 9 开始，该接口支持在 ArkTS 卡片中使用。</td>
+</tr>
+<tr>
+<td>lanes9+</td>
+<td>number &#124; <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaHVhd2VpLmNvbS9jb25zdW1lci9jbi9kb2MvaGFybW9ueW9zLXJlZmVyZW5jZXMtVjIvdHMtdHlwZXMtMDAwMDAwMTQ3Nzk4MTI0MS1WMiNaSC1DTl9UT1BJQ18wMDAwMDAxNTczOTI4ODg5X19sZW5ndGhjb25zdHJhaW4=">LengthConstrain<i class="fa fa-external-link-alt"></i></span></td>
+<td>以列模式为例（listDirection 为 Axis.Vertical）：lanes 用于决定 List 组件在交叉轴方向按几列布局。默认值：1。规则如下：- lanes 为指定的数量时，根据指定的数量与 List 组件的交叉轴尺寸除以列数作为列的宽度。- lanes 设置了 {minLength，maxLength} 时， 根据 List 组件的宽度自适应决定 lanes 数量（即列数），保证缩放过程中 lane 的宽度符合 {minLength，maxLength} 的限制。其中，minLength 条件会被优先满足，即优先保证符合 ListItem 的交叉轴尺寸符合最小限制。- lanes 设置了 {minLength，maxLength}，如果父组件交叉轴方向尺寸约束为无穷大时，固定按一列排列，列宽度按显示区域内最大的 ListItem 计算。- ListItemGroup 在多列模式下也是独占一行，ListItemGroup 中的 ListItem 按照 List 组件的 lanes 属性设置值来布局。- lanes 设置了 {minLength，maxLength} 时，计算列数会按照 ListItemGroup 的交叉轴尺寸计算。当 ListItemGroup 交叉轴尺寸与 List 交叉轴尺寸不一致时，ListItemGroup 中的列数与 List 中的列数可能不一样。该接口支持在 ArkTS 卡片中使用。</td>
+</tr>
+<tr>
+<td>alignListItem9+</td>
+<td>ListItemAlign</td>
+<td>List 交叉轴方向宽度大于 ListItem 交叉轴宽度 * lanes 时，ListItem 在 List 交叉轴方向的布局方式，默认为首部对齐。默认值：ListItemAlign.Start。该接口支持在 ArkTS 卡片中使用。</td>
+</tr>
+<tr>
+<td>sticky9+</td>
+<td>StickyStyle</td>
+<td>配合 ListItemGroup 组件使用，设置 ListItemGroup 中 header 和 footer 是否要吸顶或吸底。默认值：StickyStyle.None。该接口支持在 ArkTS 卡片中使用。说明：sticky 属性可设置为 StickyStyle.Header &#124; StickyStyle.Footer 以同时支持 header 吸顶和 footer 吸底。</td>
+</tr>
+</tbody></table>
+<h5 id="List-事件"><a href="#List-事件" class="headerlink" title="List 事件"></a>List 事件</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onItemDelete(deprecated) (event: (index: number) &#x3D;&gt; boolean)</td>
+<td></td>
+</tr>
+<tr>
+<td>onScroll(event: (scrollOﬀset: number, scrollState: ScrollState) &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onScrollIndex(event: (start: number, end: number) &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onReachStart(event: () &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onReachEnd(event: () &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onScrollFrameBegin9+ (event: (oﬀset: number, state: ScrollState) &#x3D;&gt; { oﬀsetRemain })</td>
+<td></td>
+</tr>
+<tr>
+<td>onScrollStart9+(event: () &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onScrollStop(event: () &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onItemMove(event: (from: number, to: number) &#x3D;&gt; boolean)</td>
+<td></td>
+</tr>
+<tr>
+<td>onItemDragStart(event: (event: ItemDragInfo, itemIndex: number) &#x3D;&gt; ((() &#x3D;&gt; any) &#124; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onItemDragEnter(event: (event: ItemDragInfo) &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onItemDragMove(event: (event: ItemDragInfo, itemIndex: number, insertIndex: number) &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onItemDragLeave(event: (event: ItemDragInfo, itemIndex: number) &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+<tr>
+<td>onItemDrop(event: (event: ItemDragInfo, itemIndex: number, insertIndex: number, isSuccess: boolean) &#x3D;&gt; void)</td>
+<td></td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
         <category>鸿蒙开发</category>
