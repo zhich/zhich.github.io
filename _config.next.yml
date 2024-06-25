@@ -436,7 +436,7 @@ codeblock:
   # Fold code block 
   # 代码折叠，true：开启，false：禁用；NexT 8.18.0 Released 版本开始支持该功能
   fold:
-    enable: false
+    enable: true
     height: 500
 
 
